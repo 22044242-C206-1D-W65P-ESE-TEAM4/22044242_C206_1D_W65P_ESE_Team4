@@ -2,19 +2,29 @@ import java.io.File;
 
 public class Assessment {
 
+	private int assessment_id;
 	private String assessment_type;
 	private String topic;
 	private String industry;
 	private String career_path;
 	private File assessment;
 
-	public Assessment(String assessment_type, String topic, String industry, String career_path, File assessment) {
+	public Assessment(int assessment_id,String assessment_type, String topic, String industry, String career_path, File assessment) {
 
+		this.assessment_id = assessment_id;
 		this.assessment_type = assessment_type;
 		this.topic = topic;
 		this.industry = industry;
 		this.career_path = career_path;
 		this.assessment = assessment;
+	}
+
+	public int getAssessment_id() {
+		return assessment_id;
+	}
+
+	public void setAssessment_id(int assessment_id) {
+		this.assessment_id = assessment_id;
 	}
 
 	public String getIndustry() {
@@ -41,8 +51,8 @@ public class Assessment {
 		this.career_path = career_path;
 	}
 
-	public String getAssessmentType(String type) {
-		return type;
+	public String getAssessmentType() {
+		return assessment_type;
 	}
 
 	public void setAssessmentType(String type) {
@@ -51,6 +61,10 @@ public class Assessment {
 
 	public File getAssessment() {
 		return assessment;
+	}
+	
+	public void display() {
+		//need to display the content of the file also using FILE READER
 	}
 
 }

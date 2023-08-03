@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -29,6 +30,19 @@ public class C206_CaseStudy {
 		EducationBackground user2EB = new EducationBackground(1,1,"Food sciences", "SIT", 2024);
 
 		ArrayList<EducationBackground> EducationBackgroundList = new ArrayList<EducationBackground>(Arrays.asList(adminEB,user1EB,user2EB));
+		
+		// custom Assessments
+		
+		Assessment a1 = new Assessment("Work Sample Test","Testing Flights","Aerospace","Aeronautical Engineer",new File("areo.txt"));
+		Assessment a2 = new Assessment("Personality Test","Repairing Computers","Computer Technology","Computer Engineer",new File("cs.txt"));
+		Assessment a3 = new Assessment("Hard Skill Test","General Construction","Construction","Brickmason",new File("construction.txt"));
+		
+		ArrayList<Assessment> assessmentList = new ArrayList<Assessment>();
+		
+		assessmentList.add(a1);
+		assessmentList.add(a2);
+		assessmentList.add(a3);
+		
 	}
 	
 	public static boolean validateEmailAddress(String email) {	
@@ -180,6 +194,10 @@ public class C206_CaseStudy {
 		
 	}
 
+	public void AddAssessment(ArrayList<Assessment> a) {
+		
+		
+	}
 }
 
 

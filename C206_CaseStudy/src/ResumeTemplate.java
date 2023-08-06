@@ -1,4 +1,3 @@
-import java.util.List;
 //22002464 Xaviera Ong Ke Ning
 
 public class ResumeTemplate {

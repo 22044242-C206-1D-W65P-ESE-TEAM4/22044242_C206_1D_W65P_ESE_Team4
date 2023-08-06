@@ -50,7 +50,7 @@ public class C206_CaseStudy {
 
 		assessmentList.add(a1);
 		assessmentList.add(a2);
-		assessmentList.add(a3);
+		// assessmentList.add(a3);
 
 	}
 
@@ -199,32 +199,11 @@ public class C206_CaseStudy {
 
 	}
 
-	public static void AddAssessment(ArrayList<Assessment> assessmentList) {
-
-		boolean valid = false;
-		Integer validID = 0;
+	public static Assessment getInputOfAssessment() {
 		String filePattern = "\\w*(\\.(txt))";
-
-		Helper.line(50, "=");
-		System.out.println("Addition of Assessment");
-		Helper.line(50, "=");
-		System.out.println("");
+		Assessment newassessment = null;
 
 		Integer id = Helper.readInt("Enter the ID of the assessment > ");
-
-		while (valid == false) {
-			for (Assessment a : assessmentList) {
-				if (id == a.getAssessment_id()) {
-					valid = false;
-					System.out.println("The ID of the Assessment is already existed! Try Again.");
-					id = Helper.readInt("Enter the ID of the assessment > ");
-				} else {
-					valid = true;
-					validID = id;
-				}
-			}
-		}
-
 		String type = Helper.readString("Enter the type of assessment > ");
 		String topic = Helper.readString("Enter the topic related to assessment > ");
 		String industry = Helper.readString("Enter the related industry > ");
@@ -249,12 +228,43 @@ public class C206_CaseStudy {
 			System.out.println("Error :" + io.getMessage());
 		}
 
-		assessmentList.add(new Assessment(validID, type, topic, industry, career, new File(fileName)));
+		newassessment = new Assessment(id, type, topic, industry, career, new File(fileName));
+
+		return newassessment;
+
+	}
+
+	public static void AddAssessment(ArrayList<Assessment> assessmentList, Assessment at) {
+
+		Assessment ass;
+
+		Helper.line(150, "=");
+		System.out.println("Addition of Assessment");
+		Helper.line(150, "=");
+		System.out.println("");
+
+		for (int i = 0; i < assessmentList.size(); i++) {
+			ass = assessmentList.get(i);
+
+			if (ass.getAssessment_id() == at.getAssessment_id()) {
+				System.out.println("The Assessment is already existed");
+				return;
+			}
+
+		}
+		if ((at.getAssessmentType().isEmpty()) || (at.getTopic().isEmpty()) || (at.getIndustry().isEmpty())
+				|| (at.getCareer_path().isEmpty())) {
+			System.out.println("The Info of Assessment is missing!");
+			return;
+
+		}
+
+		assessmentList.add(at);
 		System.out.println("The new assessment is successfully added");
 
 	}
 
-	public static void ViewAssessment(ArrayList<Assessment> assessmentList) {
+	public static String ViewAssessment(ArrayList<Assessment> assessmentList) {
 		Helper.line(150, "=");
 		System.out.println("\t\t\t\t\tList of Assessments");
 		Helper.line(150, "=");
@@ -269,31 +279,35 @@ public class C206_CaseStudy {
 		}
 
 		System.out.println(output);
+		return output;
 	}
 
-	public static void DeleteAssessment(ArrayList<Assessment> assessmentList) {
-		Integer delete = Helper.readInt("Enter the ID of the assessment to be deleted > ");
+	public static boolean DeleteAssessment(ArrayList<Assessment> assessmentList, Integer id) {
+
+		Helper.line(150, "=");
+		System.out.println("Deletion of Assessment");
+		Helper.line(150, "=");
+		System.out.println("");
+
 		boolean success = false;
 		int deletedAssessment = 0;
 
-		while (success == false) {
-
-			for (int i = 0; i < assessmentList.size(); i++) {
-				if (delete == assessmentList.get(i).getAssessment_id()) {
-					success = true;
-					deletedAssessment = i;
-				}
+		for (int i = 0; i < assessmentList.size(); i++) {
+			if (id == assessmentList.get(i).getAssessment_id()) {
+				success = true;
+				deletedAssessment = i;
 			}
+		}
 
-			if (success) {
-				assessmentList.remove(deletedAssessment);
-				System.out.println("\nThe Assessment is successfully deleted!\n");
-			} else {
-				System.out.println("\nThe Assessment ID entered is Invalid. Try Again!\n");
-				delete = Helper.readInt("Enter the ID of the assessment to be deleted > ");
+		if (success) {
+			assessmentList.remove(deletedAssessment);
+			System.out.println("\nThe Assessment is successfully deleted!\n");
 
-			}
+		} else {
+			System.out.println("\nThe Assessment ID entered is Invalid. Try Again!\n");
 
 		}
+
+		return success;
 	}
 }

@@ -373,7 +373,7 @@ public class C206_CaseStudy {
 		
 		return (found == 1) ? true : false;
 		
-		
+
 	}
 
 }

@@ -17,6 +17,7 @@ public class User {
 	public User(int user_id, String name, String email, String role, String password) {
 		this.user_id = user_id;
 		this.name = name;
+		this.email = email;
 		this.role = role;
 		this.password = password;
 	}
@@ -31,7 +32,7 @@ public class User {
 		this.name = name;
 	}
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
@@ -49,11 +50,10 @@ public class User {
 		this.password = password;
 	}
 	
-	public void displayUserInfo() {
-		String output = String.format("%d %-10s %-15s %-20s", "ID", "Name", "Email", "Role");
-		output += String.format("%d %-10s %-15s %-20s", user_id, name, email, role);
+	public String displayUserInfo() {
+		String output = String.format("%-10s %-20s %-20s %-15s %-5s\n", "ID", "Name", "Email", "Role", "Contact Number");
+		output += String.format("%-10d %-20s %-20s %-15s", user_id, name, email, role);
 		
-		System.out.println(output);
-		
+		return output;	
 	}
 }

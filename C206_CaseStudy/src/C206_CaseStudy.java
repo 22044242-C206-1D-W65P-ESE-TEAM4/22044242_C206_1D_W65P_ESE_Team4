@@ -2,17 +2,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class C206_CaseStudy {
-	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		start();
 	}
-	
+		
+	// Code starts from here
 	public static void start() {
+		User currentUser = null;
+		
 		// custom users
-		User admin = new User(1, "Admin", "admin@gmail.com", "admin", "lol1");
+		User admin = new User(1, "Admin", "admin@gmail.com", "admin", "lol123");
 		User user1 = new User(2, "john doe1", "john1@sgmail.com", "user", "lol123");
 		User user2 = new User(3, "john doe2", "john2@gmail.com", "user", "lol123");
+		
+		currentUser = admin;
 		
 		ArrayList<User> usersList = new ArrayList<User>(Arrays.asList(admin, user1, user2));
        
@@ -28,51 +32,138 @@ public class C206_CaseStudy {
 		EducationBackground user1EB = new EducationBackground(1,1,"Art", "NTU", 2023);
 		EducationBackground user2EB = new EducationBackground(1,1,"Food sciences", "SIT", 2024);
 
+		// Sprint 2 - haven't do yet
 		ArrayList<EducationBackground> EducationBackgroundList = new ArrayList<EducationBackground>(Arrays.asList(adminEB,user1EB,user2EB));
+	
+		int res = 10000;	
+		
+		//res = 0, means cancel
+		while(res != 0) {
+			res = Menu(currentUser);
+			
+			if(res == 0) {
+				System.out.println("Thank for using the application, Goodbye!");
+				break;
+			}
+			
+			if(currentUser != null) {
+				if(res == 1) {
+					ProfileManagement(currentUser, profileList, usersList);
+				}
+			}
+			
+			if(currentUser == null) {
+				boolean isEmailValid = false;
+				String email = "";
+				
+				// Email check
+				while(isEmailValid == false) {	
+					email = Helper.readString("Enter email > ");
+					isEmailValid = validateEmailAddress(email, usersList);
+					
+					if(isEmailValid == false) {
+						System.out.println("\nPLease enter a valid email");
+					}
+				}
+				
+				// password 1 for login, only include password 2 if registering
+				String password1 = Helper.readString("Enter password >");
+				
+				if(res==1) {
+					
+					String password2 = Helper.readString("Enter repeat-password>");
+					currentUser = register(usersList, email,password1,password2, profileList,currentUser);	
+				}
+				else if(res == 2) {
+					currentUser = login(usersList, email, password1);
+				}
+				
+			}
+		}	
 	}
 	
-	public static boolean validateEmailAddress(String email) {	
-		String emailPattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
-	    return email.matches(emailPattern);
+	
+	// menu based on the USER role
+	public static int Menu(User user) {
+		
+		Helper.line(70, "=");
+		System.out.println("CPA Application");
+		Helper.line(70, "=");
+		
+		if(user == null) {
+			System.out.println("1. Register");
+			System.out.println("2. Login");
+		}
+		
+		else {
+			System.out.println("1. Profile Management");
+			System.out.println("2. Education Background Management");
+			System.out.println("3. Disable account");
+		}
+		
+		Helper.line(70, "=");
+		int ans = Helper.readInt("Welcome to CPA, What would you like to do? ");
+		Helper.line(70, "=");
+		
+		return ans;
+	}
+	
+	public static void ProfileManagement(User user, ArrayList<Profile> profileList, ArrayList<User> usersList) {
+		System.out.println("1. View Profile");
+		System.out.println("2. Update Profile");
+		
+		int ans = Helper.readInt("Profile Management > ");
+		
+		if(ans == 1) {
+			
+			String output = user.displayUserInfo() + String.format("%9s ", profileList.get(user.getUser_id()).getContact_info()); 
+			System.out.println(output);
+			
+		}else if(ans == 2) {
+			boolean isValid = updateProfile(user.getUser_id(), profileList, usersList);
+		}
 	}
 	
 	
-	public static boolean register(ArrayList<User> usersList, String email, String password1, String password2, ArrayList<Profile> profileList) {
-		if(password1.equals(password2) && validateEmailAddress(email)) {
+	// Register a user
+	public static User register(ArrayList<User> usersList, String email, String password1, String password2, ArrayList<Profile> profileList,User currentUser) {
+		if(password1.equals(password2)) {
 			/*
 			 * Roles:
 			 * 1. user
 			 * 2. admin
 			 * 3. 
-			 * */
-			
-//			user will be automatically be set to role:user, only "admin" can edit/upgrade the roles
-			
+			 * */	
 			String name = Helper.readString("Enter name:");
 			User user = new User(usersList.size() + 1,name,email, "user", password2);
 			
 			if(user != null) {
-				System.out.println("User registered");
+			
+				System.out.println("\nUser registered successfully\n");
 				// have to redirect to create profile
 
 				createProfile(user.getUser_id(), profileList);
-				return true;
+				
+				return user;
 			}
 			
 		}else {
-			System.out.println("Password or email is invalid.");
+			System.out.println("Password is similar.");
 		}
 		// default return false
-		return false;
+		return null;
 	}
 	
+	
+	// Login user
 	public static User login(ArrayList<User> usersList, String email, String password) {
 		
 		for(User user: usersList) {
-			if(validateEmailAddress(email)) {
+			if(validateEmailAddress(email, usersList)) {
+				//System.out.println(user.getEmail());
 				
 				if(user.getEmail().equalsIgnoreCase(email) && user.getPassword().equals(password)){
-					System.out.println("Welcome back," + user.getName());
+					System.out.println("\nWelcome back," + user.getName() + "\n");
 					return user;
 				}
 				
@@ -81,6 +172,7 @@ public class C206_CaseStudy {
 		return null;
 	}
 	
+	// Profile management - Create
 	public static Profile createProfile(int user_id, ArrayList<Profile> profileList) {
 		System.out.println("Redirecting to Profile creation...");
 		
@@ -90,19 +182,28 @@ public class C206_CaseStudy {
 		
 		
 		int profile_id = profileList.size() + 1;
-		int contact_info = Helper.readInt("Enter your contact information > ");
+		boolean isValid = false;
+		int contact_info = 0;
+		
+		while(isValid == false) {
+			contact_info = Helper.readInt("Enter your contact information > ");
+			isValid = validatePhoneNumber(contact_info);
+			
+			if(isValid == false) {
+				System.out.println("Please input 8 characters");
+			}
+			
+		}
+		
 		String dob = Helper.readString("Enter your Date of Birth(dd/mm/yyyy) > ");
-		
 		Profile newProfile = new Profile(profile_id, user_id, contact_info, dob);
-		
 		
 		System.out.println("Profile created successfully");
 		
 		return newProfile;
 	}
 	
-	
-	// user only
+    // Profile management - UPDATE
 	public static boolean updateProfile(int user_id, ArrayList<Profile> profileList, ArrayList<User> userList) {
 		Helper.line(70, "*");
 		System.out.println("Update your profile");
@@ -130,11 +231,40 @@ public class C206_CaseStudy {
 				
 				found = 1;
 				
+				if(found == 1) {
+					break;				
+				}
+				
 			}
 		}
 		return (found == 1) ? true : false;
 
 	}
+		
+	
+	
+	// Email Address validation
+	public static boolean validateEmailAddress(String email, ArrayList<User> userList) {	
+		
+		String emailPattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+	    
+//			for(User user: userList) {
+//				if(user.getEmail().equalsIgnoreCase(email)) {
+//					System.out.println("The email has already been used");
+//					return false;
+//				}
+//			}
+		
+			return email.matches(emailPattern);	  
+		
+	}
+	
+	//Password validation
+	public static boolean validatePhoneNumber(int phone) {			
+		boolean phoneValid = Integer.toString(phone).length() == 8;
+		return phoneValid;
+	}
+		
 	
 	public static boolean createEducationBackground(int user_id, ArrayList<EducationBackground> EBlist ) {
 		

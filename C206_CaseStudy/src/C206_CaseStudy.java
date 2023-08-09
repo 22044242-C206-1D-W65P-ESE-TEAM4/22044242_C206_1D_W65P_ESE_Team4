@@ -16,7 +16,7 @@ public class C206_CaseStudy {
 		User user1 = new User(2, "john doe1", "john1@sgmail.com", "user", "lol123");
 		User user2 = new User(3, "john doe2", "john2@gmail.com", "user", "lol123");
 		
-		currentUser = admin;
+		//currentUser = admin;
 		
 		ArrayList<User> usersList = new ArrayList<User>(Arrays.asList(admin, user1, user2));
        
@@ -52,34 +52,41 @@ public class C206_CaseStudy {
 				}
 			}
 			
+			
 			if(currentUser == null) {
-				boolean isEmailValid = false;
 				String email = "";
-				
-				// Email check
-				while(isEmailValid == false) {	
-					email = Helper.readString("Enter email > ");
-					isEmailValid = validateEmailAddress(email, usersList);
-					
-					if(isEmailValid == false) {
-						System.out.println("\nPLease enter a valid email");
-					}
-				}
-				
-				// password 1 for login, only include password 2 if registering
-				String password1 = Helper.readString("Enter password >");
-				
 				if(res==1) {
-					
+					email = FormEmail(usersList,"register");
+					String password1 = Helper.readString("Enter password >");
 					String password2 = Helper.readString("Enter repeat-password>");
-					currentUser = register(usersList, email,password1,password2, profileList,currentUser);	
+					String name = Helper.readString("What should we call you> ");
+					currentUser = register(usersList, name, email,password1,password2, profileList,currentUser);	
 				}
 				else if(res == 2) {
+					email = FormEmail(usersList,"login");
+					String password1 = Helper.readString("Enter password >");
 					currentUser = login(usersList, email, password1);
 				}
 				
 			}
 		}	
+	}
+	
+	public static String FormEmail( ArrayList<User> usersList, String type) {
+		// Email check
+		boolean isEmailValid = false;
+		String email = "";
+		
+		while(isEmailValid == false) {	
+			email = Helper.readString("Enter email > ");
+			isEmailValid = validateEmailAddress(email, usersList,type);
+			
+			if(isEmailValid == false) {
+				System.out.println("\nPLease enter a valid email");
+			}
+		}
+		
+		return email;
 	}
 	
 	
@@ -126,7 +133,7 @@ public class C206_CaseStudy {
 	
 	
 	// Register a user
-	public static User register(ArrayList<User> usersList, String email, String password1, String password2, ArrayList<Profile> profileList,User currentUser) {
+	public static User register(ArrayList<User> usersList,String name, String email, String password1, String password2, ArrayList<Profile> profileList,User currentUser) {
 		if(password1.equals(password2)) {
 			/*
 			 * Roles:
@@ -134,15 +141,16 @@ public class C206_CaseStudy {
 			 * 2. admin
 			 * 3. 
 			 * */	
-			String name = Helper.readString("Enter name:");
+			//String name = "user101";
 			User user = new User(usersList.size() + 1,name,email, "user", password2);
 			
 			if(user != null) {
 			
 				System.out.println("\nUser registered successfully\n");
+				
 				// have to redirect to create profile
-
-				createProfile(user.getUser_id(), profileList);
+				
+				//createProfile(user.getUser_id(), profileList);
 				
 				return user;
 			}
@@ -157,18 +165,20 @@ public class C206_CaseStudy {
 	
 	// Login user
 	public static User login(ArrayList<User> usersList, String email, String password) {
-		
+		int found = 0;
 		for(User user: usersList) {
-			if(validateEmailAddress(email, usersList)) {
+			if(validateEmailAddress(email, usersList, "login")) {
 				//System.out.println(user.getEmail());
 				
 				if(user.getEmail().equalsIgnoreCase(email) && user.getPassword().equals(password)){
 					System.out.println("\nWelcome back," + user.getName() + "\n");
+					found = 1;
 					return user;
 				}
 				
 			}
-		}		
+		}
+		System.out.println("Unfortunately, Your account was not found");
 		return null;
 	}
 	
@@ -202,6 +212,23 @@ public class C206_CaseStudy {
 		
 		return newProfile;
 	}
+	
+	// Profile management - Create
+		public static Profile createProfileTest(int user_id, ArrayList<Profile> profileList, int contact_info,String dob) {
+			int profile_id = profileList.size() + 1;
+			boolean isValid = validatePhoneNumber(contact_info);			
+			
+			isValid = validatePhoneNumber(contact_info);
+			if(isValid == false) {
+				System.out.println("Please input 8 characters");
+				return null;
+			}
+			
+				
+			Profile newProfile = new Profile(profile_id, user_id, contact_info, dob);
+			System.out.println("Profile created successfully");			
+			return newProfile;
+		}
 	
     // Profile management - UPDATE
 	public static boolean updateProfile(int user_id, ArrayList<Profile> profileList, ArrayList<User> userList) {
@@ -242,20 +269,59 @@ public class C206_CaseStudy {
 	}
 		
 	
+	public static boolean updateProfileTest(int user_id, ArrayList<Profile> profileList, ArrayList<User> userList,
+		String name, String email, String dob, int contact_info) {
+		Helper.line(70, "*");
+		System.out.println("Update your profile");
+		Helper.line(70, "*");
+		
+		if(!email.equals("0") || contact_info != 0) {
+			if(validateEmailAddress(email, userList,"login") == false || validatePhoneNumber(contact_info) == false) {
+				return false;
+			}
+		}
+		
+		int found = 0;
+		
+		for(Profile profile: profileList) {
+			if(profile.getUser_id() == user_id) {
+				User user = userList.get(user_id - 1);
+				
+				user.setName(name.equals("0") ? user.getName() : name);
+				user.setEmail(email.equals("0") ? user.getEmail() : email);
+				profile.setContact_info(contact_info == 0 ? profile.getContact_info() : contact_info);
+				profile.setDob(dob.equals("0") ? profile.getDob() : dob);
+				
+				System.out.println("Updated successfully.");
+				
+				found = 1;
+				
+				if(found == 1) {
+					break;				
+				}
+				
+			}
+		}
+		return (found == 1) ? true : false;
+
+	}
+	
 	
 	// Email Address validation
-	public static boolean validateEmailAddress(String email, ArrayList<User> userList) {	
+	public static boolean validateEmailAddress(String email, ArrayList<User> userList,String type) {	
 		
 		String emailPattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
 	    
-//			for(User user: userList) {
-//				if(user.getEmail().equalsIgnoreCase(email)) {
-//					System.out.println("The email has already been used");
-//					return false;
-//				}
-//			}
+		if(type.equalsIgnoreCase("register")){
+			for(User user: userList) {
+				if(user.getEmail().equalsIgnoreCase(email)) {
+					System.out.println("The email has already been used");
+					return false;
+				}
+			}
+		}
 		
-			return email.matches(emailPattern);	  
+		return email.matches(emailPattern);	  
 		
 	}
 	

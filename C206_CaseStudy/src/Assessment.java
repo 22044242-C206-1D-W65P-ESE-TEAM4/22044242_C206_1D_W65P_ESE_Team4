@@ -77,7 +77,7 @@ public class Assessment {
 		System.out.println("Topic           : " + getTopic());
 		System.out.println("Industry        : " + getIndustry());
 		System.out.println("Career Path     : " + getCareer_path());
-		System.out.println("\ntAssessment\n");
+		System.out.println("\nAssessment\n");
 		Helper.line(150, "-");
 
 		try {

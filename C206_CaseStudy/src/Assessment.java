@@ -1,4 +1,8 @@
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.BufferedReader;
 
 public class Assessment {
 
@@ -9,7 +13,8 @@ public class Assessment {
 	private String career_path;
 	private File assessment;
 
-	public Assessment(int assessment_id,String assessment_type, String topic, String industry, String career_path, File assessment) {
+	public Assessment(int assessment_id, String assessment_type, String topic, String industry, String career_path,
+			File assessment) {
 
 		this.assessment_id = assessment_id;
 		this.assessment_type = assessment_type;
@@ -62,9 +67,37 @@ public class Assessment {
 	public File getAssessment() {
 		return assessment;
 	}
-	
+
 	public void display() {
-		//need to display the content of the file also using FILE READER
+		// need to display the content of the file also using FILE READER
+		Helper.line(150, "=");
+		System.out.println("-Assessment Preview-");
+		Helper.line(150, "=");
+		System.out.println("Assessment Type : " + getAssessmentType());
+		System.out.println("Topic           : " + getTopic());
+		System.out.println("Industry        : " + getIndustry());
+		System.out.println("Career Path     : " + getCareer_path());
+		System.out.println("\ntAssessment\n");
+		Helper.line(150, "-");
+
+		try {
+			FileReader fr = new FileReader(assessment);
+			BufferedReader br = new BufferedReader(fr);
+
+			String line = br.readLine();
+			while (line != null) {
+				System.out.println(line);
+
+				line = br.readLine();
+			}
+			br.close();
+
+		} catch (IOException io) {
+			System.out.println("Message : " + io.getMessage());
+
+		}
+
+		Helper.line(150, "=");
 	}
 
 }

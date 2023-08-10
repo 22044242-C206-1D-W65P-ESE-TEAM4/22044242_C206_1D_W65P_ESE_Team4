@@ -7,7 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class C206_CaseStudyTest {
+public class C206_CaseStudyTestKai {
 
 	private ArrayList<Assessment> assessmentList;
 	private Assessment a1;
@@ -94,12 +94,14 @@ public class C206_CaseStudyTest {
 		test += String.format("%-5d %-25s %-25s %-25s %-30s %-30s\n", 2, "Personality Test", "Repairing Computers",
 				"Computer Technology", "Computer Engineer", new File("cs.txt"));
 
+		assertEquals(2,assessmentList.size());
 		assertEquals("Test if the added assessment data is shown ", assessmentdata, test);
 
 		// the repetitive assessment is not shown in the list after being added.
 
 		C206_CaseStudy.AddAssessment(assessmentList, a1);
 		String assessment = C206_CaseStudy.ViewAssessment(assessmentList);
+		assertEquals(2,assessmentList.size());
 		assertEquals("Test if the same assessment is not displayed twice", assessment, test);
 
 	}

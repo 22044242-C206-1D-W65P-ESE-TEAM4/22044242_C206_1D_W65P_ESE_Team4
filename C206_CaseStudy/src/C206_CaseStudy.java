@@ -16,7 +16,7 @@ public class C206_CaseStudy {
 		User user1 = new User(2, "john doe1", "john1@sgmail.com", "user", "lol123");
 		User user2 = new User(3, "john doe2", "john2@gmail.com", "user", "lol123");
 		
-		//currentUser = admin;
+//		currentUser = admin;
 		
 		ArrayList<User> usersList = new ArrayList<User>(Arrays.asList(admin, user1, user2));
        
@@ -33,8 +33,9 @@ public class C206_CaseStudy {
 		EducationBackground user2EB = new EducationBackground(1,1,"Food sciences", "SIT", 2024);
 
 		// Sprint 2 - haven't do yet
-		ArrayList<EducationBackground> EducationBackgroundList = new ArrayList<EducationBackground>(Arrays.asList(adminEB,user1EB,user2EB));
-	
+		ArrayList<EducationBackground> educationBackgroundList = new ArrayList<EducationBackground>(Arrays.asList(adminEB,user1EB,user2EB));
+		
+		
 		int res = 10000;	
 		
 		//res = 0, means cancel
@@ -47,10 +48,24 @@ public class C206_CaseStudy {
 			}
 			
 			if(currentUser != null) {
-				if(res == 1) {
+				if(res == 0) {
+					System.out.println("Thank for using the application, Goodbye!");
+					break;
+				}
+				else if(res == 1) {
 					ProfileManagement(currentUser, profileList, usersList);
 				}
+				else if(res == 2) {
+					EducationBackgroundManagement(educationBackgroundList, currentUser.getUser_id());
+				}
+				else if(res == 3) {
+					deleteAccount(currentUser.getUser_id(),usersList, profileList, educationBackgroundList);
+					currentUser = null;
+					res = Menu(currentUser);
+					
+				}
 			}
+			
 			
 			
 			if(currentUser == null) {
@@ -61,6 +76,8 @@ public class C206_CaseStudy {
 					String password2 = Helper.readString("Enter repeat-password>");
 					String name = Helper.readString("What should we call you> ");
 					currentUser = register(usersList, name, email,password1,password2, profileList,currentUser);	
+					
+					educationBackgroundList.add(createEducationBackground(currentUser.getUser_id(), usersList,educationBackgroundList));
 				}
 				else if(res == 2) {
 					email = FormEmail(usersList,"login");
@@ -122,14 +139,30 @@ public class C206_CaseStudy {
 		int ans = Helper.readInt("Profile Management > ");
 		
 		if(ans == 1) {
-			
-			String output = user.displayUserInfo() + String.format("%9s ", profileList.get(user.getUser_id()).getContact_info()); 
-			System.out.println(output);
+			System.out.println(user.getEmail());
+//			String output = user.displayUserInfo() + String.format("%9s ", profileList.get(user.getUser_id()).getContact_info()); 
+//			System.out.println(output);
 			
 		}else if(ans == 2) {
 			boolean isValid = updateProfile(user.getUser_id(), profileList, usersList);
 		}
 	}
+	
+	public static void EducationBackgroundManagement(ArrayList<EducationBackground> EducationBackgroundList, int id) {
+		System.out.println("1. View Education Background");
+		System.out.println("2. Update Education Background");
+		
+		int ans = Helper.readInt("Education Management > ");
+		
+		if(ans == 1) {
+			viewEducationBackground(id,EducationBackgroundList);	
+		}
+		else if(ans == 2) {
+			updateEducationBackground(id, EducationBackgroundList);
+		}
+
+	}	
+	
 	
 	
 	// Register a user
@@ -217,17 +250,23 @@ public class C206_CaseStudy {
 		public static Profile createProfileTest(int user_id, ArrayList<Profile> profileList, int contact_info,String dob) {
 			int profile_id = profileList.size() + 1;
 			boolean isValid = validatePhoneNumber(contact_info);			
+			int errors = 0;
 			
 			isValid = validatePhoneNumber(contact_info);
 			if(isValid == false) {
 				System.out.println("Please input 8 characters");
-				return null;
+				errors += 1;
 			}
 			
-				
-			Profile newProfile = new Profile(profile_id, user_id, contact_info, dob);
-			System.out.println("Profile created successfully");			
-			return newProfile;
+			
+			if(errors < 0) {
+				Profile newProfile = new Profile(profile_id, user_id, contact_info, dob);
+				System.out.println("Profile created successfully");			
+				return newProfile;
+			}
+			
+			return null;
+			
 		}
 	
     // Profile management - UPDATE
@@ -331,13 +370,24 @@ public class C206_CaseStudy {
 		return phoneValid;
 	}
 		
+	public static void viewEducationBackground( int user_id,ArrayList<EducationBackground> EBList) {
+		String output = String.format("\n%-10s %-20s %-20s\n", "Degree", "Institution", "Year Graduated");
+		EducationBackground eb = EBList.get(user_id - 1);
+		output += String.format("%-10s %-20s %-20d", eb.getDegree(), eb.getInstitution(), eb.getYear_graduated());
+		System.out.println(output);
+	}
 	
-	public static boolean createEducationBackground(int user_id, ArrayList<EducationBackground> EBlist ) {
+	public static EducationBackground createEducationBackground(int user_id, ArrayList<User> userList,ArrayList<EducationBackground> EBlist ) {
+		
+		Helper.line(70, "*");
+		System.out.println("Tell us more about your education background");
+		Helper.line(70, "*");
 		
 		if(EBlist.size() == 0) {
 			
-			return false;
+			return null;
 		}
+		
 		else {
 			int educationBackground_id = EBlist.size() + 1;
 			String degree = Helper.readString("Degree given > ");
@@ -345,8 +395,32 @@ public class C206_CaseStudy {
 			int year_graduated = Helper.readInt("Year graduated > ");
 			
 			EducationBackground EB = new EducationBackground(educationBackground_id,  user_id, degree, institution, year_graduated);
+			System.out.println("\nThank you for your cooperation");
+			
+			return EB;
 		}
-		return true;
+		
+	}
+	
+	public static EducationBackground createEducationBackgroundTest(int user_id, ArrayList<User> userList,ArrayList<EducationBackground> EBlist, String degree, String institution, int year_graduated) {
+		
+		Helper.line(70, "*");
+		System.out.println("Tell us more about your education background");
+		Helper.line(70, "*");
+		EducationBackground EB = null;
+		
+		int educationBackground_id = EBlist.size() + 1;
+		
+		if(user_id == userList.size()) {
+			EB = new EducationBackground(educationBackground_id,  user_id, degree, institution, year_graduated);
+			return EB;
+		}
+		
+		System.out.println("\nThank you for your cooperation");
+		
+		return null;
+		
+		
 	}
 		
 	
@@ -367,7 +441,10 @@ public class C206_CaseStudy {
 				EB.setYear_graduated((year_graduated == 0) ? EB.getYear_graduated() : year_graduated);
 				
 				found = 1;
-				
+				if(found == 1) {
+					System.out.println("\nUpdated successfully");
+					break;
+				}
 			}
 		}
 		
@@ -375,6 +452,47 @@ public class C206_CaseStudy {
 		
 
 	}
+	
+	
+	public static boolean updateEducationBackgroundTest(int user_id,ArrayList<EducationBackground> EBlist,String degree, String institution, int year_graduated ) {
+		
+		int found = 0;
+		
+		for(EducationBackground EB : EBlist) {
+			if(EB.getUser_id() == user_id) {
+				
+				EB.setDegree(degree.equals("0") ? EB.getDegree() : degree);
+				EB.setInstitution(institution.equals("0") ? EB.getInstitution() : institution);				
+				EB.setYear_graduated((year_graduated == 0) ? EB.getYear_graduated() : year_graduated);
+				
+				found = 1;
+				if(found == 1) {
+					System.out.println("\nUpdated successfully");
+					break;
+				}
+			}
+		}
+		
+		return (found == 1) ? true : false;
+		
+
+	}
+	
+	public static void deleteAccount(int user_id,ArrayList<User> userList, ArrayList<Profile> profileList, ArrayList<EducationBackground> EBList) {
+		
+		userList.remove(user_id
+				- 1);
+		profileList.remove(user_id -1);
+		
+		if(EBList.get(user_id - 1) != null) {
+			EBList.remove(user_id -1);
+		}
+		
+		
+		System.out.println("Deleted successfully");
+		System.out.println("Redirecting to Registration page...");
+	}
+
 
 }
 

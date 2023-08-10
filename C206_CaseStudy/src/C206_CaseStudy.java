@@ -96,8 +96,9 @@ public class C206_CaseStudy {
 						AssessmentMenu();
 						AssessmentOption = Helper.readInt("Enter the option for managing Assessment > ");
 
-						
 					}
+				} else if (res == 4 && !currentUser.getRole().equalsIgnoreCase("admin")) {
+					ViewAssessment(assessmentList);
 				}
 			}
 
@@ -157,6 +158,8 @@ public class C206_CaseStudy {
 			System.out.println("3. Disable account");
 			if (user.getRole().equalsIgnoreCase("admin")) {
 				System.out.println("4. Manage Assessments");
+			}else {
+				System.out.println("4. View Assessments");
 			}
 		}
 

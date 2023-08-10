@@ -38,6 +38,7 @@ public class C206_CaseStudy {
 		ArrayList<EducationBackground> educationBackgroundList = new ArrayList<EducationBackground>(
 				Arrays.asList(adminEB, user1EB, user2EB));
 
+		// custom Assessments
 		Assessment a1 = new Assessment(1, "Work Sample Test", "Testing Flights", "Aerospace", "Aeronautical Engineer",
 				new File("areo.txt"));
 		Assessment a2 = new Assessment(2, "Personality Test", "Repairing Computers", "Computer Technology",
@@ -83,8 +84,7 @@ public class C206_CaseStudy {
 					String name = Helper.readString("What should we call you> ");
 					currentUser = register(usersList, name, email, password1, password2, profileList, currentUser);
 
-					educationBackgroundList.add(
-							createEducationBackground(currentUser.getUser_id(), usersList, educationBackgroundList));
+					educationBackgroundList.add(createEducationBackground(currentUser.getUser_id(), usersList, educationBackgroundList));
 				} else if (res == 2) {
 					email = FormEmail(usersList, "login");
 					String password1 = Helper.readString("Enter password >");
@@ -144,9 +144,9 @@ public class C206_CaseStudy {
 		int ans = Helper.readInt("Profile Management > ");
 
 		if (ans == 1) {
-			System.out.println(user.getEmail());
-//			String output = user.displayUserInfo() + String.format("%9s ", profileList.get(user.getUser_id()).getContact_info()); 
-//			System.out.println(output);
+			//System.out.println(user.getEmail());
+			String output = user.displayUserInfo() + String.format("%9s ", profileList.get(user.getUser_id()).getContact_info()); 
+			System.out.println(output);
 
 		} else if (ans == 2) {
 			boolean isValid = updateProfile(user.getUser_id(), profileList, usersList);
@@ -183,7 +183,7 @@ public class C206_CaseStudy {
 
 				// have to redirect to create profile
 
-				// createProfile(user.getUser_id(), profileList);
+				createProfile(user.getUser_id(), profileList);
 
 				return user;
 			}

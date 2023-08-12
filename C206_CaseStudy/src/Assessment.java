@@ -100,4 +100,19 @@ public class Assessment {
 		Helper.line(150, "=");
 	}
 
+	//Refactoring
+	public String toString() {
+
+		String output = String.format("%-5d %-25s %-25s %-25s %-30s %-30s", getAssessment_id(), getAssessmentType(),
+				getTopic(), getIndustry(), getCareer_path(), getAssessment());
+		return output;
+
+	}
+
+	public static void setHeader(String header) {
+		Helper.line(150, "-");
+		System.out.println(header);
+		Helper.line(150, "-");
+	}
+
 }

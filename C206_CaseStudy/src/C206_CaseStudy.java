@@ -4,8 +4,21 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
 public class C206_CaseStudy {
+
+	// Refactoring
+	private static final int ASSESSMENT_DELETE = 3;
+
+	private static final int ASSESSMENT_VIEW = 2;
+
+	private static final int ASSESSMENT_ADD = 1;
+
+	private static final int ASSESSMENT_QUIT = 0;
+
+	public static final int OPTION_ASSESSMENT = 4;
+
+	public static final int OPTION_QUIT = 0;
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		start();
@@ -51,14 +64,15 @@ public class C206_CaseStudy {
 
 		ArrayList<Assessment> assessmentList = new ArrayList<Assessment>(Arrays.asList(a1, a2, a3));
 
+		ViewAssessment(assessmentList);
 		int res = 10000;
 		int AssessmentOption = 10000;
 
 		// res = 0, means cancel
-		while (res != 0) {
+		while (res != OPTION_QUIT) {
 			res = Menu(currentUser);
 
-			if (res == 0) {
+			if (res == OPTION_QUIT) {
 				System.out.println("Thank for using the application, Goodbye!");
 				break;
 			}
@@ -76,32 +90,37 @@ public class C206_CaseStudy {
 					currentUser = null;
 					res = Menu(currentUser);
 
-				} else if (res == 4 && currentUser.getRole().equalsIgnoreCase("admin")) {
-					AssessmentMenu();
-					AssessmentOption = Helper.readInt("Enter the option for managing Assessment > ");
-					while (AssessmentOption != 0) {
+				} else if (res == OPTION_ASSESSMENT) {
+					if (currentUser.getRole().equalsIgnoreCase("admin")) {
 
-						if (AssessmentOption == 1) {
-
-							AddAssessment(assessmentList, getInputOfAssessment());
-
-						} else if (AssessmentOption == 2) {
-							ViewAssessment(assessmentList);
-						} else if (AssessmentOption == 3) {
-							ViewAssessment(assessmentList);
-							Integer ID = Helper.readInt("Enter the ID of the Assessment you wish to delete > ");
-							DeleteAssessment(assessmentList, ID);
-						} else if (AssessmentOption == 0) {
-							System.out.println("Existing Assessment Management!");
-						} else {
-							System.out.println("Invalid Input!");
-						}
+						// Refactoring
 						AssessmentMenu();
 						AssessmentOption = Helper.readInt("Enter the option for managing Assessment > ");
+						while (AssessmentOption != ASSESSMENT_QUIT) {
 
+							if (AssessmentOption == ASSESSMENT_ADD) {
+
+								AddAssessment(assessmentList, getInputOfAssessment());
+
+							} else if (AssessmentOption == ASSESSMENT_VIEW) {
+								ViewAssessment(assessmentList);
+							} else if (AssessmentOption == ASSESSMENT_DELETE) {
+								ViewAssessment(assessmentList);
+								Integer ID = Helper.readInt("Enter the ID of the Assessment you wish to delete > ");
+								DeleteAssessment(assessmentList, ID);
+							} else if (AssessmentOption == ASSESSMENT_QUIT) {
+								System.out.println("Existing Assessment Management!");
+							} else {
+								System.out.println("Invalid Input!");
+							}
+							AssessmentMenu();
+							AssessmentOption = Helper.readInt("Enter the option for managing Assessment > ");
+
+						}
+					} else {
+						ViewAssessment(assessmentList);
 					}
-				} else if (res == 4 && !currentUser.getRole().equalsIgnoreCase("admin")) {
-					ViewAssessment(assessmentList);
+
 				}
 			}
 
@@ -161,7 +180,7 @@ public class C206_CaseStudy {
 			System.out.println("3. Disable account");
 			if (user.getRole().equalsIgnoreCase("admin")) {
 				System.out.println("4. Manage Assessments");
-			}else {
+			} else {
 				System.out.println("4. View Assessments");
 			}
 		}
@@ -527,9 +546,9 @@ public class C206_CaseStudy {
 		System.out.println("Redirecting to Registration page...");
 	}
 
+	// Refactoring
 	public static void AssessmentMenu() {
-		System.out.println("-Management Of Assessment-");
-		Helper.line(150, "-");
+		Assessment.setHeader("-Management Of Assessment-");
 		System.out.println("1. Add Assessment");
 		System.out.println("2. View Assessment");
 		System.out.println("3. Delete Assessment");
@@ -556,17 +575,16 @@ public class C206_CaseStudy {
 
 	public static void AddAssessment(ArrayList<Assessment> assessmentList, Assessment at) {
 
-		Assessment ass;
+		Assessment.setHeader("Addition of Assessment");
 
-		Helper.line(150, "=");
-		System.out.println("Addition of Assessment");
-		Helper.line(150, "=");
 		System.out.println("");
 
 		for (int i = 0; i < assessmentList.size(); i++) {
-			ass = assessmentList.get(i);
 
-			if (ass.getAssessment_id() == at.getAssessment_id()) {
+			// Refactoring
+			int assessment_id = assessmentList.get(i).getAssessment_id();
+
+			if (assessment_id == at.getAssessment_id()) {
 				System.out.println("The Assessment is already existed");
 				return;
 			}
@@ -587,17 +605,17 @@ public class C206_CaseStudy {
 	}
 
 	public static String ViewAssessment(ArrayList<Assessment> assessmentList) {
-		Helper.line(150, "=");
-		System.out.println("List of Assessments");
-		Helper.line(150, "=");
+
+		Assessment.setHeader("List of Assessments");
+
 		System.out.println("");
 
 		String output = String.format("%-5s %-25s %-25s %-25s %-30s %-30s\n\n", "ID", "TYPE", "TOPIC", "INDUSTRY",
 				"CAREER PROSPECT", "FILE NAME");
 
 		for (Assessment a : assessmentList) {
-			output += String.format("%-5d %-25s %-25s %-25s %-30s %-30s\n", a.getAssessment_id(), a.getAssessmentType(),
-					a.getTopic(), a.getIndustry(), a.getCareer_path(), a.getAssessment());
+			// Refactroing
+			output += String.format("%-140s\n", a.toString());
 		}
 
 		System.out.println(output);
@@ -606,16 +624,17 @@ public class C206_CaseStudy {
 
 	public static boolean DeleteAssessment(ArrayList<Assessment> assessmentList, Integer id) {
 
-		Helper.line(150, "=");
-		System.out.println("Deletion of Assessment");
-		Helper.line(150, "=");
+		Assessment.setHeader("Deletion of Assessment");
+
 		System.out.println("");
 
 		boolean success = false;
 		int deletedAssessment = 0;
 
 		for (int i = 0; i < assessmentList.size(); i++) {
-			if (id == assessmentList.get(i).getAssessment_id()) {
+			// Refactoring
+			int assessment_id = assessmentList.get(i).getAssessment_id();
+			if (id == assessment_id) {
 				success = true;
 				deletedAssessment = i;
 			}

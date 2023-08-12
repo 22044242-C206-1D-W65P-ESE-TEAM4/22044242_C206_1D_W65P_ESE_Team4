@@ -75,56 +75,56 @@ public class C206_CaseStudyTestHarris {
 //		assertEquals("Test that the new user is not inserted",2,usersList.size());
 //	}
 	
-//	@Test
-//	public void testLogin(){
-//		
-//		//Test that the currentUser variable to store the login user is initially empty/null.
-//		assertNull("Test if currentUser variable is null", currentUser);
-//		
-//		//Given that the user has successfully login, the currentUser is not null
-//		currentUser = C206_CaseStudy.login(usersList, "admin@gmail.com", "lol123");
-//		assertNotNull("Test if currentUser variable has a user stored", currentUser);
-//		
-//		//Given a user has entered an invalid email address
-//		currentUser = null;
-//		currentUser = C206_CaseStudy.login(usersList, "2d.@.", "lol123");
-//		assertNull("Test if currentUser variable has a user stored", currentUser);
-//		
-//		//Given that the user account does not exist
-//		currentUser = null;
-//		currentUser = C206_CaseStudy.login(usersList, "doesnotexist@gmail.com", "doesnotexist");
-//		assertNull("Test if currentUser variable has a user stored", currentUser);
-//	}
+	@Test
+	public void testLogin(){
+		
+		//Test that the currentUser variable to store the login user is initially empty/null.
+		assertNull("Test if currentUser variable is null", currentUser);
+		
+		//Given that the user has successfully login, the currentUser is not null
+		currentUser = C206_CaseStudy.login(usersList, "admin@gmail.com", "lol123");
+		assertNotNull("Test if currentUser variable has a user stored", currentUser);
+		
+		//Given a user has entered an invalid email address
+		currentUser = null;
+		currentUser = C206_CaseStudy.login(usersList, "2d.@.", "lol123");
+		assertNull("Test if currentUser variable has a user stored", currentUser);
+		
+		//Given that the user account does not exist
+		currentUser = null;
+		currentUser = C206_CaseStudy.login(usersList, "doesnotexist@gmail.com", "doesnotexist");
+		assertNull("Test if currentUser variable has a user stored", currentUser);
+	}
 //	
-//	@Test
-//	public void testProfileManagement() {
-//		// Profile List is not null or not empty (cause have admin profile info)
-//		assertNotNull("Test if there is a valid Profile arrayList to add to", profileList);
-//		assertEquals("Test that the Profile list is not empty",1,profileList.size());
-//		
-//		//Given a user has created a profile, the arrayList increase in size by 1
-//		user1Profile = C206_CaseStudy.createProfileTest(2,profileList, 22345678, "03/03/2003");
-//		profileList.add(user1Profile);
-//		
-//		assertEquals("Test that the new profile is inserted",2,profileList.size());
-//		
-//		//Given a user has attempted to create a profile with invalid phone number
-//		user1Profile = C206_CaseStudy.createProfileTest(2, profileList, 12345, "20/02/2002");
-//		assertNull("Test that the new profile is null",user1Profile);
-//	
-//		//Given that the user is updating the profile with no changes
-//		// Input 0 as default values
-//		assertTrue(C206_CaseStudy.updateProfileTest(1, profileList, usersList, "0", "0", "0", 0));
-//		
-//		//Given that the user is updating the profile with different valid values
-//	
-//		assertTrue(C206_CaseStudy.updateProfileTest(1, profileList, usersList, "AdminHarris", "admin2@gmail.com", "20/02/2002"
-//				, 98761234));
-//		//Given that the user is updating the profile with invalid values such as email address and contact info
-//		
-//		assertFalse(C206_CaseStudy.updateProfileTest(1, profileList, usersList, "AdminHarris", "2", "20/02/2002", 987));
-//		
-//	}
+	@Test
+	public void testProfileManagement() {
+		// Profile List is not null or not empty (cause have admin profile info)
+		assertNotNull("Test if there is a valid Profile arrayList to add to", profileList);
+		assertEquals("Test that the Profile list is not empty",1,profileList.size());
+		
+		//Given a user has created a profile, the arrayList increase in size by 1
+		user1Profile = C206_CaseStudy.createProfileTest(2,profileList, 22345678, "03/03/2003");
+		profileList.add(user1Profile);
+		
+		assertEquals("Test that the new profile is inserted",2,profileList.size());
+		
+		//Given a user has attempted to create a profile with invalid phone number
+		user1Profile = C206_CaseStudy.createProfileTest(2, profileList, 12345, "20/02/2002");
+		assertNull("Test that the new profile is null",user1Profile);
+	
+		//Given that the user is updating the profile with no changes
+		// Input 0 as default values
+		assertTrue(C206_CaseStudy.updateProfileTest(1, profileList, usersList, "0", "0", "0", 0));
+		
+		//Given that the user is updating the profile with different valid values
+	
+		assertTrue(C206_CaseStudy.updateProfileTest(1, profileList, usersList, "AdminHarris", "admin2@gmail.com", "20/02/2002"
+				, 98761234));
+		//Given that the user is updating the profile with invalid values such as email address and contact info
+		
+		assertFalse(C206_CaseStudy.updateProfileTest(1, profileList, usersList, "AdminHarris", "2", "20/02/2002", 987));
+		
+	}
 //	
 	@Test
 	public void testEducationBackgroundManagement() {
@@ -155,6 +155,13 @@ public class C206_CaseStudyTestHarris {
 		
 		//Given that the user is updating the profile with invalid user id
 		assertFalse(C206_CaseStudy.updateEducationBackgroundTest(10, educationBackgroundList, "Food sciences", "SIT", 2021));	
+	}
+	
+	@Test
+	public void deleteAccountTest() {
+		
+		// delete an account who had both set up their profile and education background
+		assertTrue(C206_CaseStudy.deleteAccount(1, usersList, profileList, educationBackgroundList));
 	}
 	
 	

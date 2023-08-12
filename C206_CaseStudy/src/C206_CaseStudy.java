@@ -183,7 +183,7 @@ public class C206_CaseStudy {
 
 				// have to redirect to create profile
 
-				createProfile(user.getUser_id(), profileList);
+//				createProfile(user.getUser_id(), profileList);
 
 				return user;
 			}

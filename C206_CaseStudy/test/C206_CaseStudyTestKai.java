@@ -18,11 +18,11 @@ public class C206_CaseStudyTestKai {
 	public void setUp() throws Exception {
 
 		a1 = new Assessment(1, "Work Sample Test", "Testing Flights", "Aerospace", "Aeronautical Engineer",
-				new File("areo.txt")); 
+		new File("areo.txt")); 
 		a2 = new Assessment(2, "Personality Test", "Repairing Computers", "Computer Technology", "Computer Engineer",
-				new File("cs.txt"));
+		new File("cs.txt"));
 		a3 = new Assessment(3, "Hard Skill Test", "General Construction", "Construction", "Brickmason",
-				new File("construction.txt"));
+		new File("construction.txt"));
 		assessmentList = new ArrayList<Assessment>();
 	}
 

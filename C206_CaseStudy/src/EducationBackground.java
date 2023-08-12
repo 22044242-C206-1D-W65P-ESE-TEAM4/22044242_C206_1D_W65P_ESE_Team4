@@ -22,8 +22,6 @@ public class EducationBackground {
 			this.year_graduated = year_graduated;
 		}
 	
-	
-	
 	public int getEducationBackground_id() {
 		return educationBackground_id;
 	}
@@ -54,8 +52,4 @@ public class EducationBackground {
 	public void setYear_graduated(int year_graduated) {
 		this.year_graduated = year_graduated;
 	}
-	
-	
-	
-	
 }

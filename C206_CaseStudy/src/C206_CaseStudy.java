@@ -532,8 +532,8 @@ public class C206_CaseStudy {
 
 	}
 
-	public static void deleteAccount(int user_id, ArrayList<User> userList, ArrayList<Profile> profileList,
-			ArrayList<EducationBackground> EBList) {
+	public static boolean deleteAccount(int user_id, ArrayList<User> userList, ArrayList<Profile> profileList,
+		ArrayList<EducationBackground> EBList) {
 
 		userList.remove(user_id - 1);
 		profileList.remove(user_id - 1);
@@ -544,6 +544,8 @@ public class C206_CaseStudy {
 
 		System.out.println("Deleted successfully");
 		System.out.println("Redirecting to Registration page...");
+		
+		return true;
 	}
 
 	// Refactoring

@@ -49,6 +49,7 @@ public class C206_CaseStudy {
 		ArrayList<Assessment> assessmentList = new ArrayList<Assessment>(Arrays.asList(a1, a2, a3));
 
 		int res = 10000;
+		int AssessmentOption = 10000;
 
 		// res = 0, means cancel
 		while (res != 0) {
@@ -72,6 +73,32 @@ public class C206_CaseStudy {
 					currentUser = null;
 					res = Menu(currentUser);
 
+				} else if (res == 4 && currentUser.getRole().equalsIgnoreCase("admin")) {
+					AssessmentMenu();
+					AssessmentOption = Helper.readInt("Enter the option for managing Assessment > ");
+					while (AssessmentOption != 0) {
+
+						if (AssessmentOption == 1) {
+
+							AddAssessment(assessmentList, getInputOfAssessment());
+
+						} else if (AssessmentOption == 2) {
+							ViewAssessment(assessmentList);
+						} else if (AssessmentOption == 3) {
+							ViewAssessment(assessmentList);
+							Integer ID = Helper.readInt("Enter the ID of the Assessment you wish to delete > ");
+							DeleteAssessment(assessmentList, ID);
+						} else if (AssessmentOption == 0) {
+							System.out.println("Existing Assessment Management!");
+						} else {
+							System.out.println("Invalid Input!");
+						}
+						AssessmentMenu();
+						AssessmentOption = Helper.readInt("Enter the option for managing Assessment > ");
+
+					}
+				} else if (res == 4 && !currentUser.getRole().equalsIgnoreCase("admin")) {
+					ViewAssessment(assessmentList);
 				}
 			}
 
@@ -84,7 +111,8 @@ public class C206_CaseStudy {
 					String name = Helper.readString("What should we call you> ");
 					currentUser = register(usersList, name, email, password1, password2, profileList, currentUser);
 
-					educationBackgroundList.add(createEducationBackground(currentUser.getUser_id(), usersList, educationBackgroundList));
+					educationBackgroundList.add(
+							createEducationBackground(currentUser.getUser_id(), usersList, educationBackgroundList));
 				} else if (res == 2) {
 					email = FormEmail(usersList, "login");
 					String password1 = Helper.readString("Enter password >");
@@ -128,6 +156,11 @@ public class C206_CaseStudy {
 			System.out.println("1. Profile Management");
 			System.out.println("2. Education Background Management");
 			System.out.println("3. Disable account");
+			if (user.getRole().equalsIgnoreCase("admin")) {
+				System.out.println("4. Manage Assessments");
+			}else {
+				System.out.println("4. View Assessments");
+			}
 		}
 
 		Helper.line(70, "=");
@@ -144,8 +177,9 @@ public class C206_CaseStudy {
 		int ans = Helper.readInt("Profile Management > ");
 
 		if (ans == 1) {
-			//System.out.println(user.getEmail());
-			String output = user.displayUserInfo() + String.format("%9s ", profileList.get(user.getUser_id()).getContact_info()); 
+			// System.out.println(user.getEmail());
+			String output = user.displayUserInfo()
+					+ String.format("%9s ", profileList.get(user.getUser_id()).getContact_info());
 			System.out.println(output);
 
 		} else if (ans == 2) {
@@ -491,11 +525,12 @@ public class C206_CaseStudy {
 	}
 
 	public static void AssessmentMenu() {
-		System.out.println("-Management Assessment-");
+		System.out.println("-Management Of Assessment-");
 		Helper.line(150, "-");
 		System.out.println("1. Add Assessment");
 		System.out.println("2. View Assessment");
-		System.out.println("1. Delete Assessment");
+		System.out.println("3. Delete Assessment");
+		System.out.println("0. Quit");
 		Helper.line(150, "-");
 	}
 

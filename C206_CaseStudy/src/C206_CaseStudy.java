@@ -32,6 +32,7 @@ public class C206_CaseStudy {
 		User admin = new User(1, "Admin", "admin@gmail.com", "admin", "lol123");
 		User user1 = new User(2, "john doe1", "john1@sgmail.com", "user", "lol123");
 		User user2 = new User(3, "john doe2", "john2@gmail.com", "user", "lol123");
+		User HR = new User (4,"Hr1","Hr1@gamil.com","HR","lol123");
 
 //		currentUser = admin;
 
@@ -652,5 +653,92 @@ public class C206_CaseStudy {
 
 		return success;
 	}
+	//-----------Job Application (HR) -------------
+		public static void Job_Application_Menu() {
+				System.out.println("-Job Application-");
+				Helper.line(150, "-");
+				System.out.println("1. Add Job");
+				System.out.println("2. Manage Job thats been added");
+				System.out.println("0. Back to main page ");
+				Helper.line(150, "-");
+			}
+		
+		
+			
+		public static Job_Opportunity CreateNewJob(ArrayList<Job_Opportunity> JobList) {
+			try {
+			Helper.line(50, "=");
+			System.out.println("Please enter the following information");
+			Helper.line(50, "=");
 
+			String JobTitle = Helper.readString("Please enter your JobTitle");
+			String Location = Helper.readString("Please enter your company's Location");
+			double Min_Salary = Helper.readDouble("Enter the minimum salary");
+			double Max_Salary = Helper.readDouble("Enter Maximum salary");
+			String skills = Helper.readString("Enter the skills needed");
+			String JobDetails = Helper.readString("Enter Job Details");
+			String CompanyDetails = Helper.readString("Enter the company's details");
+			String qualifications = Helper.readString("Enter the qualification needed for this job");
+			String deadline = Helper.readString("Enter the deadline of this job Application");
+
+			for (Job_Opportunity job : JobList) {
+			if (job.getJobTitle().equalsIgnoreCase(JobTitle)) {
+			System.out.println("Job opportunity already exists.");
+			return null; // Return here if the job opportunity already exists
+			}
+			}
+
+			Job_Opportunity newJob = new Job_Opportunity(JobTitle, Location, Min_Salary, Max_Salary, skills, JobDetails, CompanyDetails, qualifications, deadline);
+			JobList.add(newJob);
+			System.out.println("Job opportunity successfully added.");
+			return newJob; // Return the newly created job opportunity
+
+			} catch (Exception e) {
+			System.out.println("An error occurred: " + e.getMessage());
+			return null; // Return null if an error occurs
+			}
+			}
+			
+
+			public static   Job_Opportunity ManageAddedJob (ArrayList<Job_Opportunity> JobList) {
+				System.out.println("Enter the Job title that you want to manage");
+				String choice1 = "" ;
+				String jobtitle = "";
+				boolean check = true ;
+				while (choice1 !="exit") {
+					jobtitle = Helper.readString ("Enter The job title > ");
+					for (Job_Opportunity job : JobList) { 
+						if(job.getJobTitle().equalsIgnoreCase(jobtitle)) {
+							System.out.println(job.getJobTitle());
+							check = true ;				
+							break;
+						}else {
+							check = false ;
+							
+						}
+					}
+					if (check == false) {
+						System.out.print("The Job title cant be found . \n");
+					
+					}else if (check == true) {
+					String	del = Helper.readString("Would you like to delete the Job?(yes/no)");
+					if (del.equalsIgnoreCase("yes")) {
+						for(int i = 0 ; i < JobList.size();i++) { 
+							if (JobList.get(i).getJobTitle().equals(jobtitle)) {
+								JobList.remove(i);
+								System.out.println("It has been successfully deleted");
+								break;
+				
+							}
+							else {
+								System.out.println("Sorry the Job title cannot be found");
+							}
+						}
+						
+					}	
+					}
+			}
+				return null;
+			
+		}
 }

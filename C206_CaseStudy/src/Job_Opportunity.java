@@ -101,7 +101,18 @@ public class Job_Opportunity {
 	public void setDeadline(String deadline) {
 		this.deadline = deadline;
 	}
-	
+	public void displayJobInfo() {
+	    System.out.println("Job Title: " + JobTitle);
+	    System.out.println("Location: " + Location);
+	    System.out.println("Min Salary: " + Min_Salary);
+	    System.out.println("Max Salary: " + Max_Salary);
+	    System.out.println("Skills: " + skills);
+	    System.out.println("Job Details: " + JobDetails);
+	    System.out.println("Company Details: " + CompanyDetails);
+	    System.out.println("Qualifications: " + qualifications);
+	    System.out.println("Deadline: " + deadline);
+	    System.out.println("-------------------------------");
+	}
 		
 	}
 	

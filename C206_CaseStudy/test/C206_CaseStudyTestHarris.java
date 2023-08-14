@@ -52,26 +52,26 @@ public class C206_CaseStudyTestHarris {
 
 	}
 	
-//	@Test
-//	public void testRegister() {
-//		// Users List is not null or not empty (cause have admin credentials)
-//		assertNotNull("Test if there is a valid User arrayList to add to", usersList);
-//		assertEquals("Test that the Users list is not empty",1,usersList.size());
-//		
-//		//Given a user is registered and the profile is setup, the arrayList increase in size by 1
-//		user1 = new User(2, "john doe1", "john1@sgmail.com", "user", "lol123");
-//		usersList.add(user1);
-//		
-//		assertEquals("Test that the new user is inserted",2,usersList.size());
-//		
-//		//Given a user has entered an invalid email address
-//		C206_CaseStudy.register(usersList,"user1","2cw.c","lol123", "lol123", profileList, currentUser);
-//		assertEquals("Test that the new user is not inserted",2,usersList.size());
-//	
-//		//Given a user has entered a similar email address
-//		C206_CaseStudy.register(usersList,"user2","admin@gmail.com","lol123", "lol123", profileList, currentUser);
-//		assertEquals("Test that the new user is not inserted",2,usersList.size());
-//	}
+	@Test
+	public void testRegister() {
+		// Users List is not null or not empty (cause have admin credentials)
+		assertNotNull("Test if there is a valid User arrayList to add to", usersList);
+		assertEquals("Test that the Users list is not empty",1,usersList.size());
+		
+		//Given a user is registered and the profile is setup, the arrayList increase in size by 1
+		user1 = new User(2, "john doe1", "john1@sgmail.com", "user", "lol123");
+		usersList.add(user1);
+		
+		assertEquals("Test that the new user is inserted",2,usersList.size());
+		
+		//Given a user has entered an invalid email address
+		C206_CaseStudy.register(usersList,"user1","2cw.c","lol123", "lol123", profileList, currentUser);
+		assertEquals("Test that the new user is not inserted",2,usersList.size());
+	
+		//Given a user has entered a similar email address
+		C206_CaseStudy.register(usersList,"user2","admin@gmail.com","lol123", "lol123", profileList, currentUser);
+		assertEquals("Test that the new user is not inserted",2,usersList.size());
+	}
 	
 	@Test
 	public void testLogin(){

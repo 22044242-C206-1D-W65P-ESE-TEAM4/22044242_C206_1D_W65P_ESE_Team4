@@ -1,4 +1,3 @@
-
 public class CareerPath {
 
 	private String careerTitle;

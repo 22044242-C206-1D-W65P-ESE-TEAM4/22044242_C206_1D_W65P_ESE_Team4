@@ -1,11 +1,23 @@
-// try updte
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+public class C206_CaseStudy {
 
-public class C206_CaseStudy{
+	// Refactoring
+	private static final int ASSESSMENT_DELETE = 3;
+
+	private static final int ASSESSMENT_VIEW = 2;
+
+	private static final int ASSESSMENT_ADD = 1;
+
+	private static final int ASSESSMENT_QUIT = 0;
+
+	public static final int OPTION_ASSESSMENT = 4;
+
+	public static final int OPTION_QUIT = 0;
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		start();
@@ -14,20 +26,35 @@ public class C206_CaseStudy{
 	// Code starts from here
 	public static void start() {
 		User currentUser = null;
+		  ArrayList<Job_Opportunity> jobList = new ArrayList<>();
+		  Job_Opportunity jobOpportunity = new Job_Opportunity(
+				    "Software Engineer", // JobTitle
+				    "Singapore",         // Location
+				    5000.0,              // Min_Salary
+				    8000.0,              // Max_Salary
+				    "Java, Python",      // skills
+				    "Develop software applications", // JobDetails
+				    "XYZ Tech Solutions", // CompanyDetails
+				    "Bachelor's degree in Computer Science", // qualifications
+				    "2023-08-31"         // deadline
+				);
+		  jobList.add(jobOpportunity);
 
 		// custom users
 		User admin = new User(1, "Admin", "admin@gmail.com", "admin", "lol123");
 		User user1 = new User(2, "john doe1", "john1@sgmail.com", "user", "lol123");
 		User user2 = new User(3, "john doe2", "john2@gmail.com", "user", "lol123");
+		User HR1 = new User (4,"Hr1","Hr1@gmail.com","HR","lol123");
 
 //		currentUser = admin;
 
-		ArrayList<User> usersList = new ArrayList<User>(Arrays.asList(admin, user1, user2));
+		ArrayList<User> usersList = new ArrayList<User>(Arrays.asList(admin, user1, user2,HR1));
 
 		// custom profiles
 		Profile adminProfile = new Profile(1, 1, 12345678, "02/02/2002");
 		Profile user1Profile = new Profile(2, 1, 22345678, "03/03/2003");
 		Profile user2Profile = new Profile(3, 1, 32345678, "04/04/2004");
+		Profile HR1Profile= new Profile(4,1,42345678,"05/05/2005");
 
 		ArrayList<Profile> profileList = new ArrayList<Profile>(
 				Arrays.asList(adminProfile, user1Profile, user2Profile));
@@ -51,14 +78,15 @@ public class C206_CaseStudy{
 
 		ArrayList<Assessment> assessmentList = new ArrayList<Assessment>(Arrays.asList(a1, a2, a3));
 
+		ViewAssessment(assessmentList);
 		int res = 10000;
 		int AssessmentOption = 10000;
 
 		// res = 0, means cancel
-		while (res != 0) {
+		while (res != OPTION_QUIT) {
 			res = Menu(currentUser);
 
-			if (res == 0) {
+			if (res == OPTION_QUIT) {
 				System.out.println("Thank for using the application, Goodbye!");
 				break;
 			}
@@ -76,32 +104,55 @@ public class C206_CaseStudy{
 					currentUser = null;
 					res = Menu(currentUser);
 
-				} else if (res == 4 && currentUser.getRole().equalsIgnoreCase("admin")) {
-					AssessmentMenu();
-					AssessmentOption = Helper.readInt("Enter the option for managing Assessment > ");
-					while (AssessmentOption != 0) {
+				} else if (res == OPTION_ASSESSMENT) {
+					if (currentUser.getRole().equalsIgnoreCase("admin")) {
 
-						if (AssessmentOption == 1) {
-
-							AddAssessment(assessmentList, getInputOfAssessment());
-
-						} else if (AssessmentOption == 2) {
-							ViewAssessment(assessmentList);
-						} else if (AssessmentOption == 3) {
-							ViewAssessment(assessmentList);
-							Integer ID = Helper.readInt("Enter the ID of the Assessment you wish to delete > ");
-							DeleteAssessment(assessmentList, ID);
-						} else if (AssessmentOption == 0) {
-							System.out.println("Existing Assessment Management!");
-						} else {
-							System.out.println("Invalid Input!");
-						}
+						// Refactoring
 						AssessmentMenu();
 						AssessmentOption = Helper.readInt("Enter the option for managing Assessment > ");
+						while (AssessmentOption != ASSESSMENT_QUIT) {
 
+							if (AssessmentOption == ASSESSMENT_ADD) {
+
+								AddAssessment(assessmentList, getInputOfAssessment());
+
+							} else if (AssessmentOption == ASSESSMENT_VIEW) {
+								ViewAssessment(assessmentList);
+							} else if (AssessmentOption == ASSESSMENT_DELETE) {
+								ViewAssessment(assessmentList);
+								Integer ID = Helper.readInt("Enter the ID of the Assessment you wish to delete > ");
+								DeleteAssessment(assessmentList, ID);
+							} else if (AssessmentOption == ASSESSMENT_QUIT) {
+								System.out.println("Existing Assessment Management!");
+							} else {
+								System.out.println("Invalid Input!");
+							}
+							AssessmentMenu();
+							AssessmentOption = Helper.readInt("Enter the option for managing Assessment > ");
+
+						}
 					}
-				} else if (res == 4 && !currentUser.getRole().equalsIgnoreCase("admin")) {
-					ViewAssessment(assessmentList);
+					 // Handle HR options
+		            else if (currentUser.getRole().equalsIgnoreCase("HR")) {
+		                Job_Application_Menu();
+		                int hrRes=Helper.readInt("Enter an option > ");
+		                if (hrRes == 1) {
+		                    CreateNewJob(jobList);
+		                } else if (hrRes == 2) {
+		                     ManageAddedJob(jobList);
+		                }
+		                else if(hrRes==3) {
+		                	ViewAllJobOpportunities(jobList);
+		                }
+		                else if (hrRes == 0) {
+		                    System.out.println("Exiting Job Application Menu.");
+		                } else {
+		                    System.out.println("Invalid choice.");
+		                }
+		            }else {
+						ViewAssessment(assessmentList);
+					}
+
 				}
 			}
 
@@ -161,7 +212,7 @@ public class C206_CaseStudy{
 			System.out.println("3. Disable account");
 			if (user.getRole().equalsIgnoreCase("admin")) {
 				System.out.println("4. Manage Assessments");
-			}else {
+			} else {
 				System.out.println("4. View Assessments");
 			}
 		}
@@ -529,9 +580,9 @@ public class C206_CaseStudy{
 		return true;
 	}
 
+	// Refactoring
 	public static void AssessmentMenu() {
-		System.out.println("-Management Of Assessment-");
-		Helper.line(150, "-");
+		Assessment.setHeader("-Management Of Assessment-");
 		System.out.println("1. Add Assessment");
 		System.out.println("2. View Assessment");
 		System.out.println("3. Delete Assessment");
@@ -558,17 +609,16 @@ public class C206_CaseStudy{
 
 	public static void AddAssessment(ArrayList<Assessment> assessmentList, Assessment at) {
 
-		Assessment ass;
+		Assessment.setHeader("Addition of Assessment");
 
-		Helper.line(150, "=");
-		System.out.println("Addition of Assessment");
-		Helper.line(150, "=");
 		System.out.println("");
 
 		for (int i = 0; i < assessmentList.size(); i++) {
-			ass = assessmentList.get(i);
 
-			if (ass.getAssessment_id() == at.getAssessment_id()) {
+			// Refactoring
+			int assessment_id = assessmentList.get(i).getAssessment_id();
+
+			if (assessment_id == at.getAssessment_id()) {
 				System.out.println("The Assessment is already existed");
 				return;
 			}
@@ -589,17 +639,17 @@ public class C206_CaseStudy{
 	}
 
 	public static String ViewAssessment(ArrayList<Assessment> assessmentList) {
-		Helper.line(150, "=");
-		System.out.println("List of Assessments");
-		Helper.line(150, "=");
+
+		Assessment.setHeader("List of Assessments");
+
 		System.out.println("");
 
 		String output = String.format("%-5s %-25s %-25s %-25s %-30s %-30s\n\n", "ID", "TYPE", "TOPIC", "INDUSTRY",
 				"CAREER PROSPECT", "FILE NAME");
 
 		for (Assessment a : assessmentList) {
-			output += String.format("%-5d %-25s %-25s %-25s %-30s %-30s\n", a.getAssessment_id(), a.getAssessmentType(),
-					a.getTopic(), a.getIndustry(), a.getCareer_path(), a.getAssessment());
+			// Refactroing
+			output += String.format("%-140s\n", a.toString());
 		}
 
 		System.out.println(output);
@@ -608,16 +658,17 @@ public class C206_CaseStudy{
 
 	public static boolean DeleteAssessment(ArrayList<Assessment> assessmentList, Integer id) {
 
-		Helper.line(150, "=");
-		System.out.println("Deletion of Assessment");
-		Helper.line(150, "=");
+		Assessment.setHeader("Deletion of Assessment");
+
 		System.out.println("");
 
 		boolean success = false;
 		int deletedAssessment = 0;
 
 		for (int i = 0; i < assessmentList.size(); i++) {
-			if (id == assessmentList.get(i).getAssessment_id()) {
+			// Refactoring
+			int assessment_id = assessmentList.get(i).getAssessment_id();
+			if (id == assessment_id) {
 				success = true;
 				deletedAssessment = i;
 			}
@@ -633,5 +684,100 @@ public class C206_CaseStudy{
 
 		return success;
 	}
+	//-----------Job Application (HR) -------------
+		public static void Job_Application_Menu() {
+			Helper.line(70, "=");
+		    System.out.println("Job Application Menu");
+		    Helper.line(70, "=");
+		    System.out.println("1. Add Job");
+		    System.out.println("2. Manage Added Job");
+		    System.out.println("3. View All Job Opportunities");
+
+		    System.out.println("0. Quit");
+		    Helper.line(70, "=");
+			}
+		
+		
+			
+		public static Job_Opportunity CreateNewJob(ArrayList<Job_Opportunity> JobList) {
+			try {
+			Helper.line(50, "=");
+			System.out.println("Please enter the following information");
+			Helper.line(50, "=");
+
+			String JobTitle = Helper.readString("Please enter your JobTitle: ");
+			String Location = Helper.readString("Please enter your company's Location: ");
+			double Min_Salary = Helper.readDouble("Enter the minimum salary: ");
+			double Max_Salary = Helper.readDouble("Enter Maximum salary: ");
+			String skills = Helper.readString("Enter the skills needed: ");
+			String JobDetails = Helper.readString("Enter Job Details: ");
+			String CompanyDetails = Helper.readString("Enter the company's details: ");
+			String qualifications = Helper.readString("Enter the qualification needed for this job: ");
+			String deadline = Helper.readString("Enter the deadline of this job Application: ");
+
+			for (Job_Opportunity job : JobList) {
+			if (job.getJobTitle().equalsIgnoreCase(JobTitle)) {
+			System.out.println("Job opportunity already exists.");
+			return null; // Return here if the job opportunity already exists
+			}
+			}
+
+			Job_Opportunity newJob = new Job_Opportunity(JobTitle, Location, Min_Salary, Max_Salary, skills, JobDetails, CompanyDetails, qualifications, deadline);
+			JobList.add(newJob);
+			System.out.println("Job opportunity successfully added.");
+			return newJob; // Return the newly created job opportunity
+
+			} catch (Exception e) {
+			System.out.println("An error occurred: " + e.getMessage());
+			return null; // Return null if an error occurs
+			}
+			}
+			
+
+		public static void ManageAddedJob(ArrayList<Job_Opportunity> JobList) {
+		    while (true) {
+		        String jobTitle = Helper.readString("Enter the job title to manage (or type 'exit' to quit): ");
+		        if (jobTitle.equalsIgnoreCase("exit")) {
+		            System.out.println("Exiting job management.");
+		            break;
+		        }
+		        
+		        boolean found = false;
+		        for (Job_Opportunity job : JobList) {
+		            if (job.getJobTitle().equalsIgnoreCase(jobTitle)) {
+		                found = true;
+		                deleteJob(JobList, jobTitle); // Call the deleteJob method
+		                break;
+		            }
+		        }
+		        
+		        if (!found) {
+		            System.out.println("Job opportunity '" + jobTitle + "' not found.");
+		        }
+		    }
+		}
+
+
+			public static void ViewAllJobOpportunities(ArrayList<Job_Opportunity> jobList) {
+			    System.out.println("List of All Job Opportunities:");
+			    for (Job_Opportunity job : jobList) {
+			        job.displayJobInfo();
+			    }
+			}	
+			public static void deleteJob(ArrayList<Job_Opportunity> jobList, String jobTitle) {
+			    for (int i = 0; i < jobList.size(); i++) {
+			        if (jobList.get(i).getJobTitle().equalsIgnoreCase(jobTitle)) {
+			            String confirm = Helper.readString("Are you sure you want to delete job opportunity '" + jobTitle + "'? (yes/no): ");
+			            if (confirm.equalsIgnoreCase("yes")) {
+			                jobList.remove(i);
+			                System.out.println("Job opportunity '" + jobTitle + "' has been successfully deleted.");
+			            } else {
+			                System.out.println("Deletion of job opportunity '" + jobTitle + "' cancelled.");
+			            }
+			            break;
+			        }
+			    }
+			}
+
 
 }

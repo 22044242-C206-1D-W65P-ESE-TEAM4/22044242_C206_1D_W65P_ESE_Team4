@@ -79,6 +79,30 @@ public class C206_CaseStudy {
 		ArrayList<Assessment> assessmentList = new ArrayList<Assessment>(Arrays.asList(a1, a2, a3));
 
 		ViewAssessment(assessmentList);
+		
+		//custom Resumes
+		String user1Description="Experienced software developer with a passion for crafting efficient and innovative solutions. "
+						+ "Proficient in multiple programming languages and adept at collaborating in Agile environments. "
+						+ "Track record of delivering high-quality code and driving project success. Eager to contribute technical expertise to a dynamic team.";
+				
+		String user2Description="Experienced software developer with a proven track record of delivering high-quality solutions in fast-paced environments."
+						+ " Proficient in full-stack development, utilizing languages like Python, JavaScript, and Java. "
+						+ "Expertise in designing and implementing efficient algorithms and data structures. "
+						+ "Strong problem-solving skills and a collaborative mindset, demonstrated through successful cross-functional team projects. ";
+
+		ArrayList<JobExperience> jbl = new ArrayList<JobExperience>();
+		JobExperience jbe1 = new JobExperience("DBS","Software Tester","Aug 2020 - Sept 2023","Lead some projects");
+		JobExperience jbe2 = new JobExperience("Smart Nation","Software Tester","Mar 2020 - Sept 2021","Projects leader");
+
+		jbl=new ArrayList<JobExperience>(Arrays.asList(jbe1,jbe2));
+		
+		ResumeTemplate user1Resume= new ResumeTemplate(2,1,1,jbl,"GovTech Resume","John Doe 1",22345678,"john1@sgmail.com",user1Description);
+		ResumeTemplate user2Resume= new ResumeTemplate(3,2,2,jbl,"Navy Resume","John Doe 2",32345678,"john2@gmail.com",user2Description);
+
+		//add to resumeList
+		ArrayList<ResumeTemplate> resumeList = new ArrayList<ResumeTemplate>(Arrays.asList(user1Resume,user2Resume));		
+
+	
 		int res = 10000;
 		int AssessmentOption = 10000;
 
@@ -152,7 +176,23 @@ public class C206_CaseStudy {
 		            }else {
 						ViewAssessment(assessmentList);
 					}
-
+				}
+				else if (res ==5 )//resume
+				{
+					ResumeMenu();
+					int resumeOption=Helper.readInt("Welcome to Resume Management, What would you like to do?> ");
+					if (resumeOption==1)
+					{
+						AddResume(resumeList,educationBackgroundList);
+					}
+					else if (resumeOption==2)
+					{
+						ViewResume(currentUser.getUser_id(),resumeList,educationBackgroundList);
+					}
+					else if (resumeOption==3)
+					{
+						DeleteResume(currentUser.getUser_id(),resumeList,educationBackgroundList);
+					}
 				}
 			}
 
@@ -172,9 +212,10 @@ public class C206_CaseStudy {
 					String password1 = Helper.readString("Enter password >");
 					currentUser = login(usersList, email, password1);
 				}
-
 			}
+			
 		}
+			
 	}
 
 	public static String FormEmail(ArrayList<User> usersList, String type) {
@@ -214,7 +255,9 @@ public class C206_CaseStudy {
 				System.out.println("4. Manage Assessments");
 			} else {
 				System.out.println("4. View Assessments");
+				
 			}
+			System.out.println("5. Resume Management");
 		}
 
 		Helper.line(70, "=");
@@ -684,6 +727,7 @@ public class C206_CaseStudy {
 
 		return success;
 	}
+	
 	//-----------Job Application (HR) -------------
 		public static void Job_Application_Menu() {
 			Helper.line(70, "=");
@@ -778,6 +822,327 @@ public class C206_CaseStudy {
 			        }
 			    }
 			}
+			
+			public static void ResumeMenu() 
+			{
+				System.out.println("1. Add resume");
+				System.out.println("2. View resume");
+				System.out.println("3. Delete resume");
+				Helper.line(50, "=");
+			}
+			
+			
+			
+			public static void AddResume(ArrayList<ResumeTemplate> resumeList,ArrayList<EducationBackground> EBlist)
+			{	
+				Helper.line(50, "=");
+				System.out.println("CHOOSE TEMPLATE");
+				Helper.line(50, "=");
+				System.out.println("1. Chronological resume");
+				System.out.println("2. Functional resume");
+				System.out.println("3. Combination resume");
+				Helper.line(50, "=");
+				
+				int templateOption=Helper.readInt("Choose a template> ");
+				int userID=Helper.readInt("Enter your user ID> ");
+				
+				if (templateOption==1)
+				{
+					boolean isAdded=false;
+
+					
+					Helper.line(50, "=");
+					System.out.println("Building resume...");
+					Helper.line(50, "=");
+
+					int resumeID = resumeList.size()+1;
+					String title=Helper.readString("Resume Title> ");
+					String name=Helper.readString("Your full name>");
+					int phoneNum=Helper.readInt("Your contact number> ");
+					String email=Helper.readString("Your email address> ");
+					String description=Helper.readString("Short introduction about yourself> ");
+					
+					//employment 
+					Helper.line(50, "=");
+					System.out.println("Employment History");
+					Helper.line(50, "=");
+					
+					String company=Helper.readString("Company name> ");
+					String position=Helper.readString("Position> ");
+					String period=Helper.readString("Employement period> ");
+					String achievements=Helper.readString("Achievements> ");
+					
+					ArrayList<JobExperience> jbl = new ArrayList<JobExperience>();
+					JobExperience jbe = new JobExperience(company, position, period, achievements);
+					
+					jbl.add(jbe);
+			
+					
+					//createEducationBackground(,EBlist,userList);
+					Helper.line(50, "=");
+					System.out.println("Education History");
+					Helper.line(50, "=");
+					
+					String degree = Helper.readString("Degree given > ");
+					String institution = Helper.readString("Education institution > ");
+					int year_graduated = Helper.readInt("Year graduated > ");
+
+					
+					ResumeTemplate rs=new ResumeTemplate(userID,resumeID,templateOption,jbl,title,name,phoneNum,email,description);
+					EducationBackground eb=new EducationBackground(degree,institution,year_graduated);
+					
+					resumeList.add(rs);
+
+					EBlist.add(eb);
+								
+					rs.display1();
+					
+					String output = String.format("\n%-20s %-15s %-15s %-10s\n", "Company", "Position", "Emplyement Period", "Achievements");
+					output += String.format("%-20s %-15s %-15s %-10s\n",company,position,period,achievements);
+					
+					output += String.format("\n%-20s %-12s %-10s\n", "Degree", "Institution", "Year Graduated");
+					output += String.format("%-20s %-12s %-10d\n", eb.getDegree(), eb.getInstitution(), eb.getYear_graduated());
+					System.out.println(output);	
+
+					isAdded=true;
+					
+				
+					if (isAdded)
+					{
+						System.out.println("Added successfully!");
+					}
+					else
+					{
+						System.out.println("Added failed!");
+					}
+					
+				}
+				else if (templateOption==2)
+				{
+					boolean isAdded=false;
+
+					Helper.line(50, "=");
+					System.out.println("Building resume...");
+					Helper.line(50, "=");
+					
+					int resumeID= resumeList.size()+1;
+					String title=Helper.readString("Resume Title> ");
+					String name=Helper.readString("Your full name>");
+					int phoneNum=Helper.readInt("Your contact number> ");
+					String email=Helper.readString("Your email address> ");
+					String description=Helper.readString("Brief summary of your skills> ");
+					
+					//employment 
+					Helper.line(50, "=");
+					System.out.println("Employment History");
+					Helper.line(50, "=");
+					String company=Helper.readString("Company name> ");
+					String position=Helper.readString("Position> ");
+					String period=Helper.readString("Employement period> ");
+					String achievements=Helper.readString("Achievements> ");
+					
+					ArrayList<JobExperience> jbl = new ArrayList<JobExperience>();
+					JobExperience jbe = new JobExperience(company, position, period, achievements);
+					
+					jbl.add(jbe);
+					
+					//createEducationBackground(,EBlist,userList);
+					Helper.line(50, "=");
+					System.out.println("Education History");
+					Helper.line(50, "=");
+					String degree = Helper.readString("Degree given > ");
+					String institution = Helper.readString("Education institution > ");
+					int year_graduated = Helper.readInt("Year graduated > ");
+
+					
+					ResumeTemplate rs=new ResumeTemplate(userID,resumeID,templateOption,jbl,title,name,phoneNum,email,description);
+					EducationBackground eb=new EducationBackground(degree,institution,year_graduated);
+					
+				
+					resumeList.add(rs);
+
+					EBlist.add(eb);
+
+					rs.display2();
+								
+					String output = String.format("\n%-20s %-15s %-15s %-10s\n", "Company", "Position", "Emplyement Period", "Achievements");
+					output += String.format("%-20s %-15s %-15s %-10s\n",company,position,period,achievements);
+					
+					output += String.format("\n%-20s %-12s %-10s\n", "Degree", "Institution", "Year Graduated");
+					output += String.format("%-20s %-12s %-10d\n", eb.getDegree(), eb.getInstitution(), eb.getYear_graduated());
+					System.out.println(output);	
+
+					if (isAdded)
+					{
+						System.out.println("Added successfully!");
+					}
+					else
+					{
+						System.out.println("Added failed!");
+					}
+					
+				}
+				
+				else if(templateOption==3)
+				{
+					boolean isAdded=false;
+					
+					Helper.line(50, "=");
+					System.out.println("Building resume...");
+					Helper.line(50, "=");
+					
+					int resumeID= resumeList.size()+1;
+					String title=Helper.readString("Resume Title> ");
+					String name=Helper.readString("Your full name>");
+					int phoneNum=Helper.readInt("Your contact number> ");
+					String email=Helper.readString("Your email address> ");
+					String description=Helper.readString("Brief summary of your skills> ");
+					
+					//employment 
+					Helper.line(50, "=");
+					System.out.println("Employment History");
+					Helper.line(50, "=");
+					String company=Helper.readString("Company name> ");
+					String position=Helper.readString("Position> ");
+					String period=Helper.readString("Employement period> ");
+					String achievements=Helper.readString("Achievements> ");
+					
+					
+					ArrayList<JobExperience> jbl = new ArrayList<JobExperience>();
+					JobExperience jbe = new JobExperience(company, position, period, achievements);
+					
+					jbl.add(jbe);
+					
+					//createEducationBackground(,EBlist,userList);
+					Helper.line(50, "=");
+					System.out.println("Education History");
+					Helper.line(50, "=");
+					String degree = Helper.readString("Degree given > ");
+					String institution = Helper.readString("Education institution > ");
+					int year_graduated = Helper.readInt("Year graduated > ");
+					
+					ResumeTemplate rs=new ResumeTemplate(userID,resumeID,templateOption,jbl,title,name,phoneNum,email,description);
+					EducationBackground eb=new EducationBackground(degree,institution,year_graduated);
+					
+					resumeList.add(rs);
+
+					EBlist.add(eb);
+								
+					rs.display3();
+					
+					String output = String.format("\n%-20s %-15s %-15s %-10s\n", "Company", "Position", "Emplyement Period", "Achievements");
+					output += String.format("%-20s %-15s %-15s %-10s\n",company,position,period,achievements);
+					
+					output += String.format("\n%-20s %-12s %-10s\n", "Degree", "Institution", "Year Graduated");
+					output += String.format("%-20s %-12s %-10d\n", eb.getDegree(), eb.getInstitution(), eb.getYear_graduated());
+					System.out.println(output);	
+										
+					isAdded=true;
+					
+					if (isAdded)
+					{
+						System.out.println("Added successfully!");
+					}
+					else
+					{
+						System.out.println("Added failed!");
+					}
+				}
+					
+			}
+			
+			public static void ViewResume(int user_id, ArrayList<ResumeTemplate> resumeList,ArrayList<EducationBackground> EBlist)
+			{
+				boolean isFound=true;
+				
+				int resume_id = Helper.readInt("Enter resume ID > ");
+				
+				if ((resumeList!=null) && (EBlist!=null))
+				{
+					for(ResumeTemplate rs : resumeList) 
+					{
+						if(rs.getUserID() == user_id) {
+							//template id
+							if(rs.getResumeID() == resume_id) {
+								if(rs.getTemplateID() == 1)
+								{
+									rs.display1();
+								}
+								else if (rs.getTemplateID() == 2)
+								{
+									rs.display2();
+								}
+								else if (rs.getTemplateID() == 3)
+								{
+									rs.display3();
+								}
+								//if(rs.getTemplateID() == 2) rs.display2();
+								//if(rs.getTemplateID() == 3) rs.display3();
+								
+								EducationBackground EB = EBlist.get(user_id - 1);
+								
+								
+								String output = String.format("\n%-20s %-12s %-10s\n", "Degree", "Institution", "Year Graduated");
+								output += String.format("%-20s %-12s %-10d\n", EB.getDegree(), EB.getInstitution(), EB.getYear_graduated());
+								System.out.println(output);
+								
+								ArrayList<JobExperience> we = rs.getWorkExperience();
+								//System.out.println(we.size());
+								we.get(resume_id - 1).displayWorkExperience();
+								isFound=true;
+								
+							}
+						}
+						
+					}
+					
+				}
+				
+				if (isFound==false)
+				{
+					System.out.println("Resume does not exist");	
+				}
+				
+				
+		}
+				
+			
+		public static boolean DeleteResume(int userID, ArrayList<ResumeTemplate> resumeList,ArrayList<EducationBackground> EBlist)
+			{
+				Helper.line(50, "=");
+				System.out.println("Delete Resume");
+				Helper.line(50, "=");
+								
+				int resumeID=Helper.readInt("Enter resume ID> ");
+				
+				for (int i=0;i<resumeList.size();i++)
+				{
+					if (resumeList.get(i).getResumeID()==resumeID)
+					{
+						if(resumeList.get(i).getTemplateID()== 1)
+						{
+							resumeList.get(i).display1();
+
+						}
+						else if (resumeList.get(i).getTemplateID()== 2)
+						{
+							resumeList.get(i).display2();
+						}
+						else if (resumeList.get(i).getTemplateID() == 3)
+						{
+							resumeList.get(i).display3();
+						}
+						resumeList.remove(i);
+						EBlist.remove(i);
+						System.out.println("\nDelete successfully!");
+					
+					}
+				}
+				return true;
+								
+			}
+
+
 
 
 }

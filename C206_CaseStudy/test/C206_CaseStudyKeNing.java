@@ -54,7 +54,7 @@ public class C206_CaseStudyKeNing {
 	}
 
 
-	//@Test
+	@Test
 	public void testAddResume() 
 	{
 		//list was initially empty (TEST 1)
@@ -150,7 +150,7 @@ public class C206_CaseStudyKeNing {
 		
 	}
 	
-	//@Test
+	@Test
 	public void testDeleteResume() 
 	{
 		EducationBackground user1EB = new EducationBackground(1, 1, "Art", "NTU", 2023);

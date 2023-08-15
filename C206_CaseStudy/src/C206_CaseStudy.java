@@ -77,7 +77,7 @@ public class C206_CaseStudy {
 
 		ArrayList<Assessment> assessmentList = new ArrayList<Assessment>(Arrays.asList(a1, a2, a3));
 
-		ViewAssessment(assessmentList);
+		Assessment.ViewAssessment(assessmentList);
 		int res = 10000;
 		int AssessmentOption = 10000;
 
@@ -107,26 +107,26 @@ public class C206_CaseStudy {
 					if (currentUser.getRole().equalsIgnoreCase("admin")) {
 
 						// Refactoring
-						AssessmentMenu();
+						Assessment.AssessmentMenu();
 						AssessmentOption = Helper.readInt("Enter the option for managing Assessment > ");
 						while (AssessmentOption != ASSESSMENT_QUIT) {
 
 							if (AssessmentOption == ASSESSMENT_ADD) {
 
-								AddAssessment(assessmentList, getInputOfAssessment());
+								Assessment.AddAssessment(assessmentList, Assessment.getInputOfAssessment());
 
 							} else if (AssessmentOption == ASSESSMENT_VIEW) {
-								ViewAssessment(assessmentList);
+								Assessment.ViewAssessment(assessmentList);
 							} else if (AssessmentOption == ASSESSMENT_DELETE) {
-								ViewAssessment(assessmentList);
+								Assessment.ViewAssessment(assessmentList);
 								Integer ID = Helper.readInt("Enter the ID of the Assessment you wish to delete > ");
-								DeleteAssessment(assessmentList, ID);
+								Assessment.DeleteAssessment(assessmentList, ID);
 							} else if (AssessmentOption == ASSESSMENT_QUIT) {
 								System.out.println("Existing Assessment Management!");
 							} else {
 								System.out.println("Invalid Input!");
 							}
-							AssessmentMenu();
+							Assessment.AssessmentMenu();
 							AssessmentOption = Helper.readInt("Enter the option for managing Assessment > ");
 
 						}
@@ -147,7 +147,7 @@ public class C206_CaseStudy {
 							System.out.println("Invalid choice.");
 						}
 					} else {
-						ViewAssessment(assessmentList);
+						Assessment.ViewAssessment(assessmentList);
 					}
 
 				}
@@ -579,110 +579,6 @@ public class C206_CaseStudy {
 		return true;
 	}
 
-	// Refactoring
-	public static void AssessmentMenu() {
-		Assessment.setHeader("-Management Of Assessment-");
-		System.out.println("1. Add Assessment");
-		System.out.println("2. View Assessment");
-		System.out.println("3. Delete Assessment");
-		System.out.println("0. Quit");
-		Helper.line(150, "-");
-	}
-
-	public static Assessment getInputOfAssessment() {
-		String filePattern = "\\w*(\\.(txt))";
-		Assessment newassessment = null;
-
-		Integer id = Helper.readInt("Enter the ID of the assessment > ");
-		String type = Helper.readString("Enter the type of assessment > ");
-		String topic = Helper.readString("Enter the topic related to assessment > ");
-		String industry = Helper.readString("Enter the related industry > ");
-		String career = Helper.readString("Enter the related career prospect > ");
-		String fileName = Helper.readStringRegEx("Enter the complete name of the file > ", filePattern);
-
-		newassessment = new Assessment(id, type, topic, industry, career, new File(fileName));
-
-		return newassessment;
-
-	}
-
-	public static void AddAssessment(ArrayList<Assessment> assessmentList, Assessment at) {
-
-		Assessment.setHeader("Addition of Assessment");
-
-		System.out.println("");
-
-		for (int i = 0; i < assessmentList.size(); i++) {
-
-			// Refactoring
-			int assessment_id = assessmentList.get(i).getAssessment_id();
-
-			if (assessment_id == at.getAssessment_id()) {
-				System.out.println("The Assessment is already existed");
-				return;
-			}
-
-		}
-		if ((at.getAssessmentType().isEmpty()) || (at.getTopic().isEmpty()) || (at.getIndustry().isEmpty())
-				|| (at.getCareer_path().isEmpty())) {
-			System.out.println("The Info of Assessment is missing!");
-			return;
-
-		}
-
-		assessmentList.add(at);
-
-		System.out.println("The new assessment is successfully added");
-		at.display();
-
-	}
-
-	public static String ViewAssessment(ArrayList<Assessment> assessmentList) {
-
-		Assessment.setHeader("List of Assessments");
-
-		System.out.println("");
-
-		String output = String.format("%-5s %-25s %-25s %-25s %-30s %-30s\n\n", "ID", "TYPE", "TOPIC", "INDUSTRY",
-				"CAREER PROSPECT", "FILE NAME");
-
-		for (Assessment a : assessmentList) {
-			// Refactroing
-			output += String.format("%-140s\n", a.toString());
-		}
-
-		System.out.println(output);
-		return output;
-	}
-
-	public static boolean DeleteAssessment(ArrayList<Assessment> assessmentList, Integer id) {
-
-		Assessment.setHeader("Deletion of Assessment");
-
-		System.out.println("");
-
-		boolean success = false;
-		int deletedAssessment = 0;
-
-		for (int i = 0; i < assessmentList.size(); i++) {
-			// Refactoring
-			int assessment_id = assessmentList.get(i).getAssessment_id();
-			if (id == assessment_id) {
-				success = true;
-				deletedAssessment = i;
-			}
-		}
-
-		if (success) {
-			assessmentList.remove(deletedAssessment);
-			System.out.println("\nThe Assessment is successfully deleted!\n");
-
-		} else {
-			System.out.println("\nThe Assessment ID entered is Invalid.\n");
-		}
-
-		return success;
-	}
 
 	// -----------Job Application (HR) -------------
 	public static void Job_Application_Menu() {

@@ -41,17 +41,17 @@ public class C206_CaseStudyTestKai {
 
 		assertEquals("Test if the arrayList is empty at first", 0, assessmentList.size());
 
-		C206_CaseStudy.AddAssessment(assessmentList, a1);
+		Assessment.AddAssessment(assessmentList, a1);
 
 		assertEquals("Test if the size of arrayList reflect after successful addition", 1, assessmentList.size());
 
-		C206_CaseStudy.AddAssessment(assessmentList, a2);
+		Assessment.AddAssessment(assessmentList, a2);
 
 		assertEquals("Test if the size of arrayList reflect after another successful addition", 2,
 				assessmentList.size());
 
 		// RepetitiveAdding
-		C206_CaseStudy.AddAssessment(assessmentList, a1);
+		Assessment.AddAssessment(assessmentList, a1);
 
 		assertEquals("Test if the size of arrayList stays the same after repetitive addition", 2,
 				assessmentList.size());
@@ -59,7 +59,7 @@ public class C206_CaseStudyTestKai {
 		// MisisingInfo
 		Assessment missinginfo = new Assessment(0, "Personality Test", "Kindergarden Edu", "Education", "",
 				new File(""));
-		C206_CaseStudy.AddAssessment(assessmentList, missinginfo);
+		Assessment.AddAssessment(assessmentList, missinginfo);
 
 		assertEquals("Test if the arrayList stays unchanged when assessment with missing info is added", 2,
 				assessmentList.size());
@@ -76,7 +76,7 @@ public class C206_CaseStudyTestKai {
 
 		// nothing to display at first other than titles
 
-		String output = C206_CaseStudy.ViewAssessment(assessmentList);
+		String output = Assessment.ViewAssessment(assessmentList);
 		String test = String.format("%-5s %-25s %-25s %-25s %-30s %-30s\n\n", "ID", "TYPE", "TOPIC", "INDUSTRY",
 				"CAREER PROSPECT", "FILE NAME");
 
@@ -84,10 +84,10 @@ public class C206_CaseStudyTestKai {
 
 		// the assessment is shown after it is being added
 
-		C206_CaseStudy.AddAssessment(assessmentList, a1);
-		C206_CaseStudy.AddAssessment(assessmentList, a2);
+		Assessment.AddAssessment(assessmentList, a1);
+		Assessment.AddAssessment(assessmentList, a2);
 
-		String assessmentdata = C206_CaseStudy.ViewAssessment(assessmentList);
+		String assessmentdata = Assessment.ViewAssessment(assessmentList);
 
 		test += String.format("%-5d %-25s %-25s %-25s %-30s %-30s\n", 1, "Work Sample Test", "Testing Flights",
 				"Aerospace", "Aeronautical Engineer", new File("areo.txt"));
@@ -99,8 +99,8 @@ public class C206_CaseStudyTestKai {
 
 		// the repetitive assessment is not shown in the list after being added.
 
-		C206_CaseStudy.AddAssessment(assessmentList, a1);
-		String assessment = C206_CaseStudy.ViewAssessment(assessmentList);
+		Assessment.AddAssessment(assessmentList, a1);
+		String assessment = Assessment.ViewAssessment(assessmentList);
 		assertEquals(2,assessmentList.size());
 		assertEquals("Test if the same assessment is not displayed twice", assessment, test);
 
@@ -113,27 +113,27 @@ public class C206_CaseStudyTestKai {
 
 		assertEquals("Test if the arrayList is empty at first", 0, assessmentList.size());
 
-		C206_CaseStudy.AddAssessment(assessmentList, a1);
+		Assessment.AddAssessment(assessmentList, a1);
 
 		// available assessment in the list is successfully deleted
-		boolean delete = C206_CaseStudy.DeleteAssessment(assessmentList, 1);
+		boolean delete = Assessment.DeleteAssessment(assessmentList, 1);
 
 		assertTrue("Test if the available item in the list is successfully deleted ", delete);
 
 		// Test if the assessment which is not in the list cannot be deleted
-		delete = C206_CaseStudy.DeleteAssessment(assessmentList, 2);
+		delete = Assessment.DeleteAssessment(assessmentList, 2);
 		assertFalse("Test if the assessment not in the list cannot be deleted ", delete);
 
 		// delete twice
 
-		delete = C206_CaseStudy.DeleteAssessment(assessmentList, 1);
+		delete = Assessment.DeleteAssessment(assessmentList, 1);
 		assertFalse("Test if the deleted assessment cannot be deleted again", delete);
 
 		// delete not shown in the list
 
-		C206_CaseStudy.AddAssessment(assessmentList, a3);
-		delete = C206_CaseStudy.DeleteAssessment(assessmentList, 3);
-		String display = C206_CaseStudy.ViewAssessment(assessmentList);
+		Assessment.AddAssessment(assessmentList, a3);
+		delete = Assessment.DeleteAssessment(assessmentList, 3);
+		String display = Assessment.ViewAssessment(assessmentList);
 
 		String test = String.format("%-5s %-25s %-25s %-25s %-30s %-30s\n\n", "ID", "TYPE", "TOPIC", "INDUSTRY",
 				"CAREER PROSPECT", "FILE NAME");

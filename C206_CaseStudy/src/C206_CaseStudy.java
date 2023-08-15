@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,8 +17,9 @@ public class C206_CaseStudy {
 	public static final int OPTION_ASSESSMENT = 4;
 
 	public static final int OPTION_QUIT = 0;
-
+	
 	public static final int CareerPathManagement = 6;
+
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -78,6 +80,31 @@ public class C206_CaseStudy {
 
 		ArrayList<Assessment> assessmentList = new ArrayList<Assessment>(Arrays.asList(a1, a2, a3));
 
+		ViewAssessment(assessmentList);
+		
+		//custom Resumes
+		String user1Description="Experienced software developer with a passion for crafting efficient and innovative solutions. "
+						+ "Proficient in multiple programming languages and adept at collaborating in Agile environments. "
+						+ "Track record of delivering high-quality code and driving project success. Eager to contribute technical expertise to a dynamic team.";
+				
+		String user2Description="Experienced software developer with a proven track record of delivering high-quality solutions in fast-paced environments."
+						+ " Proficient in full-stack development, utilizing languages like Python, JavaScript, and Java. "
+						+ "Expertise in designing and implementing efficient algorithms and data structures. "
+						+ "Strong problem-solving skills and a collaborative mindset, demonstrated through successful cross-functional team projects. ";
+
+		ArrayList<JobExperience> jbl = new ArrayList<JobExperience>();
+		JobExperience jbe1 = new JobExperience("DBS","Software Tester","Aug 2020 - Sept 2023","Lead some projects");
+		JobExperience jbe2 = new JobExperience("Smart Nation","Software Tester","Mar 2020 - Sept 2021","Projects leader");
+
+		jbl=new ArrayList<JobExperience>(Arrays.asList(jbe1,jbe2));
+		
+		ResumeTemplate user1Resume= new ResumeTemplate(2,1,1,jbl,"GovTech Resume","John Doe 1",22345678,"john1@sgmail.com",user1Description);
+		ResumeTemplate user2Resume= new ResumeTemplate(3,2,2,jbl,"Navy Resume","John Doe 2",32345678,"john2@gmail.com",user2Description);
+
+		//add to resumeList
+		ArrayList<ResumeTemplate> resumeList = new ArrayList<ResumeTemplate>(Arrays.asList(user1Resume,user2Resume));		
+
+		
 		// Career path list!!!
 		CareerPath c1 = new CareerPath(1, 1, "Software Engineer", "Develops software applications",
 				"High growth potential", "Programming skills");
@@ -85,8 +112,7 @@ public class C206_CaseStudy {
 				"communication skills");
 
 		ArrayList<CareerPath> cpList = new ArrayList<>(Arrays.asList(c1, c2));
-
-		ViewAssessment(assessmentList);
+	
 		int res = 10000;
 		int AssessmentOption = 10000;
 
@@ -108,7 +134,6 @@ public class C206_CaseStudy {
 				} else if (res == 2) {
 					EducationBackgroundManagement(educationBackgroundList, currentUser.getUser_id());
 				} else if (res == 3) {
-
 					deleteAccount(currentUser.getUser_id(), usersList, profileList, educationBackgroundList);
 					currentUser = null;
 					res = Menu(currentUser);
@@ -117,32 +142,32 @@ public class C206_CaseStudy {
 					if (currentUser.getRole().equalsIgnoreCase("admin")) {
 
 						// Refactoring
-						AssessmentMenu();
+						Assessment.AssessmentMenu();
 						AssessmentOption = Helper.readInt("Enter the option for managing Assessment > ");
 						while (AssessmentOption != ASSESSMENT_QUIT) {
 
 							if (AssessmentOption == ASSESSMENT_ADD) {
 
-								AddAssessment(assessmentList, getInputOfAssessment());
+								Assessment.AddAssessment(assessmentList, Assessment.getInputOfAssessment());
 
 							} else if (AssessmentOption == ASSESSMENT_VIEW) {
-								ViewAssessment(assessmentList);
+								Assessment.ViewAssessment(assessmentList);
 							} else if (AssessmentOption == ASSESSMENT_DELETE) {
-								ViewAssessment(assessmentList);
+								Assessment.ViewAssessment(assessmentList);
 								Integer ID = Helper.readInt("Enter the ID of the Assessment you wish to delete > ");
-								DeleteAssessment(assessmentList, ID);
-
+								Assessment.DeleteAssessment(assessmentList, ID);
 							} else if (AssessmentOption == ASSESSMENT_QUIT) {
 								System.out.println("Existing Assessment Management!");
-
 							} else {
 								System.out.println("Invalid Input!");
 							}
-							AssessmentMenu();
+							Assessment.AssessmentMenu();
 							AssessmentOption = Helper.readInt("Enter the option for managing Assessment > ");
 
 						}
-					} else if (currentUser.getRole().equalsIgnoreCase("HR")) {
+					}
+					// Handle HR options
+					else if (currentUser.getRole().equalsIgnoreCase("HR")) {
 						Job_Application_Menu();
 						int hrRes = Helper.readInt("Enter an option > ");
 						if (hrRes == 1) {
@@ -156,15 +181,31 @@ public class C206_CaseStudy {
 						} else {
 							System.out.println("Invalid choice.");
 						}
-
 					} else {
-						ViewAssessment(assessmentList);
+						Assessment.ViewAssessment(assessmentList);
 					}
 				}
-				// Handle HR options
-				// Careeeeeee path
-				else if (res == 6) {
+				else if (res ==5 )//resume
+				{
+					ResumeMenu();
+					int resumeOption=Helper.readInt("Welcome to Resume Management, What would you like to do?> ");
+					if (resumeOption==1)
+					{
+						AddResume(resumeList,educationBackgroundList);
+					}
+					else if (resumeOption==2)
+					{
+						ViewResume(currentUser.getUser_id(),resumeList,educationBackgroundList);
+					}
+					else if (resumeOption==3)
+					{
+						DeleteResume(currentUser.getUser_id(),resumeList,educationBackgroundList);
+					}
+				}
+				
+				else if(res == 6) {
 					CareerPathManagement(currentUser, cpList);
+
 				}
 			}
 
@@ -184,10 +225,10 @@ public class C206_CaseStudy {
 					String password1 = Helper.readString("Enter password >");
 					currentUser = login(usersList, email, password1);
 				}
-
 			}
-
+			
 		}
+			
 	}
 
 	public static String FormEmail(ArrayList<User> usersList, String type) {
@@ -285,7 +326,7 @@ public class C206_CaseStudy {
 
 				// have to redirect to create profile
 
-//        createProfile(user.getUser_id(), profileList);
+//				createProfile(user.getUser_id(), profileList);
 
 				return user;
 			}
@@ -346,7 +387,7 @@ public class C206_CaseStudy {
 		return newProfile;
 	}
 
-// Profile management - Create
+	// Profile management - Create
 	public static Profile createProfileTest(int user_id, ArrayList<Profile> profileList, int contact_info, String dob) {
 		int profile_id = profileList.size() + 1;
 		boolean isValid = validatePhoneNumber(contact_info);
@@ -594,15 +635,19 @@ public class C206_CaseStudy {
 		return true;
 	}
 
-	// Refactoring
-	public static void AssessmentMenu() {
-		Assessment.setHeader("-Management Of Assessment-");
-		System.out.println("1. Add Assessment");
-		System.out.println("2. View Assessment");
-		System.out.println("3. Delete Assessment");
-		System.out.println("0. Quit");
-		Helper.line(150, "-");
-	}
+
+//	// -----------Job Application (HR) -------------
+//	public static void Job_Application_Menu() {
+//		Helper.line(70, "=");
+//		System.out.println("Job Application Menu");
+//		Helper.line(70, "=");
+//		System.out.println("1. Add Job");
+//		System.out.println("2. Manage Added Job");
+//		System.out.println("3. View All Job Opportunities");
+//
+//		System.out.println("0. Quit");
+//		Helper.line(70, "=");
+//	}
 
 	public static Assessment getInputOfAssessment() {
 		String filePattern = "\\w*(\\.(txt))";
@@ -638,7 +683,7 @@ public class C206_CaseStudy {
 			}
 
 		}
-		if ((at.getAssessmentType().isEmpty()) || (at.getTopic().isEmpty()) || at.getIndustry().isEmpty()
+		if ((at.getAssessmentType().isEmpty()) || (at.getTopic().isEmpty()) || (at.getIndustry().isEmpty())
 				|| (at.getCareer_path().isEmpty())) {
 			System.out.println("The Info of Assessment is missing!");
 			return;
@@ -698,19 +743,22 @@ public class C206_CaseStudy {
 
 		return success;
 	}
+	
+	//-----------Job Application (HR) -------------
+		public static void Job_Application_Menu() {
+			Helper.line(70, "=");
+		    System.out.println("Job Application Menu");
+		    Helper.line(70, "=");
+		    System.out.println("1. Add Job");
+		    System.out.println("2. Manage Added Job");
+		    System.out.println("3. View All Job Opportunities");
 
-	// -----------Job Application (HR) -------------
-	public static void Job_Application_Menu() {
-		Helper.line(70, "=");
-		System.out.println("Job Application Menu");
-		Helper.line(70, "=");
-		System.out.println("1. Add Job");
-		System.out.println("2. Manage Added Job");
-		System.out.println("3. View All Job Opportunities");
-
-		System.out.println("0. Quit");
-		Helper.line(70, "=");
-	}
+		    System.out.println("0. Quit");
+		    Helper.line(70, "=");
+			}
+		
+		
+	
 
 	public static Job_Opportunity CreateNewJob(ArrayList<Job_Opportunity> JobList) {
 		try {
@@ -746,15 +794,36 @@ public class C206_CaseStudy {
 			return null; // Return null if an error occurs
 		}
 	}
-
+	public static void ViewAllJobOpportunities(ArrayList<Job_Opportunity> jobList) {
+		System.out.println("List of All Job Opportunities:");
+		for (Job_Opportunity job : jobList) {
+			job.displayJobInfo();
+		}
+	}
+	public static void deleteJob(ArrayList<Job_Opportunity> jobList, String jobTitle) {
+		for (int i = 0; i < jobList.size(); i++) {
+			if (jobList.get(i).getJobTitle().equalsIgnoreCase(jobTitle)) {
+				String confirm = Helper
+						.readString("Are you sure you want to delete job opportunity '" + jobTitle + "'? (yes/no): ");
+				if (confirm.equalsIgnoreCase("yes")) {
+					jobList.remove(i);
+					System.out.println("Job opportunity '" + jobTitle + "' has been successfully deleted.");
+				} else {
+					System.out.println("Deletion of job opportunity '" + jobTitle + "' cancelled.");
+				}
+				break;
+			}
+		}
+	}
+	
+	
 	public static void ManageAddedJob(ArrayList<Job_Opportunity> JobList) {
 		while (true) {
 			String jobTitle = Helper.readString("Enter the job title to manage (or type 'exit' to quit): ");
 			if (jobTitle.equalsIgnoreCase("exit")) {
 				System.out.println("Exiting job management.");
 				break;
-			}
-
+				}
 			boolean found = false;
 			for (Job_Opportunity job : JobList) {
 				if (job.getJobTitle().equalsIgnoreCase(jobTitle)) {
@@ -770,31 +839,326 @@ public class C206_CaseStudy {
 		}
 	}
 
-	public static void ViewAllJobOpportunities(ArrayList<Job_Opportunity> jobList) {
-		System.out.println("List of All Job Opportunities:");
-		for (Job_Opportunity job : jobList) {
-			job.displayJobInfo();
-		}
+	
+	public static void ResumeMenu() 
+	{
+		System.out.println("1. Add resume");
+		System.out.println("2. View resume");
+		System.out.println("3. Delete resume");
+		Helper.line(50, "=");
 	}
+	
+	public static void AddResume(ArrayList<ResumeTemplate> resumeList,ArrayList<EducationBackground> EBlist)
+	{	
+		Helper.line(50, "=");
+		System.out.println("CHOOSE TEMPLATE");
+		Helper.line(50, "=");
+		System.out.println("1. Chronological resume");
+		System.out.println("2. Functional resume");
+		System.out.println("3. Combination resume");
+		Helper.line(50, "=");
+		
+		int templateOption=Helper.readInt("Choose a template> ");
+		int userID=Helper.readInt("Enter your user ID> ");
+		
+		if (templateOption==1)
+		{
+			boolean isAdded=false;
 
-	public static void deleteJob(ArrayList<Job_Opportunity> jobList, String jobTitle) {
-		for (int i = 0; i < jobList.size(); i++) {
-			if (jobList.get(i).getJobTitle().equalsIgnoreCase(jobTitle)) {
-				String confirm = Helper
-						.readString("Are you sure you want to delete job opportunity '" + jobTitle + "'? (yes/no): ");
-				if (confirm.equalsIgnoreCase("yes")) {
-					jobList.remove(i);
-					System.out.println("Job opportunity '" + jobTitle + "' has been successfully deleted.");
-				} else {
-					System.out.println("Deletion of job opportunity '" + jobTitle + "' cancelled.");
-				}
-				break;
+			
+			Helper.line(50, "=");
+			System.out.println("Building resume...");
+			Helper.line(50, "=");
+
+			int resumeID = resumeList.size()+1;
+			String title=Helper.readString("Resume Title> ");
+			String name=Helper.readString("Your full name>");
+			int phoneNum=Helper.readInt("Your contact number> ");
+			String email=Helper.readString("Your email address> ");
+			String description=Helper.readString("Short introduction about yourself> ");
+			
+			//employment 
+			Helper.line(50, "=");
+			System.out.println("Employment History");
+			Helper.line(50, "=");
+			
+			String company=Helper.readString("Company name> ");
+			String position=Helper.readString("Position> ");
+			String period=Helper.readString("Employement period> ");
+			String achievements=Helper.readString("Achievements> ");
+			
+			ArrayList<JobExperience> jbl = new ArrayList<JobExperience>();
+			JobExperience jbe = new JobExperience(company, position, period, achievements);
+			
+			jbl.add(jbe);
+	
+			
+			//createEducationBackground(,EBlist,userList);
+			Helper.line(50, "=");
+			System.out.println("Education History");
+			Helper.line(50, "=");
+			
+			String degree = Helper.readString("Degree given > ");
+			String institution = Helper.readString("Education institution > ");
+			int year_graduated = Helper.readInt("Year graduated > ");
+
+			
+			ResumeTemplate rs=new ResumeTemplate(userID,resumeID,templateOption,jbl,title,name,phoneNum,email,description);
+			EducationBackground eb=new EducationBackground(degree,institution,year_graduated);
+			
+			resumeList.add(rs);
+
+			EBlist.add(eb);
+						
+			rs.display1();
+			
+			String output = String.format("\n%-20s %-15s %-15s %-10s\n", "Company", "Position", "Emplyement Period", "Achievements");
+			output += String.format("%-20s %-15s %-15s %-10s\n",company,position,period,achievements);
+			
+			output += String.format("\n%-20s %-12s %-10s\n", "Degree", "Institution", "Year Graduated");
+			output += String.format("%-20s %-12s %-10d\n", eb.getDegree(), eb.getInstitution(), eb.getYear_graduated());
+			System.out.println(output);	
+
+			isAdded=true;
+			
+		
+			if (isAdded)
+			{
+				System.out.println("Added successfully!");
+			}
+			else
+			{
+				System.out.println("Added failed!");
+			}
+			
+		}
+		else if (templateOption==2)
+		{
+			boolean isAdded=false;
+
+			Helper.line(50, "=");
+			System.out.println("Building resume...");
+			Helper.line(50, "=");
+			
+			int resumeID= resumeList.size()+1;
+			String title=Helper.readString("Resume Title> ");
+			String name=Helper.readString("Your full name>");
+			int phoneNum=Helper.readInt("Your contact number> ");
+			String email=Helper.readString("Your email address> ");
+			String description=Helper.readString("Brief summary of your skills> ");
+			
+			//employment 
+			Helper.line(50, "=");
+			System.out.println("Employment History");
+			Helper.line(50, "=");
+			String company=Helper.readString("Company name> ");
+			String position=Helper.readString("Position> ");
+			String period=Helper.readString("Employement period> ");
+			String achievements=Helper.readString("Achievements> ");
+			
+			ArrayList<JobExperience> jbl = new ArrayList<JobExperience>();
+			JobExperience jbe = new JobExperience(company, position, period, achievements);
+			
+			jbl.add(jbe);
+			
+			//createEducationBackground(,EBlist,userList);
+			Helper.line(50, "=");
+			System.out.println("Education History");
+			Helper.line(50, "=");
+			String degree = Helper.readString("Degree given > ");
+			String institution = Helper.readString("Education institution > ");
+			int year_graduated = Helper.readInt("Year graduated > ");
+
+			
+			ResumeTemplate rs=new ResumeTemplate(userID,resumeID,templateOption,jbl,title,name,phoneNum,email,description);
+			EducationBackground eb=new EducationBackground(degree,institution,year_graduated);
+			
+		
+			resumeList.add(rs);
+
+			EBlist.add(eb);
+
+			rs.display2();
+						
+			String output = String.format("\n%-20s %-15s %-15s %-10s\n", "Company", "Position", "Emplyement Period", "Achievements");
+			output += String.format("%-20s %-15s %-15s %-10s\n",company,position,period,achievements);
+			
+			output += String.format("\n%-20s %-12s %-10s\n", "Degree", "Institution", "Year Graduated");
+			output += String.format("%-20s %-12s %-10d\n", eb.getDegree(), eb.getInstitution(), eb.getYear_graduated());
+			System.out.println(output);	
+
+			if (isAdded)
+			{
+				System.out.println("Added successfully!");
+			}
+			else
+			{
+				System.out.println("Added failed!");
+			}
+			
+		}
+		
+		else if(templateOption==3)
+		{
+			boolean isAdded=false;
+			
+			Helper.line(50, "=");
+			System.out.println("Building resume...");
+			Helper.line(50, "=");
+			
+			int resumeID= resumeList.size()+1;
+			String title=Helper.readString("Resume Title> ");
+			String name=Helper.readString("Your full name>");
+			int phoneNum=Helper.readInt("Your contact number> ");
+			String email=Helper.readString("Your email address> ");
+			String description=Helper.readString("Brief summary of your skills> ");
+			
+			//employment 
+			Helper.line(50, "=");
+			System.out.println("Employment History");
+			Helper.line(50, "=");
+			String company=Helper.readString("Company name> ");
+			String position=Helper.readString("Position> ");
+			String period=Helper.readString("Employement period> ");
+			String achievements=Helper.readString("Achievements> ");
+			
+			
+			ArrayList<JobExperience> jbl = new ArrayList<JobExperience>();
+			JobExperience jbe = new JobExperience(company, position, period, achievements);
+			
+			jbl.add(jbe);
+			
+			//createEducationBackground(,EBlist,userList);
+			Helper.line(50, "=");
+			System.out.println("Education History");
+			Helper.line(50, "=");
+			String degree = Helper.readString("Degree given > ");
+			String institution = Helper.readString("Education institution > ");
+			int year_graduated = Helper.readInt("Year graduated > ");
+			
+			ResumeTemplate rs=new ResumeTemplate(userID,resumeID,templateOption,jbl,title,name,phoneNum,email,description);
+			EducationBackground eb=new EducationBackground(degree,institution,year_graduated);
+			
+			resumeList.add(rs);
+
+			EBlist.add(eb);
+						
+			rs.display3();
+			
+			String output = String.format("\n%-20s %-15s %-15s %-10s\n", "Company", "Position", "Emplyement Period", "Achievements");
+			output += String.format("%-20s %-15s %-15s %-10s\n",company,position,period,achievements);
+			
+			output += String.format("\n%-20s %-12s %-10s\n", "Degree", "Institution", "Year Graduated");
+			output += String.format("%-20s %-12s %-10d\n", eb.getDegree(), eb.getInstitution(), eb.getYear_graduated());
+			System.out.println(output);	
+								
+			isAdded=true;
+			
+			if (isAdded)
+			{
+				System.out.println("Added successfully!");
+			}
+			else
+			{
+				System.out.println("Added failed!");
 			}
 		}
-		// -----------
-
+			
 	}
+	
+	
+	
+	
+	
+	public static void ViewResume(int user_id, ArrayList<ResumeTemplate> resumeList,ArrayList<EducationBackground> EBlist)
+	{
+		boolean isFound=true;
+		
+		int resume_id = Helper.readInt("Enter resume ID > ");
+		
+		if ((resumeList!=null) && (EBlist!=null))
+		{
+			for(ResumeTemplate rs : resumeList) 
+			{
+				if(rs.getUserID() == user_id) {
+					//template id
+					if(rs.getResumeID() == resume_id) {
+						if(rs.getTemplateID() == 1)
+						{
+							rs.display1();
+						}
+						else if (rs.getTemplateID() == 2)
+						{
+							rs.display2();
+						}
+						else if (rs.getTemplateID() == 3)
+						{
+							rs.display3();
+						}
+						//if(rs.getTemplateID() == 2) rs.display2();
+						//if(rs.getTemplateID() == 3) rs.display3();
+						
+						EducationBackground EB = EBlist.get(user_id - 1);
+						
+						
+						String output = String.format("\n%-20s %-12s %-10s\n", "Degree", "Institution", "Year Graduated");
+						output += String.format("%-20s %-12s %-10d\n", EB.getDegree(), EB.getInstitution(), EB.getYear_graduated());
+						System.out.println(output);
+						
+						ArrayList<JobExperience> we = rs.getWorkExperience();
+						//System.out.println(we.size());
+						we.get(resume_id - 1).displayWorkExperience();
+						isFound=true;
+						
+					}
+				}
+				
+			}
+			
+		}
+		
+		if (isFound==false)
+		{
+			System.out.println("Resume does not exist");	
+		}
+		
+	}
+	
+	public static boolean DeleteResume(int userID, ArrayList<ResumeTemplate> resumeList,ArrayList<EducationBackground> EBlist)
+	{
+		Helper.line(50, "=");
+		System.out.println("Delete Resume");
+		Helper.line(50, "=");
+						
+		int resumeID=Helper.readInt("Enter resume ID> ");
+		
+		for (int i=0;i<resumeList.size();i++)
+		{
+			if (resumeList.get(i).getResumeID()==resumeID)
+			{
+				if(resumeList.get(i).getTemplateID()== 1)
+				{
+					resumeList.get(i).display1();
 
+				}
+				else if (resumeList.get(i).getTemplateID()== 2)
+				{
+					resumeList.get(i).display2();
+				}
+				else if (resumeList.get(i).getTemplateID() == 3)
+				{
+					resumeList.get(i).display3();
+				}
+				resumeList.remove(i);
+				EBlist.remove(i);
+				System.out.println("\nDelete successfully!");
+			
+			}
+		}
+		return true;
+						
+	}
+	
 	public static void CareerPathManagement(User currentUser, ArrayList<CareerPath> cpList) {
 		System.out.println("1. View Career Path");
 		System.out.println("2. Add New Career Path");
@@ -810,8 +1174,8 @@ public class C206_CaseStudy {
 			deleteCareerPath(cpList);
 		}
 	}
-
-	public static String viewCareerPath(User currentUser, ArrayList<CareerPath> cpList) {
+	
+	public static void viewCareerPath(User currentUser, ArrayList<CareerPath> cpList) {
 		// CareerPath selectedCareerPath = getCareerPathById(cpList, careerPathId);
 
 		for (CareerPath career : cpList) {
@@ -823,19 +1187,8 @@ public class C206_CaseStudy {
 				System.out.println("Required Skills: " + career.getRequiredSkills());
 			}
 		}
-
-		return null;
 	}
-
-	public static CareerPath getCareerPathById(ArrayList<CareerPath> cpList, int id) {
-		for (CareerPath cp : cpList) {
-			if (cp.getCareerPathId() == id) {
-				return cp;
-			}
-		}
-		return null;
-	}
-
+	
 	public static CareerPath addNewCareerPath(User currentUser, ArrayList<CareerPath> cpList) {
 
 		int newId = cpList.size() + 1;
@@ -862,7 +1215,16 @@ public class C206_CaseStudy {
 
 		return null;
 	}
-
+	
+	public static CareerPath getCareerPathById(ArrayList<CareerPath> cpList, int id) {
+		for (CareerPath cp : cpList) {
+			if (cp.getCareerPathId() == id) {
+				return cp;
+			}
+		}
+		return null;
+	}
+	
 	public static void deleteCareerPath(ArrayList<CareerPath> cpList) {
 		int idToDelete = Helper.readInt("Enter the ID of the career path to delete:"); // Assuming the user enters the
 																						// ID to delete
@@ -875,8 +1237,9 @@ public class C206_CaseStudy {
 			System.out.println("Career Path with ID " + idToDelete + " not found.");
 		}
 	}
-
+	
 	public static void CareerpathMenu() {
 		// Similar implementation as before
 	}
+
 }

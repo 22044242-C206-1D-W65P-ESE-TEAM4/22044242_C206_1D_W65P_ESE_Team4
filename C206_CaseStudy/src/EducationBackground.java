@@ -22,6 +22,13 @@ public class EducationBackground {
 			this.year_graduated = year_graduated;
 		}
 	
+	public EducationBackground(String degree, String institution, int year_graduated) 
+	{
+		this.degree = degree;
+		this.institution = institution;
+		this.year_graduated = year_graduated;
+	}
+
 	public int getEducationBackground_id() {
 		return educationBackground_id;
 	}

@@ -26,6 +26,21 @@ public class C206_CaseStudy {
 	
 	private static final int CAREERPATH_DELETE = 3;
 
+	//Refactoring (Xaviera Ong Ke Ning)
+	private static final int OPTION_RESUME = 5;
+	private static final int RESUME_ADD = 1;
+	private static final int RESUME_VIEW = 2;
+	private static final int RESUME_DELETE = 3;
+	
+	private static final int TEMPLATE1 = 1;
+	private static final int TEMPLATE2 = 2;
+	private static final int TEMPLATE3 = 3;
+
+
+	
+
+	public static final int CareerPathManagement = 6;
+
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -191,19 +206,19 @@ public class C206_CaseStudy {
 						Assessment.ViewAssessment(assessmentList);
 					}
 				}
-				else if (res ==5 )//resume
+				else if (res == OPTION_RESUME )//resume
 				{
 					ResumeMenu();
 					int resumeOption=Helper.readInt("Welcome to Resume Management, What would you like to do?> ");
-					if (resumeOption==1)
+					if (resumeOption==RESUME_ADD)
 					{
-						AddResume(resumeList,educationBackgroundList);
+						AddResume(currentUser.getUser_id(),resumeList,educationBackgroundList);
 					}
-					else if (resumeOption==2)
+					else if (resumeOption==RESUME_VIEW)
 					{
 						ViewResume(currentUser.getUser_id(),resumeList,educationBackgroundList);
 					}
-					else if (resumeOption==3)
+					else if (resumeOption==RESUME_DELETE)
 					{
 						DeleteResume(currentUser.getUser_id(),resumeList,educationBackgroundList);
 					}
@@ -855,8 +870,9 @@ public class C206_CaseStudy {
 		Helper.line(50, "=");
 	}
 	
-	public static void AddResume(ArrayList<ResumeTemplate> resumeList,ArrayList<EducationBackground> EBlist)
-	{	
+	//Refactoring (Xaviera Ong Ke Ning)
+	public static void ResumeTemplateMenu()
+	{
 		Helper.line(50, "=");
 		System.out.println("CHOOSE TEMPLATE");
 		Helper.line(50, "=");
@@ -864,15 +880,19 @@ public class C206_CaseStudy {
 		System.out.println("2. Functional resume");
 		System.out.println("3. Combination resume");
 		Helper.line(50, "=");
+	}
+
+		
+	public static boolean AddResume(int userID,ArrayList<ResumeTemplate> resumeList,ArrayList<EducationBackground> EBlist)
+	{	
+		//Refactoring (Xaviera Ong Ke Ning)
+		ResumeTemplateMenu();
 		
 		int templateOption=Helper.readInt("Choose a template> ");
-		int userID=Helper.readInt("Enter your user ID> ");
-		
-		if (templateOption==1)
+		userID=Helper.readInt("Enter your user ID> ");
+				
+		if (templateOption == TEMPLATE1)
 		{
-			boolean isAdded=false;
-
-			
 			Helper.line(50, "=");
 			System.out.println("Building resume...");
 			Helper.line(50, "=");
@@ -926,22 +946,11 @@ public class C206_CaseStudy {
 			output += String.format("%-20s %-12s %-10d\n", eb.getDegree(), eb.getInstitution(), eb.getYear_graduated());
 			System.out.println(output);	
 
-			isAdded=true;
-			
-		
-			if (isAdded)
-			{
-				System.out.println("Added successfully!");
-			}
-			else
-			{
-				System.out.println("Added failed!");
-			}
-			
+			//return true;
+
 		}
-		else if (templateOption==2)
+		else if (templateOption == TEMPLATE2)
 		{
-			boolean isAdded=false;
 
 			Helper.line(50, "=");
 			System.out.println("Building resume...");
@@ -994,21 +1003,12 @@ public class C206_CaseStudy {
 			output += String.format("%-20s %-12s %-10d\n", eb.getDegree(), eb.getInstitution(), eb.getYear_graduated());
 			System.out.println(output);	
 
-			if (isAdded)
-			{
-				System.out.println("Added successfully!");
-			}
-			else
-			{
-				System.out.println("Added failed!");
-			}
+			//return true;
 			
 		}
 		
-		else if(templateOption==3)
-		{
-			boolean isAdded=false;
-			
+		else if(templateOption == TEMPLATE3)
+		{			
 			Helper.line(50, "=");
 			System.out.println("Building resume...");
 			Helper.line(50, "=");
@@ -1058,28 +1058,16 @@ public class C206_CaseStudy {
 			output += String.format("\n%-20s %-12s %-10s\n", "Degree", "Institution", "Year Graduated");
 			output += String.format("%-20s %-12s %-10d\n", eb.getDegree(), eb.getInstitution(), eb.getYear_graduated());
 			System.out.println(output);	
-								
-			isAdded=true;
-			
-			if (isAdded)
-			{
-				System.out.println("Added successfully!");
-			}
-			else
-			{
-				System.out.println("Added failed!");
-			}
+											
 		}
-			
+		System.out.println("Added successfully!");
+		return true;
 	}
+		
 	
-	
-	
-	
-	
-	public static void ViewResume(int user_id, ArrayList<ResumeTemplate> resumeList,ArrayList<EducationBackground> EBlist)
-	{
-		boolean isFound=true;
+	public static boolean ViewResume(int user_id, ArrayList<ResumeTemplate> resumeList,ArrayList<EducationBackground> EBlist)
+	{		
+		boolean isFound=false;
 		
 		int resume_id = Helper.readInt("Enter resume ID > ");
 		
@@ -1087,23 +1075,28 @@ public class C206_CaseStudy {
 		{
 			for(ResumeTemplate rs : resumeList) 
 			{
-				if(rs.getUserID() == user_id) {
-					//template id
-					if(rs.getResumeID() == resume_id) {
-						if(rs.getTemplateID() == 1)
+				if(rs.getUserID() == user_id) 
+				{
+					//Refactoring (Xaviera Ong Ke Ning)
+					int rs_ResumeID = rs.getResumeID();
+
+					if(rs_ResumeID == resume_id) 
+					{
+						//Refactoring (Xaviera Ong Ke Ning)
+						int rs_TemplateID = rs.getTemplateID();
+						
+						if(rs_TemplateID == 1)
 						{
 							rs.display1();
 						}
-						else if (rs.getTemplateID() == 2)
+						else if (rs_TemplateID == 2)
 						{
 							rs.display2();
 						}
-						else if (rs.getTemplateID() == 3)
+						else if (rs_TemplateID == 3)
 						{
 							rs.display3();
 						}
-						//if(rs.getTemplateID() == 2) rs.display2();
-						//if(rs.getTemplateID() == 3) rs.display3();
 						
 						EducationBackground EB = EBlist.get(user_id - 1);
 						
@@ -1113,10 +1106,11 @@ public class C206_CaseStudy {
 						System.out.println(output);
 						
 						ArrayList<JobExperience> we = rs.getWorkExperience();
-						//System.out.println(we.size());
-						we.get(resume_id - 1).displayWorkExperience();
-						isFound=true;
-						
+						for (JobExperience experience:we)
+						{
+							experience.displayWorkExperience();
+						}
+						return true;
 					}
 				}
 				
@@ -1124,10 +1118,12 @@ public class C206_CaseStudy {
 			
 		}
 		
-		if (isFound==false)
+		if (!isFound)
 		{
-			System.out.println("Resume does not exist");	
+			System.out.println("Resume does not exist!");	
 		}
+		return false;
+		
 		
 	}
 	
@@ -1141,18 +1137,23 @@ public class C206_CaseStudy {
 		
 		for (int i=0;i<resumeList.size();i++)
 		{
-			if (resumeList.get(i).getResumeID()==resumeID)
+			//Refactoring(Xaviera Ong Ke Ning)
+			int ResumeList_ResumeID = resumeList.get(i).getResumeID();
+			if (ResumeList_ResumeID == resumeID)
 			{
-				if(resumeList.get(i).getTemplateID()== 1)
+				//Refactoring(Xaviera Ong Ke Ning)
+
+				int ResumeList_TemplateID = resumeList.get(i).getTemplateID();
+				if(ResumeList_TemplateID == 1)
 				{
 					resumeList.get(i).display1();
 
 				}
-				else if (resumeList.get(i).getTemplateID()== 2)
+				else if (ResumeList_TemplateID == 2)
 				{
 					resumeList.get(i).display2();
 				}
-				else if (resumeList.get(i).getTemplateID() == 3)
+				else if (ResumeList_TemplateID == 3)
 				{
 					resumeList.get(i).display3();
 				}

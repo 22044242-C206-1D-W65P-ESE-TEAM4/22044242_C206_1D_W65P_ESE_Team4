@@ -54,6 +54,9 @@ public class C206_CaseStudyTestHanLin {
 
 		// when viewing the career path
 		careerdata = C206_CaseStudy.viewCareerPath(admin, cpList);
+		assertEquals("Test that the values increased",1, cpList.size());
+		careerdata = C206_CaseStudy.viewCareerPath(admin, cpList);
+		
 
 	}
 

@@ -75,7 +75,20 @@ public class CareerPath {
 	}
 
 	public static String viewCareerPath(User currentUser, ArrayList<CareerPath> cpList) {
-		// TODO Auto-generated method stub
+		// CareerPath selectedCareerPath = getCareerPathById(cpList, careerPathId);
+
+		for (CareerPath career : cpList) {
+			if (currentUser.getUser_id() == career.getUser_id()) {
+				System.out.println("Selected Career Path for :" + career.getCareerPathId());
+				System.out.println("Title: " + career.getCareerTitle());
+				System.out.println("Description: " + career.getJobDescription());
+				System.out.println("Growth Prospects: " + career.getGrowthProspects());
+				System.out.println("Required Skills: " + career.getRequiredSkills());
+			}
+		}
 		return null;
 	}
+
+	
+	
 }

@@ -18,7 +18,13 @@ public class C206_CaseStudy {
 
 	public static final int OPTION_QUIT = 0;
 	
-	public static final int CareerPathManagement = 6;
+	public static final int CAREERPATH_OPTION = 6;
+	
+	private static final int CAREERPATH_VIEW = 1;
+	
+	private static final int CAREERPATH_ADD = 2;
+	
+	private static final int CAREERPATH_DELETE = 3;
 
 
 	public static void main(String[] args) {
@@ -203,7 +209,8 @@ public class C206_CaseStudy {
 					}
 				}
 				
-				else if(res == 6) {
+				//refactoring
+				else if(res == CAREERPATH_OPTION ) {
 					CareerPathManagement(currentUser, cpList);
 
 				}
@@ -1166,32 +1173,38 @@ public class C206_CaseStudy {
 
 		int op = Helper.readInt("CareerPath Management > "); // You should have a Helper class with this method
 
-		if (op == 1) {
+		if (op == CAREERPATH_VIEW) {
 			viewCareerPath(currentUser, cpList);
-		} else if (op == 2) {
+		} else if (op == CAREERPATH_ADD) {
 			addNewCareerPath(currentUser, cpList);
-		} else if (op == 3) {
+		} else if (op == CAREERPATH_DELETE ) {
 			deleteCareerPath(cpList);
 		}
 	}
 	
-	public static void viewCareerPath(User currentUser, ArrayList<CareerPath> cpList) {
+	public static String viewCareerPath(User currentUser, ArrayList<CareerPath> cpList) {
 		// CareerPath selectedCareerPath = getCareerPathById(cpList, careerPathId);
 
 		for (CareerPath career : cpList) {
-			if (currentUser.getUser_id() == career.getUser_id()) {
+			int user_id = career.getUser_id();
+			int currentuser_id = currentUser.getUser_id();
+			if (currentuser_id == user_id) {
+				Helper.line(50, "=");
 				System.out.println("Selected Career Path for :" + career.getCareerPathId());
 				System.out.println("Title: " + career.getCareerTitle());
 				System.out.println("Description: " + career.getJobDescription());
 				System.out.println("Growth Prospects: " + career.getGrowthProspects());
 				System.out.println("Required Skills: " + career.getRequiredSkills());
+				
 			}
 		}
+		return null;
 	}
 	
 	public static CareerPath addNewCareerPath(User currentUser, ArrayList<CareerPath> cpList) {
 
 		int newId = cpList.size() + 1;
+		Helper.line(50, "=");
 		String newTitle = Helper.readString("Career Title: ");
 		String newDescription = Helper.readString("A description of the new career path: ");
 		String newGrowthProspects = Helper.readString("Growth Prospects: ");
@@ -1207,7 +1220,9 @@ public class C206_CaseStudy {
 			cpList.add(newCareerPath);
 
 			// Inform the user about the successful addition
-			System.out.println("New career path added");
+			Helper.line(50, "=");
+			System.out.println("New career path added !");
+			Helper.line(50, "=");
 
 			return newCareerPath;
 
@@ -1217,6 +1232,7 @@ public class C206_CaseStudy {
 	}
 	
 	public static CareerPath getCareerPathById(ArrayList<CareerPath> cpList, int id) {
+	
 		for (CareerPath cp : cpList) {
 			if (cp.getCareerPathId() == id) {
 				return cp;
@@ -1238,8 +1254,4 @@ public class C206_CaseStudy {
 		}
 	}
 	
-	public static void CareerpathMenu() {
-		// Similar implementation as before
-	}
-
 }

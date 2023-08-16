@@ -18,6 +18,7 @@ public class C206_CaseStudy {
 
 	public static final int OPTION_QUIT = 0;
 	
+
 	//Refactoring (Xaviera Ong Ke Ning)
 	private static final int OPTION_RESUME = 5;
 	private static final int RESUME_ADD = 1;
@@ -30,6 +31,9 @@ public class C206_CaseStudy {
 
 
 	
+
+	public static final int CareerPathManagement = 6;
+
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -58,7 +62,7 @@ public class C206_CaseStudy {
 		User user2 = new User(3, "john doe2", "john2@gmail.com", "user", "lol123");
 		User HR1 = new User(4, "Hr1", "Hr1@gmail.com", "HR", "lol123");
 
-//		currentUser = admin;
+		currentUser = admin;
 
 		ArrayList<User> usersList = new ArrayList<User>(Arrays.asList(admin, user1, user2, HR1));
 
@@ -114,6 +118,14 @@ public class C206_CaseStudy {
 		//add to resumeList
 		ArrayList<ResumeTemplate> resumeList = new ArrayList<ResumeTemplate>(Arrays.asList(user1Resume,user2Resume));		
 
+		
+		// Career path list!!!
+		CareerPath c1 = new CareerPath(1, 1, "Software Engineer", "Develops software applications",
+				"High growth potential", "Programming skills");
+		CareerPath c2 = new CareerPath(1, 2, "UI Designer", "Design user interface", "Understanding user behaviour",
+				"communication skills");
+
+		ArrayList<CareerPath> cpList = new ArrayList<>(Arrays.asList(c1, c2));
 	
 		int res = 10000;
 		int AssessmentOption = 10000;
@@ -204,6 +216,11 @@ public class C206_CaseStudy {
 						DeleteResume(currentUser.getUser_id(),resumeList,educationBackgroundList);
 					}
 				}
+				
+				else if(res == 6) {
+					CareerPathManagement(currentUser, cpList);
+
+				}
 			}
 
 			if (currentUser == null) {
@@ -263,13 +280,10 @@ public class C206_CaseStudy {
 			System.out.println("3. Disable account");
 			if (user.getRole().equalsIgnoreCase("admin")) {
 				System.out.println("4. Manage Assessments");
-			} else if (user.getRole().equalsIgnoreCase("HR")) {
-				System.out.println("4. Manage Jobs");
+				System.out.println("6. Manage career path");
 			} else {
 				System.out.println("4. View Assessments");
-				
 			}
-			System.out.println("5. Resume Management");
 		}
 
 		Helper.line(70, "=");
@@ -1145,23 +1159,87 @@ public class C206_CaseStudy {
 						
 	}
 	
+	public static void CareerPathManagement(User currentUser, ArrayList<CareerPath> cpList) {
+		System.out.println("1. View Career Path");
+		System.out.println("2. Add New Career Path");
+		System.out.println("3. Delete Career Path");
+
+		int op = Helper.readInt("CareerPath Management > "); // You should have a Helper class with this method
+
+		if (op == 1) {
+			viewCareerPath(currentUser, cpList);
+		} else if (op == 2) {
+			addNewCareerPath(currentUser, cpList);
+		} else if (op == 3) {
+			deleteCareerPath(cpList);
+		}
+	}
 	
+	public static void viewCareerPath(User currentUser, ArrayList<CareerPath> cpList) {
+		// CareerPath selectedCareerPath = getCareerPathById(cpList, careerPathId);
 
+		for (CareerPath career : cpList) {
+			if (currentUser.getUser_id() == career.getUser_id()) {
+				System.out.println("Selected Career Path for :" + career.getCareerPathId());
+				System.out.println("Title: " + career.getCareerTitle());
+				System.out.println("Description: " + career.getJobDescription());
+				System.out.println("Growth Prospects: " + career.getGrowthProspects());
+				System.out.println("Required Skills: " + career.getRequiredSkills());
+			}
+		}
+	}
+	
+	public static CareerPath addNewCareerPath(User currentUser, ArrayList<CareerPath> cpList) {
 
+		int newId = cpList.size() + 1;
+		String newTitle = Helper.readString("Career Title: ");
+		String newDescription = Helper.readString("A description of the new career path: ");
+		String newGrowthProspects = Helper.readString("Growth Prospects: ");
+		String newRequiredSkills = Helper.readString("Required skills for this path: ");
 
-//	boolean found = false;
-//	for (Job_Opportunity job : JobList) {
-//		if (job.getJobTitle().equalsIgnoreCase(jobTitle)) {
-//			found = true;
-//			deleteJob(JobList, jobTitle); // Call the deleteJob method
-//			break;
-//		}
-//	}
-//
-//	if (!found) {
-//		System.out.println("Job opportunity '" + jobTitle + "' not found.");
-//	}
-//}
-//}
+		CareerPath cp = getCareerPathById(cpList, newId);
+
+		if (cp == null) {
+
+			// Create a new CareerPath instance
+			CareerPath newCareerPath = new CareerPath(currentUser.getUser_id(), newId, newTitle, newDescription,
+					newGrowthProspects, newRequiredSkills);
+			cpList.add(newCareerPath);
+
+			// Inform the user about the successful addition
+			System.out.println("New career path added");
+
+			return newCareerPath;
+
+		}
+
+		return null;
+	}
+	
+	public static CareerPath getCareerPathById(ArrayList<CareerPath> cpList, int id) {
+		for (CareerPath cp : cpList) {
+			if (cp.getCareerPathId() == id) {
+				return cp;
+			}
+		}
+		return null;
+	}
+	
+	public static void deleteCareerPath(ArrayList<CareerPath> cpList) {
+		int idToDelete = Helper.readInt("Enter the ID of the career path to delete:"); // Assuming the user enters the
+																						// ID to delete
+		CareerPath pathToDelete = getCareerPathById(cpList, idToDelete);
+
+		if (pathToDelete != null) {
+			cpList.remove(pathToDelete);
+			System.out.println("Career Path with ID " + idToDelete + " has been deleted.");
+		} else {
+			System.out.println("Career Path with ID " + idToDelete + " not found.");
+		}
+	}
+	
+	public static void CareerpathMenu() {
+		// Similar implementation as before
+	}
 
 }

@@ -68,7 +68,7 @@ public class C206_CaseStudy {
 				    "2023-08-31"         // deadline
 				);
 		  jobList.add(jobOpportunity);
-
+//
 	
 		// custom users
 		User admin = new User(1, "Admin", "admin@gmail.com", "admin", "lol123");
@@ -140,6 +140,7 @@ public class C206_CaseStudy {
 				"communication skills");
 
 		ArrayList<CareerPath> cpList = new ArrayList<>(Arrays.asList(c1, c2));
+		//
 	
 		int res = 10000;
 		int AssessmentOption = 10000;
@@ -195,6 +196,8 @@ public class C206_CaseStudy {
 
 						}
 					}
+					
+
 					// Handle HR options
 					else if (currentUser.getRole().equalsIgnoreCase("HR")) {
 						Job_Application_Menu();
@@ -215,7 +218,6 @@ public class C206_CaseStudy {
 					}
 				}
 				else if (res == OPTION_RESUME )//resume
-				{
 					ResumeMenu();
 					int resumeOption=Helper.readInt("Welcome to Resume Management, What would you like to do?> ");
 					if (resumeOption==RESUME_ADD)
@@ -259,7 +261,7 @@ public class C206_CaseStudy {
 			
 		}
 			
-	}
+	
 
 	public static String FormEmail(ArrayList<User> usersList, String type) {
 		// Email check
@@ -656,7 +658,8 @@ public class C206_CaseStudy {
 		userList.remove(user_id - 1);
 		profileList.remove(user_id - 1);
 
-		if (EBList.get(user_id - 1) != null) {
+		EducationBackground deletedEB = EBList.get(user_id - 1);
+		if (deletedEB != null) {
 			EBList.remove(user_id - 1);
 		}
 

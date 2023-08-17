@@ -42,7 +42,7 @@ public class C206_CaseStudyTestHarris {
 		admin = new User(1, "Admin", "admin@gmail.com", "admin", "lol123");
 		usersList = new ArrayList<User>(Arrays.asList(admin));
 
-	    
+	    currentUser = null;
 		// custom profiles
 		adminProfile = new Profile(1, 1, 12345678, "02/02/2002");
 		profileList = new ArrayList<Profile>(Arrays.asList(adminProfile));

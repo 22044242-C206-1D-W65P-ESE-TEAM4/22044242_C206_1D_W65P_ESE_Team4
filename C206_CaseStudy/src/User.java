@@ -57,10 +57,4 @@ public class User {
 		return output;	
 	}
 
-	public void setUser_id(int i) {
-		// TODO Auto-generated method stub
-		
-	
-		
-	}
 }

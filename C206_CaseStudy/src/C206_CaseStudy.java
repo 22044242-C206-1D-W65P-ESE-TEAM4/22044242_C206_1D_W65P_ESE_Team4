@@ -275,25 +275,6 @@ public class C206_CaseStudy {
 		}
 
 	}
-//DECLARATION----------------
-private static boolean CHECK_USER_HR(User currentUser) {
-		return currentUser.getRole().equalsIgnoreCase("HR");
-}
-
-private static boolean CHECK_JOBTITLE_CREATE_ADDED(String JobTitle, Job_Opportunity job) {
-		return job.getJobTitle().equalsIgnoreCase(JobTitle);
-}
-private static boolean CHECK_JOBTITLE_DELETE(ArrayList<Job_Opportunity> jobList, String jobTitle, int i) {
-	return jobList.get(i).getJobTitle().equalsIgnoreCase(jobTitle);
-	}
-	
-private static boolean CHECK_ADDED_EXIT(String jobTitle) {
-	return jobTitle.equalsIgnoreCase("exit");
-}
-
-	
-	
-//---------------------------------
 
 	public static String FormEmail(ArrayList<User> usersList, String type) {
 		// Email check
@@ -878,7 +859,7 @@ private static boolean CHECK_ADDED_EXIT(String jobTitle) {
 			if (CHECK_JOBTITLE_DELETE(jobList, jobTitle, i)) {
 				String confirm = Helper
 						.readString("Are you sure you want to delete job opportunity '" + jobTitle + "'? (yes/no): ");
-				if (confirm.equalsIgnoreCase("yes")) {
+				if (CHECK_YES(confirm)) {
 					jobList.remove(i);
 					System.out.println("Job opportunity '" + jobTitle + "' has been successfully deleted.");
 				} else {
@@ -889,6 +870,7 @@ private static boolean CHECK_ADDED_EXIT(String jobTitle) {
 		}
 	}
 
+	
 
 
 	public static void ManageAddedJob(ArrayList<Job_Opportunity> JobList) {
@@ -1343,5 +1325,27 @@ private static boolean CHECK_ADDED_EXIT(String jobTitle) {
 			}
 		}
 	}
+	//---------DECLARATION(SHIHAN)----------------
+	private static boolean CHECK_USER_HR(User currentUser) {
+			return currentUser.getRole().equalsIgnoreCase("HR");
+	}
+
+	private static boolean CHECK_JOBTITLE_CREATE_ADDED(String JobTitle, Job_Opportunity job) {
+			return job.getJobTitle().equalsIgnoreCase(JobTitle);
+	}
+	private static boolean CHECK_JOBTITLE_DELETE(ArrayList<Job_Opportunity> jobList, String jobTitle, int i) {
+		return jobList.get(i).getJobTitle().equalsIgnoreCase(jobTitle);
+		}
+		
+	private static boolean CHECK_ADDED_EXIT(String jobTitle) {
+		return jobTitle.equalsIgnoreCase("exit");
+	}
+	private static boolean CHECK_YES(String confirm) {
+		return confirm.equalsIgnoreCase("yes");
+	}
+
+		
+		
+	//---------------------------------
 
 }

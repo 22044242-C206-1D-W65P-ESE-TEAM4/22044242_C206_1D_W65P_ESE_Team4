@@ -42,6 +42,13 @@ public class C206_CaseStudy {
 	private static final int SKILL_ADD = 2;
 	private static final int SKILL_DELETE = 3;
 	private static final int SKILLMANAGEMENTOPTION = 7;
+	
+	//Refactoring Shihan
+	private static final int CREATE_NEW_JOBS =1 ;
+	private static final int MANAGE_ADDED_JOBS=2;
+	private static final int VIEW_ALL_JOBS =3;
+	private static final int EXIT =0 ;
+	
 
 	public static final int CareerPathManagement = 6;
 
@@ -73,7 +80,7 @@ public class C206_CaseStudy {
 		User user2 = new User(3, "john doe2", "john2@gmail.com", "user", "lol123");
 		User HR1 = new User(4, "Hr1", "Hr1@gmail.com", "HR", "lol123");
 
-		currentUser = admin;
+//		currentUser = admin;
 
 		ArrayList<User> usersList = new ArrayList<User>(Arrays.asList(admin, user1, user2, HR1));
 
@@ -210,16 +217,16 @@ public class C206_CaseStudy {
 						}
 					}
 					// Handle HR options
-					else if (currentUser.getRole().equalsIgnoreCase("HR")) {
+					else if (CHECK_USER_HR(currentUser)) {
 						Job_Application_Menu();
 						int hrRes = Helper.readInt("Enter an option > ");
-						if (hrRes == 1) {
+						if (hrRes == CREATE_NEW_JOBS) {
 							CreateNewJob(jobList);
-						} else if (hrRes == 2) {
+						} else if (hrRes == MANAGE_ADDED_JOBS) {
 							ManageAddedJob(jobList);
-						} else if (hrRes == 3) {
+						} else if (hrRes == VIEW_ALL_JOBS) {
 							ViewAllJobOpportunities(jobList);
-						} else if (hrRes == 0) {
+						} else if (hrRes == EXIT) {
 							System.out.println("Exiting Job Application Menu.");
 						} else {
 							System.out.println("Invalid choice.");
@@ -268,6 +275,25 @@ public class C206_CaseStudy {
 		}
 
 	}
+//DECLARATION----------------
+private static boolean CHECK_USER_HR(User currentUser) {
+		return currentUser.getRole().equalsIgnoreCase("HR");
+}
+
+private static boolean CHECK_JOBTITLE_CREATE_ADDED(String JobTitle, Job_Opportunity job) {
+		return job.getJobTitle().equalsIgnoreCase(JobTitle);
+}
+private static boolean CHECK_JOBTITLE_DELETE(ArrayList<Job_Opportunity> jobList, String jobTitle, int i) {
+	return jobList.get(i).getJobTitle().equalsIgnoreCase(jobTitle);
+	}
+	
+private static boolean CHECK_ADDED_EXIT(String jobTitle) {
+	return jobTitle.equalsIgnoreCase("exit");
+}
+
+	
+	
+//---------------------------------
 
 	public static String FormEmail(ArrayList<User> usersList, String type) {
 		// Email check
@@ -305,7 +331,7 @@ public class C206_CaseStudy {
 			System.out.println("3. Disable account");
 			if (user.getRole().equalsIgnoreCase("admin")) {
 				System.out.println("4. Manage Assessments");
-			} else if (user.getRole().equalsIgnoreCase("HR")) {
+			} else if (CHECK_USER_HR(user)) {
 				System.out.println("4. Manage Jobs");
 			} else {
 				System.out.println("4. View Assessments");
@@ -821,7 +847,7 @@ public class C206_CaseStudy {
 			String deadline = Helper.readString("Enter the deadline of this job Application: ");
 
 			for (Job_Opportunity job : JobList) {
-				if (job.getJobTitle().equalsIgnoreCase(JobTitle)) {
+				if (CHECK_JOBTITLE_CREATE_ADDED(JobTitle, job)) {
 					System.out.println("Job opportunity already exists.");
 					return null; // Return here if the job opportunity already exists
 				}
@@ -839,6 +865,7 @@ public class C206_CaseStudy {
 		}
 	}
 
+
 	public static void ViewAllJobOpportunities(ArrayList<Job_Opportunity> jobList) {
 		System.out.println("List of All Job Opportunities:");
 		for (Job_Opportunity job : jobList) {
@@ -848,7 +875,7 @@ public class C206_CaseStudy {
 
 	public static void deleteJob(ArrayList<Job_Opportunity> jobList, String jobTitle) {
 		for (int i = 0; i < jobList.size(); i++) {
-			if (jobList.get(i).getJobTitle().equalsIgnoreCase(jobTitle)) {
+			if (CHECK_JOBTITLE_DELETE(jobList, jobTitle, i)) {
 				String confirm = Helper
 						.readString("Are you sure you want to delete job opportunity '" + jobTitle + "'? (yes/no): ");
 				if (confirm.equalsIgnoreCase("yes")) {
@@ -862,16 +889,18 @@ public class C206_CaseStudy {
 		}
 	}
 
+
+
 	public static void ManageAddedJob(ArrayList<Job_Opportunity> JobList) {
 		while (true) {
 			String jobTitle = Helper.readString("Enter the job title to manage (or type 'exit' to quit): ");
-			if (jobTitle.equalsIgnoreCase("exit")) {
+			if (CHECK_ADDED_EXIT(jobTitle)) {
 				System.out.println("Exiting job management.");
 				break;
 			}
 			boolean found = false;
 			for (Job_Opportunity job : JobList) {
-				if (job.getJobTitle().equalsIgnoreCase(jobTitle)) {
+				if (CHECK_JOBTITLE_CREATE_ADDED(jobTitle, job)) {
 					found = true;
 					deleteJob(JobList, jobTitle); // Call the deleteJob method
 					break;
@@ -884,6 +913,7 @@ public class C206_CaseStudy {
 		}
 	}
 
+	
 	public static void ResumeMenu() {
 		System.out.println("1. Add resume");
 		System.out.println("2. View resume");

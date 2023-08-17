@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,16 +6,13 @@ public class C206_CaseStudy {
 
 	// Refactoring
 	private static final int ASSESSMENT_DELETE = 3;
-
 	private static final int ASSESSMENT_VIEW = 2;
-
 	private static final int ASSESSMENT_ADD = 1;
-
 	private static final int ASSESSMENT_QUIT = 0;
-
 	public static final int OPTION_ASSESSMENT = 4;
-
 	public static final int OPTION_QUIT = 0;
+	
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -25,7 +21,7 @@ public class C206_CaseStudy {
 
 	// Code starts from here
 	public static void start() {
-		User currentUser = null;
+		  User currentUser = null;
 		  ArrayList<Job_Opportunity> jobList = new ArrayList<>();
 		  Job_Opportunity jobOpportunity = new Job_Opportunity(
 				    "Software Engineer", // JobTitle
@@ -227,6 +223,7 @@ public class C206_CaseStudy {
 	public static void ProfileManagement(User user, ArrayList<Profile> profileList, ArrayList<User> usersList) {
 		System.out.println("1. View Profile");
 		System.out.println("2. Update Profile");
+	
 
 		int ans = Helper.readInt("Profile Management > ");
 

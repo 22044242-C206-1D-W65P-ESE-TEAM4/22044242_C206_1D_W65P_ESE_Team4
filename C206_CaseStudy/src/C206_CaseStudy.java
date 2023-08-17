@@ -4,6 +4,20 @@ import java.util.Arrays;
 
 public class C206_CaseStudy {
 
+	private static final int PROFILEMANAGEMENT = 1;
+	private static final int VIEWPROFILE = 1;
+	private static final int UPDATEPROFILE = 2;
+
+
+	
+	private static final int EDUCATIONBACKGROUNDMANAGEMENT = 2;
+	private static final int VIEWEDUCATIONBACKGROUND = 1;
+	private static final int UPDATEEDUCATIONBACKGROUND = 2;
+	
+	private static final int DELETEACCOUNTMANAGEMENT = 3;	
+	
+	
+	
 	// Refactoring
 	private static final int ASSESSMENT_DELETE = 3;
 	private static final int ASSESSMENT_VIEW = 2;
@@ -13,11 +27,8 @@ public class C206_CaseStudy {
 	public static final int OPTION_QUIT = 0;
 
 	public static final int CAREERPATH_OPTION = 6;
-	
 	private static final int CAREERPATH_VIEW = 1;
-	
 	private static final int CAREERPATH_ADD = 2;
-	
 	private static final int CAREERPATH_DELETE = 3;
 
 	//Refactoring (Xaviera Ong Ke Ning)
@@ -30,10 +41,10 @@ public class C206_CaseStudy {
 	private static final int TEMPLATE2 = 2;
 	private static final int TEMPLATE3 = 3;
 
-
 	
 
 	public static final int CareerPathManagement = 6;
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -58,15 +69,14 @@ public class C206_CaseStudy {
 				);
 		  jobList.add(jobOpportunity);
 
-		
-
+	
 		// custom users
 		User admin = new User(1, "Admin", "admin@gmail.com", "admin", "lol123");
 		User user1 = new User(2, "john doe1", "john1@sgmail.com", "user", "lol123");
 		User user2 = new User(3, "john doe2", "john2@gmail.com", "user", "lol123");
 		User HR1 = new User(4, "Hr1", "Hr1@gmail.com", "HR", "lol123");
 
-		currentUser = admin;
+		//currentUser = admin;
 
 		ArrayList<User> usersList = new ArrayList<User>(Arrays.asList(admin, user1, user2, HR1));
 
@@ -144,14 +154,15 @@ public class C206_CaseStudy {
 			}
 
 			if (currentUser != null) {
-				if (res == 0) {
+				if (res == OPTION_QUIT) {
 					System.out.println("Thank for using the application, Goodbye!");
 					break;
-				} else if (res == 1) {
+				} else if (res == PROFILEMANAGEMENT) {
+					
 					ProfileManagement(currentUser, profileList, usersList);
-				} else if (res == 2) {
+				} else if (res == EDUCATIONBACKGROUNDMANAGEMENT) {
 					EducationBackgroundManagement(educationBackgroundList, currentUser.getUser_id());
-				} else if (res == 3) {
+				} else if (res == DELETEACCOUNTMANAGEMENT) {
 					deleteAccount(currentUser.getUser_id(), usersList, profileList, educationBackgroundList);
 					currentUser = null;
 					res = Menu(currentUser);
@@ -305,13 +316,13 @@ public class C206_CaseStudy {
 
 		int ans = Helper.readInt("Profile Management > ");
 
-		if (ans == 1) {
+		if (ans == VIEWPROFILE) {
 			// System.out.println(user.getEmail());
 			String output = user.displayUserInfo()
 					+ String.format("%9s ", profileList.get(user.getUser_id()).getContact_info());
 			System.out.println(output);
 
-		} else if (ans == 2) {
+		} else if (ans == UPDATEPROFILE) {
 			boolean isValid = updateProfile(user.getUser_id(), profileList, usersList);
 		}
 	}

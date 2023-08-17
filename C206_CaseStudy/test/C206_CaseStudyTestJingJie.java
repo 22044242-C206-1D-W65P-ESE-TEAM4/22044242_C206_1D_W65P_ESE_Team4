@@ -65,7 +65,7 @@ public class C206_CaseStudyTestJingJie {
 		
 		assertNotEquals("Test if the arrayList is empty at first", 0, skillList.size());
 		
-		TestJobSkill.deleteSkill(usersList, skillList);
+		C206_CaseStudy.deleteSkill(usersList, skillList);
 
 		assertEquals("Test if the available item in the list is successful",1, skillList.get(0).getSkills().size());
 

@@ -277,7 +277,7 @@ public class C206_CaseStudy {
 
 		return email;
 	}
-
+	
 	// menu based on the USER role
 	public static int Menu(User user) {
 
@@ -296,10 +296,13 @@ public class C206_CaseStudy {
 			System.out.println("3. Disable account");
 			if (user.getRole().equalsIgnoreCase("admin")) {
 				System.out.println("4. Manage Assessments");
-				System.out.println("6. Manage career path");
+			} else if (user.getRole().equalsIgnoreCase("HR")) {
+				System.out.println("4. Manage Jobs");
 			} else {
 				System.out.println("4. View Assessments");
+				
 			}
+			System.out.println("5. Resume Management");
 		}
 
 		Helper.line(70, "=");
@@ -1133,8 +1136,8 @@ public class C206_CaseStudy {
 		}
 		return false;
 		
-		
 	}
+	
 	
 	public static boolean DeleteResume(int userID, ArrayList<ResumeTemplate> resumeList,ArrayList<EducationBackground> EBlist)
 	{

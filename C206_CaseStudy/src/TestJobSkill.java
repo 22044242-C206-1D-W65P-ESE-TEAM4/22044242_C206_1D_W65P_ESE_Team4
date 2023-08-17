@@ -3,6 +3,13 @@ import java.util.Arrays;
 
 public class TestJobSkill {
     private static ArrayList<Skill> skillList = new ArrayList<>();
+    
+    private static final int SKILL_VIEW = 1;
+    
+    private static final int SKILL_ADD = 2;
+    
+    private static final int SKILL_DELETE = 3;
+    
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
@@ -25,13 +32,13 @@ public class TestJobSkill {
 		while(option != 100) {
 			menu();
 		option = Helper.readInt("Enter option > ");
-		if (option == 1) {
+		if (option == SKILL_VIEW) {
 			viewSkills(usersList, skillList);
 
-		}else if(option == 2) {
+		}else if(option == SKILL_ADD) {
 			addSkill(usersList, skillList);
 				
-		}else if(option == 3){
+		}else if(option == SKILL_DELETE){
 			deleteSkill(usersList, skillList);
 		}
 	}

@@ -51,8 +51,6 @@ public class C206_CaseStudyTestJingJie {
 		assertNotNull("Test if there is a valid arrayList to add", skillList);
 
 		assertNotEquals("Test if the arrayList is empty at first", 0, skillList.size());
-
-		ArrayList<String> prevSkill = skillList.get(0).getSkills();
 		
 		skillList.add(new Skill(4));
 		

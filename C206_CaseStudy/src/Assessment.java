@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 
 public class Assessment {
 
+	// 22003477- Zay Yar Lin Naing
 	private int assessment_id;
 	private String assessment_type;
 	private String topic;

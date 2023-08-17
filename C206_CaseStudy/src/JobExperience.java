@@ -6,6 +6,9 @@
  * @author KN
  *
  */
+
+//22002464 Xaviera Ong Ke Ning
+
 public class JobExperience {
 	private String companyName;
 	private String position;

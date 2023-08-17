@@ -1,15 +1,18 @@
+
 import java.util.ArrayList;
 
 public class CareerPath {
 
+	private int user_id;
 	private int careerPathId;
 	private String careerTitle;
 	private String jobDescription;
 	private String growthProspects;
 	private String requiredSkills;
 
-	
-	public CareerPath(int careerPathId, String careerTitle, String jobDescription, String growthProspects, String requiredSkills) {
+	public CareerPath(int user_id,int careerPathId, String careerTitle, String jobDescription, String growthProspects,
+			String requiredSkills) {
+		this.user_id = user_id;
 		this.careerPathId = careerPathId;
 		this.careerTitle = careerTitle;
 		this.jobDescription = jobDescription;
@@ -18,11 +21,21 @@ public class CareerPath {
 	}
 
 	// Getters and setters for career path fields
+
+
 	
 	public int getCareerPathId() {
 		return careerPathId;
 	}
-	
+
+	public int getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
+
 	public String getCareerTitle() {
 		return careerTitle;
 	}
@@ -58,5 +71,24 @@ public class CareerPath {
 	public static CareerPath getCareerPathById(ArrayList<CareerPath> cpList, int id) {
 		// TODO Auto-generated method stub
 		return null;
-	} 
+
+	}
+
+	public static String viewCareerPath(User currentUser, ArrayList<CareerPath> cpList) {
+		// CareerPath selectedCareerPath = getCareerPathById(cpList, careerPathId);
+
+		for (CareerPath career : cpList) {
+			if (currentUser.getUser_id() == career.getUser_id()) {
+				System.out.println("Selected Career Path for :" + career.getCareerPathId());
+				System.out.println("Title: " + career.getCareerTitle());
+				System.out.println("Description: " + career.getJobDescription());
+				System.out.println("Growth Prospects: " + career.getGrowthProspects());
+				System.out.println("Required Skills: " + career.getRequiredSkills());
+			}
+		}
+		return null;
+	}
+
+	
+	
 }

@@ -95,7 +95,8 @@ class C206_CaseStudyTestShihan {
         C206_CaseStudy.deleteJob(jobList, "Non Existing Job");
 
         assertEquals(initialSize, jobList.size());
-    }}
+    }
+    
+}
   
-
 

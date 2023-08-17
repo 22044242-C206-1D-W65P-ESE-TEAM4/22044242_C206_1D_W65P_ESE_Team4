@@ -8,16 +8,12 @@ public class C206_CaseStudy {
 	private static final int VIEWPROFILE = 1;
 	private static final int UPDATEPROFILE = 2;
 
-
-	
 	private static final int EDUCATIONBACKGROUNDMANAGEMENT = 2;
 	private static final int VIEWEDUCATIONBACKGROUND = 1;
 	private static final int UPDATEEDUCATIONBACKGROUND = 2;
-	
-	private static final int DELETEACCOUNTMANAGEMENT = 3;	
-	
-	
-	
+
+	private static final int DELETEACCOUNTMANAGEMENT = 3;
+
 	// Refactoring
 	private static final int ASSESSMENT_DELETE = 3;
 	private static final int ASSESSMENT_VIEW = 2;
@@ -31,24 +27,23 @@ public class C206_CaseStudy {
 	private static final int CAREERPATH_ADD = 2;
 	private static final int CAREERPATH_DELETE = 3;
 
-	//Refactoring (Xaviera Ong Ke Ning)
+	// Refactoring (Xaviera Ong Ke Ning)
 	private static final int OPTION_RESUME = 5;
 	private static final int RESUME_ADD = 1;
 	private static final int RESUME_VIEW = 2;
 	private static final int RESUME_DELETE = 3;
-	
+
 	private static final int TEMPLATE1 = 1;
 	private static final int TEMPLATE2 = 2;
 	private static final int TEMPLATE3 = 3;
 
-	//Refactoring Jing jie
-    private static final int SKILL_VIEW = 1;
-    private static final int SKILL_ADD = 2;
-    private static final int SKILL_DELETE = 3;
-    private static final int SKILLMANAGEMENTOPTION = 7;
+	// Refactoring Jing jie
+	private static final int SKILL_VIEW = 1;
+	private static final int SKILL_ADD = 2;
+	private static final int SKILL_DELETE = 3;
+	private static final int SKILLMANAGEMENTOPTION = 7;
 
 	public static final int CareerPathManagement = 6;
-	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -57,23 +52,21 @@ public class C206_CaseStudy {
 
 	// Code starts from here
 	public static void start() {
-		
-		User currentUser = null;
-		  ArrayList<Job_Opportunity> jobList = new ArrayList<>();
-		  Job_Opportunity jobOpportunity = new Job_Opportunity(
-				    "Software Engineer", // JobTitle
-				    "Singapore",         // Location
-				    5000.0,              // Min_Salary
-				    8000.0,              // Max_Salary
-				    "Java, Python",      // skills
-				    "Develop software applications", // JobDetails
-				    "XYZ Tech Solutions", // CompanyDetails
-				    "Bachelor's degree in Computer Science", // qualifications
-				    "2023-08-31"         // deadline
-				);
-		  jobList.add(jobOpportunity);
 
-	
+		User currentUser = null;
+		ArrayList<Job_Opportunity> jobList = new ArrayList<>();
+		Job_Opportunity jobOpportunity = new Job_Opportunity("Software Engineer", // JobTitle
+				"Singapore", // Location
+				5000.0, // Min_Salary
+				8000.0, // Max_Salary
+				"Java, Python", // skills
+				"Develop software applications", // JobDetails
+				"XYZ Tech Solutions", // CompanyDetails
+				"Bachelor's degree in Computer Science", // qualifications
+				"2023-08-31" // deadline
+		);
+		jobList.add(jobOpportunity);
+
 		// custom users
 		User admin = new User(1, "Admin", "admin@gmail.com", "admin", "lol123");
 		User user1 = new User(2, "john doe1", "john1@sgmail.com", "user", "lol123");
@@ -113,30 +106,32 @@ public class C206_CaseStudy {
 		ArrayList<Assessment> assessmentList = new ArrayList<Assessment>(Arrays.asList(a1, a2, a3));
 
 		ViewAssessment(assessmentList);
-		
-		//custom Resumes
-		String user1Description="Experienced software developer with a passion for crafting efficient and innovative solutions. "
-						+ "Proficient in multiple programming languages and adept at collaborating in Agile environments. "
-						+ "Track record of delivering high-quality code and driving project success. Eager to contribute technical expertise to a dynamic team.";
-				
-		String user2Description="Experienced software developer with a proven track record of delivering high-quality solutions in fast-paced environments."
-						+ " Proficient in full-stack development, utilizing languages like Python, JavaScript, and Java. "
-						+ "Expertise in designing and implementing efficient algorithms and data structures. "
-						+ "Strong problem-solving skills and a collaborative mindset, demonstrated through successful cross-functional team projects. ";
+
+		// custom Resumes
+		String user1Description = "Experienced software developer with a passion for crafting efficient and innovative solutions. "
+				+ "Proficient in multiple programming languages and adept at collaborating in Agile environments. "
+				+ "Track record of delivering high-quality code and driving project success. Eager to contribute technical expertise to a dynamic team.";
+
+		String user2Description = "Experienced software developer with a proven track record of delivering high-quality solutions in fast-paced environments."
+				+ " Proficient in full-stack development, utilizing languages like Python, JavaScript, and Java. "
+				+ "Expertise in designing and implementing efficient algorithms and data structures. "
+				+ "Strong problem-solving skills and a collaborative mindset, demonstrated through successful cross-functional team projects. ";
 
 		ArrayList<JobExperience> jbl = new ArrayList<JobExperience>();
-		JobExperience jbe1 = new JobExperience("DBS","Software Tester","Aug 2020 - Sept 2023","Lead some projects");
-		JobExperience jbe2 = new JobExperience("Smart Nation","Software Tester","Mar 2020 - Sept 2021","Projects leader");
+		JobExperience jbe1 = new JobExperience("DBS", "Software Tester", "Aug 2020 - Sept 2023", "Lead some projects");
+		JobExperience jbe2 = new JobExperience("Smart Nation", "Software Tester", "Mar 2020 - Sept 2021",
+				"Projects leader");
 
-		jbl=new ArrayList<JobExperience>(Arrays.asList(jbe1,jbe2));
-		
-		ResumeTemplate user1Resume= new ResumeTemplate(2,1,1,jbl,"GovTech Resume","John Doe 1",22345678,"john1@sgmail.com",user1Description);
-		ResumeTemplate user2Resume= new ResumeTemplate(3,2,2,jbl,"Navy Resume","John Doe 2",32345678,"john2@gmail.com",user2Description);
+		jbl = new ArrayList<JobExperience>(Arrays.asList(jbe1, jbe2));
 
-		//add to resumeList
-		ArrayList<ResumeTemplate> resumeList = new ArrayList<ResumeTemplate>(Arrays.asList(user1Resume,user2Resume));		
+		ResumeTemplate user1Resume = new ResumeTemplate(2, 1, 1, jbl, "GovTech Resume", "John Doe 1", 22345678,
+				"john1@sgmail.com", user1Description);
+		ResumeTemplate user2Resume = new ResumeTemplate(3, 2, 2, jbl, "Navy Resume", "John Doe 2", 32345678,
+				"john2@gmail.com", user2Description);
 
-		
+		// add to resumeList
+		ArrayList<ResumeTemplate> resumeList = new ArrayList<ResumeTemplate>(Arrays.asList(user1Resume, user2Resume));
+
 		// Career path list!!!
 		CareerPath c1 = new CareerPath(1, 1, "Software Engineer", "Develops software applications",
 				"High growth potential", "Programming skills");
@@ -144,11 +139,10 @@ public class C206_CaseStudy {
 				"communication skills");
 
 		ArrayList<CareerPath> cpList = new ArrayList<>(Arrays.asList(c1, c2));
-	
-		
-		//skill
-	    ArrayList<Skill> skillList = new ArrayList<Skill>();
-	    
+
+		// skill
+		ArrayList<Skill> skillList = new ArrayList<Skill>();
+
 		skillList.add(new Skill(2));
 		skillList.add(new Skill(3));
 
@@ -156,8 +150,7 @@ public class C206_CaseStudy {
 		skillList.get(0).addSkill("Applications Integration");
 		skillList.get(1).addSkill("Business innovation");
 		skillList.get(1).addSkill("Software Design");
-		
-		
+
 		int res = 10000;
 		int AssessmentOption = 10000;
 
@@ -175,7 +168,7 @@ public class C206_CaseStudy {
 					System.out.println("Thank for using the application, Goodbye!");
 					break;
 				} else if (res == PROFILEMANAGEMENT) {
-					
+
 					ProfileManagement(currentUser, profileList, usersList);
 				} else if (res == EDUCATIONBACKGROUNDMANAGEMENT) {
 					EducationBackgroundManagement(educationBackgroundList, currentUser.getUser_id());
@@ -184,9 +177,10 @@ public class C206_CaseStudy {
 					currentUser = null;
 					res = Menu(currentUser);
 
-				}else if(res == SKILLMANAGEMENTOPTION) {
-					skillMenu();				}
-				
+				} else if (res == SKILLMANAGEMENTOPTION) {
+					skillMenu();
+				}
+
 				else if (res == OPTION_ASSESSMENT) {
 					if (currentUser.getRole().equalsIgnoreCase("admin")) {
 
@@ -233,27 +227,21 @@ public class C206_CaseStudy {
 					} else {
 						Assessment.ViewAssessment(assessmentList);
 					}
-				}
-				else if (res == OPTION_RESUME )//resume
+				} else if (res == OPTION_RESUME)// resume
 				{
 					ResumeMenu();
-					int resumeOption=Helper.readInt("Welcome to Resume Management, What would you like to do?> ");
-					if (resumeOption==RESUME_ADD)
-					{
-						AddResume(currentUser.getUser_id(),resumeList,educationBackgroundList);
-					}
-					else if (resumeOption==RESUME_VIEW)
-					{
-						ViewResume(currentUser.getUser_id(),resumeList,educationBackgroundList);
-					}
-					else if (resumeOption==RESUME_DELETE)
-					{
-						DeleteResume(currentUser.getUser_id(),resumeList,educationBackgroundList);
+					int resumeOption = Helper.readInt("Welcome to Resume Management, What would you like to do?> ");
+					if (resumeOption == RESUME_ADD) {
+						AddResume(currentUser.getUser_id(), resumeList, educationBackgroundList);
+					} else if (resumeOption == RESUME_VIEW) {
+						ViewResume(currentUser.getUser_id(), resumeList, educationBackgroundList);
+					} else if (resumeOption == RESUME_DELETE) {
+						DeleteResume(currentUser.getUser_id(), resumeList, educationBackgroundList);
 					}
 				}
-				
-				//refactoring
-				else if(res == CAREERPATH_OPTION ) {
+
+				// refactoring
+				else if (res == CAREERPATH_OPTION) {
 					CareerPathManagement(currentUser, cpList);
 
 				}
@@ -276,9 +264,9 @@ public class C206_CaseStudy {
 					currentUser = login(usersList, email, password1);
 				}
 			}
-			
+
 		}
-			
+
 	}
 
 	public static String FormEmail(ArrayList<User> usersList, String type) {
@@ -297,7 +285,7 @@ public class C206_CaseStudy {
 
 		return email;
 	}
-	
+
 	// menu based on the USER role
 	public static int Menu(User user) {
 
@@ -305,6 +293,7 @@ public class C206_CaseStudy {
 		System.out.println("CPA Application");
 		Helper.line(70, "=");
 
+		int ans;
 		if (user == null) {
 			System.out.println("1. Register");
 			System.out.println("2. Login");
@@ -320,27 +309,27 @@ public class C206_CaseStudy {
 				System.out.println("4. Manage Jobs");
 			} else {
 				System.out.println("4. View Assessments");
-				
+
 			}
-<<<<<<< HEAD
+
 			System.out.println("7. Skill Management");
-			
-=======
+
 			System.out.println("5. Resume Management");
->>>>>>> branch 'master' of https://github.com/W65P-C206-TEAM4/C206_CaseStudy.git
 		}
 
-		Helper.line(70, "=");
-		int ans = Helper.readInt("Welcome to CPA, What would you like to do? ");
-		Helper.line(70, "=");
+			Helper.line(70, "=");
+			ans = Helper.readInt("Welcome to CPA, What would you like to do? ");
+			Helper.line(70, "=");
+		
 
-		return ans;
+			
+			return ans;
+		
 	}
 
 	public static void ProfileManagement(User user, ArrayList<Profile> profileList, ArrayList<User> usersList) {
 		System.out.println("1. View Profile");
 		System.out.println("2. Update Profile");
-	
 
 		int ans = Helper.readInt("Profile Management > ");
 
@@ -694,7 +683,6 @@ public class C206_CaseStudy {
 		return true;
 	}
 
-
 //	// -----------Job Application (HR) -------------
 //	public static void Job_Application_Menu() {
 //		Helper.line(70, "=");
@@ -802,22 +790,19 @@ public class C206_CaseStudy {
 
 		return success;
 	}
-	
-	//-----------Job Application (HR) -------------
-		public static void Job_Application_Menu() {
-			Helper.line(70, "=");
-		    System.out.println("Job Application Menu");
-		    Helper.line(70, "=");
-		    System.out.println("1. Add Job");
-		    System.out.println("2. Manage Added Job");
-		    System.out.println("3. View All Job Opportunities");
 
-		    System.out.println("0. Quit");
-		    Helper.line(70, "=");
-			}
-		
-		
-	
+	// -----------Job Application (HR) -------------
+	public static void Job_Application_Menu() {
+		Helper.line(70, "=");
+		System.out.println("Job Application Menu");
+		Helper.line(70, "=");
+		System.out.println("1. Add Job");
+		System.out.println("2. Manage Added Job");
+		System.out.println("3. View All Job Opportunities");
+
+		System.out.println("0. Quit");
+		Helper.line(70, "=");
+	}
 
 	public static Job_Opportunity CreateNewJob(ArrayList<Job_Opportunity> JobList) {
 		try {
@@ -853,12 +838,14 @@ public class C206_CaseStudy {
 			return null; // Return null if an error occurs
 		}
 	}
+
 	public static void ViewAllJobOpportunities(ArrayList<Job_Opportunity> jobList) {
 		System.out.println("List of All Job Opportunities:");
 		for (Job_Opportunity job : jobList) {
 			job.displayJobInfo();
 		}
 	}
+
 	public static void deleteJob(ArrayList<Job_Opportunity> jobList, String jobTitle) {
 		for (int i = 0; i < jobList.size(); i++) {
 			if (jobList.get(i).getJobTitle().equalsIgnoreCase(jobTitle)) {
@@ -874,15 +861,14 @@ public class C206_CaseStudy {
 			}
 		}
 	}
-	
-	
+
 	public static void ManageAddedJob(ArrayList<Job_Opportunity> JobList) {
 		while (true) {
 			String jobTitle = Helper.readString("Enter the job title to manage (or type 'exit' to quit): ");
 			if (jobTitle.equalsIgnoreCase("exit")) {
 				System.out.println("Exiting job management.");
 				break;
-				}
+			}
 			boolean found = false;
 			for (Job_Opportunity job : JobList) {
 				if (job.getJobTitle().equalsIgnoreCase(jobTitle)) {
@@ -898,18 +884,15 @@ public class C206_CaseStudy {
 		}
 	}
 
-	
-	public static void ResumeMenu() 
-	{
+	public static void ResumeMenu() {
 		System.out.println("1. Add resume");
 		System.out.println("2. View resume");
 		System.out.println("3. Delete resume");
 		Helper.line(50, "=");
 	}
-	
-	//Refactoring (Xaviera Ong Ke Ning)
-	public static void ResumeTemplateMenu()
-	{
+
+	// Refactoring (Xaviera Ong Ke Ning)
+	public static void ResumeTemplateMenu() {
 		Helper.line(50, "=");
 		System.out.println("CHOOSE TEMPLATE");
 		Helper.line(50, "=");
@@ -919,102 +902,98 @@ public class C206_CaseStudy {
 		Helper.line(50, "=");
 	}
 
-		
-	public static boolean AddResume(int userID,ArrayList<ResumeTemplate> resumeList,ArrayList<EducationBackground> EBlist)
-	{	
-		//Refactoring (Xaviera Ong Ke Ning)
+	public static boolean AddResume(int userID, ArrayList<ResumeTemplate> resumeList,
+			ArrayList<EducationBackground> EBlist) {
+		// Refactoring (Xaviera Ong Ke Ning)
 		ResumeTemplateMenu();
-		
-		int templateOption=Helper.readInt("Choose a template> ");
-		userID=Helper.readInt("Enter your user ID> ");
-				
-		if (templateOption == TEMPLATE1)
-		{
+
+		int templateOption = Helper.readInt("Choose a template> ");
+		userID = Helper.readInt("Enter your user ID> ");
+
+		if (templateOption == TEMPLATE1) {
 			Helper.line(50, "=");
 			System.out.println("Building resume...");
 			Helper.line(50, "=");
 
-			int resumeID = resumeList.size()+1;
-			String title=Helper.readString("Resume Title> ");
-			String name=Helper.readString("Your full name>");
-			int phoneNum=Helper.readInt("Your contact number> ");
-			String email=Helper.readString("Your email address> ");
-			String description=Helper.readString("Short introduction about yourself> ");
-			
-			//employment 
+			int resumeID = resumeList.size() + 1;
+			String title = Helper.readString("Resume Title> ");
+			String name = Helper.readString("Your full name>");
+			int phoneNum = Helper.readInt("Your contact number> ");
+			String email = Helper.readString("Your email address> ");
+			String description = Helper.readString("Short introduction about yourself> ");
+
+			// employment
 			Helper.line(50, "=");
 			System.out.println("Employment History");
 			Helper.line(50, "=");
-			
-			String company=Helper.readString("Company name> ");
-			String position=Helper.readString("Position> ");
-			String period=Helper.readString("Employement period> ");
-			String achievements=Helper.readString("Achievements> ");
-			
+
+			String company = Helper.readString("Company name> ");
+			String position = Helper.readString("Position> ");
+			String period = Helper.readString("Employement period> ");
+			String achievements = Helper.readString("Achievements> ");
+
 			ArrayList<JobExperience> jbl = new ArrayList<JobExperience>();
 			JobExperience jbe = new JobExperience(company, position, period, achievements);
-			
+
 			jbl.add(jbe);
-	
-			
-			//createEducationBackground(,EBlist,userList);
+
+			// createEducationBackground(,EBlist,userList);
 			Helper.line(50, "=");
 			System.out.println("Education History");
 			Helper.line(50, "=");
-			
+
 			String degree = Helper.readString("Degree given > ");
 			String institution = Helper.readString("Education institution > ");
 			int year_graduated = Helper.readInt("Year graduated > ");
 
-			
-			ResumeTemplate rs=new ResumeTemplate(userID,resumeID,templateOption,jbl,title,name,phoneNum,email,description);
-			EducationBackground eb=new EducationBackground(degree,institution,year_graduated);
-			
+			ResumeTemplate rs = new ResumeTemplate(userID, resumeID, templateOption, jbl, title, name, phoneNum, email,
+					description);
+			EducationBackground eb = new EducationBackground(degree, institution, year_graduated);
+
 			resumeList.add(rs);
 
 			EBlist.add(eb);
-						
+
 			rs.display1();
-			
-			String output = String.format("\n%-20s %-15s %-15s %-10s\n", "Company", "Position", "Emplyement Period", "Achievements");
-			output += String.format("%-20s %-15s %-15s %-10s\n",company,position,period,achievements);
-			
+
+			String output = String.format("\n%-20s %-15s %-15s %-10s\n", "Company", "Position", "Emplyement Period",
+					"Achievements");
+			output += String.format("%-20s %-15s %-15s %-10s\n", company, position, period, achievements);
+
 			output += String.format("\n%-20s %-12s %-10s\n", "Degree", "Institution", "Year Graduated");
 			output += String.format("%-20s %-12s %-10d\n", eb.getDegree(), eb.getInstitution(), eb.getYear_graduated());
-			System.out.println(output);	
+			System.out.println(output);
 
-			//return true;
+			// return true;
 
-		}
-		else if (templateOption == TEMPLATE2)
-		{
+		} else if (templateOption == TEMPLATE2) {
 
 			Helper.line(50, "=");
 			System.out.println("Building resume...");
 			Helper.line(50, "=");
-			
-			int resumeID= resumeList.size()+1;
-			String title=Helper.readString("Resume Title> ");
-			String name=Helper.readString("Your full name>");
-			int phoneNum=Helper.readInt("Your contact number> ");
-			String email=Helper.readString("Your email address> ");
-			String description=Helper.readString("Brief summary of your skills> ");
-			
-			//employment 
+
+			int resumeID = resumeList.size() + 1;
+			String title = Helper.readString("Resume Title> ");
+			String name = Helper.readString("Your full name>");
+			int phoneNum = Helper.readInt("Your contact number> ");
+			String email = Helper.readString("Your email address> ");
+			String description = Helper.readString("Brief summary of your skills> ");
+
+			// employment
 			Helper.line(50, "=");
 			System.out.println("Employment History");
 			Helper.line(50, "=");
-			String company=Helper.readString("Company name> ");
-			String position=Helper.readString("Position> ");
-			String period=Helper.readString("Employement period> ");
-			String achievements=Helper.readString("Achievements> ");
-			
+			String company = Helper.readString("Company name> ");
+			String position = Helper.readString("Position> ");
+			String period = Helper.readString("Employement period> ");
+			String achievements = Helper.readString("Achievements> ");
+
 			ArrayList<JobExperience> jbl = new ArrayList<JobExperience>();
 			JobExperience jbe = new JobExperience(company, position, period, achievements);
-			
+
 			jbl.add(jbe);
-			
-			//createEducationBackground(,EBlist,userList);
+
+			// createEducationBackground(,EBlist,userList);
 			Helper.line(50, "=");
 			System.out.println("Education History");
 			Helper.line(50, "=");
@@ -1022,188 +1001,169 @@ public class C206_CaseStudy {
 			String institution = Helper.readString("Education institution > ");
 			int year_graduated = Helper.readInt("Year graduated > ");
 
-			
-			ResumeTemplate rs=new ResumeTemplate(userID,resumeID,templateOption,jbl,title,name,phoneNum,email,description);
-			EducationBackground eb=new EducationBackground(degree,institution,year_graduated);
-			
-		
+			ResumeTemplate rs = new ResumeTemplate(userID, resumeID, templateOption, jbl, title, name, phoneNum, email,
+					description);
+			EducationBackground eb = new EducationBackground(degree, institution, year_graduated);
+
 			resumeList.add(rs);
 
 			EBlist.add(eb);
 
 			rs.display2();
-						
-			String output = String.format("\n%-20s %-15s %-15s %-10s\n", "Company", "Position", "Emplyement Period", "Achievements");
-			output += String.format("%-20s %-15s %-15s %-10s\n",company,position,period,achievements);
-			
+
+			String output = String.format("\n%-20s %-15s %-15s %-10s\n", "Company", "Position", "Emplyement Period",
+					"Achievements");
+			output += String.format("%-20s %-15s %-15s %-10s\n", company, position, period, achievements);
+
 			output += String.format("\n%-20s %-12s %-10s\n", "Degree", "Institution", "Year Graduated");
 			output += String.format("%-20s %-12s %-10d\n", eb.getDegree(), eb.getInstitution(), eb.getYear_graduated());
-			System.out.println(output);	
+			System.out.println(output);
 
-			//return true;
-			
+			// return true;
+
 		}
-		
-		else if(templateOption == TEMPLATE3)
-		{			
+
+		else if (templateOption == TEMPLATE3) {
 			Helper.line(50, "=");
 			System.out.println("Building resume...");
 			Helper.line(50, "=");
-			
-			int resumeID= resumeList.size()+1;
-			String title=Helper.readString("Resume Title> ");
-			String name=Helper.readString("Your full name>");
-			int phoneNum=Helper.readInt("Your contact number> ");
-			String email=Helper.readString("Your email address> ");
-			String description=Helper.readString("Brief summary of your skills> ");
-			
-			//employment 
+
+			int resumeID = resumeList.size() + 1;
+			String title = Helper.readString("Resume Title> ");
+			String name = Helper.readString("Your full name>");
+			int phoneNum = Helper.readInt("Your contact number> ");
+			String email = Helper.readString("Your email address> ");
+			String description = Helper.readString("Brief summary of your skills> ");
+
+			// employment
 			Helper.line(50, "=");
 			System.out.println("Employment History");
 			Helper.line(50, "=");
-			String company=Helper.readString("Company name> ");
-			String position=Helper.readString("Position> ");
-			String period=Helper.readString("Employement period> ");
-			String achievements=Helper.readString("Achievements> ");
-			
-			
+			String company = Helper.readString("Company name> ");
+			String position = Helper.readString("Position> ");
+			String period = Helper.readString("Employement period> ");
+			String achievements = Helper.readString("Achievements> ");
+
 			ArrayList<JobExperience> jbl = new ArrayList<JobExperience>();
 			JobExperience jbe = new JobExperience(company, position, period, achievements);
-			
+
 			jbl.add(jbe);
-			
-			//createEducationBackground(,EBlist,userList);
+
+			// createEducationBackground(,EBlist,userList);
 			Helper.line(50, "=");
 			System.out.println("Education History");
 			Helper.line(50, "=");
 			String degree = Helper.readString("Degree given > ");
 			String institution = Helper.readString("Education institution > ");
 			int year_graduated = Helper.readInt("Year graduated > ");
-			
-			ResumeTemplate rs=new ResumeTemplate(userID,resumeID,templateOption,jbl,title,name,phoneNum,email,description);
-			EducationBackground eb=new EducationBackground(degree,institution,year_graduated);
-			
+
+			ResumeTemplate rs = new ResumeTemplate(userID, resumeID, templateOption, jbl, title, name, phoneNum, email,
+					description);
+			EducationBackground eb = new EducationBackground(degree, institution, year_graduated);
+
 			resumeList.add(rs);
 
 			EBlist.add(eb);
-						
+
 			rs.display3();
-			
-			String output = String.format("\n%-20s %-15s %-15s %-10s\n", "Company", "Position", "Emplyement Period", "Achievements");
-			output += String.format("%-20s %-15s %-15s %-10s\n",company,position,period,achievements);
-			
+
+			String output = String.format("\n%-20s %-15s %-15s %-10s\n", "Company", "Position", "Emplyement Period",
+					"Achievements");
+			output += String.format("%-20s %-15s %-15s %-10s\n", company, position, period, achievements);
+
 			output += String.format("\n%-20s %-12s %-10s\n", "Degree", "Institution", "Year Graduated");
 			output += String.format("%-20s %-12s %-10d\n", eb.getDegree(), eb.getInstitution(), eb.getYear_graduated());
-			System.out.println(output);	
-											
+			System.out.println(output);
+
 		}
 		System.out.println("Added successfully!");
 		return true;
 	}
-		
-	
-	public static boolean ViewResume(int user_id, ArrayList<ResumeTemplate> resumeList,ArrayList<EducationBackground> EBlist)
-	{		
-		boolean isFound=false;
-		
+
+	public static boolean ViewResume(int user_id, ArrayList<ResumeTemplate> resumeList,
+			ArrayList<EducationBackground> EBlist) {
+		boolean isFound = false;
+
 		int resume_id = Helper.readInt("Enter resume ID > ");
-		
-		if ((resumeList!=null) && (EBlist!=null))
-		{
-			for(ResumeTemplate rs : resumeList) 
-			{
-				if(rs.getUserID() == user_id) 
-				{
-					//Refactoring (Xaviera Ong Ke Ning)
+
+		if ((resumeList != null) && (EBlist != null)) {
+			for (ResumeTemplate rs : resumeList) {
+				if (rs.getUserID() == user_id) {
+					// Refactoring (Xaviera Ong Ke Ning)
 					int rs_ResumeID = rs.getResumeID();
 
-					if(rs_ResumeID == resume_id) 
-					{
-						//Refactoring (Xaviera Ong Ke Ning)
+					if (rs_ResumeID == resume_id) {
+						// Refactoring (Xaviera Ong Ke Ning)
 						int rs_TemplateID = rs.getTemplateID();
-						
-						if(rs_TemplateID == 1)
-						{
+
+						if (rs_TemplateID == 1) {
 							rs.display1();
-						}
-						else if (rs_TemplateID == 2)
-						{
+						} else if (rs_TemplateID == 2) {
 							rs.display2();
-						}
-						else if (rs_TemplateID == 3)
-						{
+						} else if (rs_TemplateID == 3) {
 							rs.display3();
 						}
-						
+
 						EducationBackground EB = EBlist.get(user_id - 1);
-						
-						
-						String output = String.format("\n%-20s %-12s %-10s\n", "Degree", "Institution", "Year Graduated");
-						output += String.format("%-20s %-12s %-10d\n", EB.getDegree(), EB.getInstitution(), EB.getYear_graduated());
+
+						String output = String.format("\n%-20s %-12s %-10s\n", "Degree", "Institution",
+								"Year Graduated");
+						output += String.format("%-20s %-12s %-10d\n", EB.getDegree(), EB.getInstitution(),
+								EB.getYear_graduated());
 						System.out.println(output);
-						
+
 						ArrayList<JobExperience> we = rs.getWorkExperience();
-						for (JobExperience experience:we)
-						{
+						for (JobExperience experience : we) {
 							experience.displayWorkExperience();
 						}
 						return true;
 					}
 				}
-				
+
 			}
-			
+
 		}
-		
-		if (!isFound)
-		{
-			System.out.println("Resume does not exist!");	
+
+		if (!isFound) {
+			System.out.println("Resume does not exist!");
 		}
 		return false;
-		
+
 	}
-	
-	
-	public static boolean DeleteResume(int userID, ArrayList<ResumeTemplate> resumeList,ArrayList<EducationBackground> EBlist)
-	{
+
+	public static boolean DeleteResume(int userID, ArrayList<ResumeTemplate> resumeList,
+			ArrayList<EducationBackground> EBlist) {
 		Helper.line(50, "=");
 		System.out.println("Delete Resume");
 		Helper.line(50, "=");
-						
-		int resumeID=Helper.readInt("Enter resume ID> ");
-		
-		for (int i=0;i<resumeList.size();i++)
-		{
-			//Refactoring(Xaviera Ong Ke Ning)
+
+		int resumeID = Helper.readInt("Enter resume ID> ");
+
+		for (int i = 0; i < resumeList.size(); i++) {
+			// Refactoring(Xaviera Ong Ke Ning)
 			int ResumeList_ResumeID = resumeList.get(i).getResumeID();
-			if (ResumeList_ResumeID == resumeID)
-			{
-				//Refactoring(Xaviera Ong Ke Ning)
+			if (ResumeList_ResumeID == resumeID) {
+				// Refactoring(Xaviera Ong Ke Ning)
 
 				int ResumeList_TemplateID = resumeList.get(i).getTemplateID();
-				if(ResumeList_TemplateID == 1)
-				{
+				if (ResumeList_TemplateID == 1) {
 					resumeList.get(i).display1();
 
-				}
-				else if (ResumeList_TemplateID == 2)
-				{
+				} else if (ResumeList_TemplateID == 2) {
 					resumeList.get(i).display2();
-				}
-				else if (ResumeList_TemplateID == 3)
-				{
+				} else if (ResumeList_TemplateID == 3) {
 					resumeList.get(i).display3();
 				}
 				resumeList.remove(i);
 				EBlist.remove(i);
 				System.out.println("\nDelete successfully!");
-			
+
 			}
 		}
 		return true;
-						
+
 	}
-	
+
 	public static void CareerPathManagement(User currentUser, ArrayList<CareerPath> cpList) {
 		System.out.println("1. View Career Path");
 		System.out.println("2. Add New Career Path");
@@ -1215,11 +1175,11 @@ public class C206_CaseStudy {
 			viewCareerPath(currentUser, cpList);
 		} else if (op == CAREERPATH_ADD) {
 			addNewCareerPath(currentUser, cpList);
-		} else if (op == CAREERPATH_DELETE ) {
+		} else if (op == CAREERPATH_DELETE) {
 			deleteCareerPath(cpList);
 		}
 	}
-	
+
 	public static String viewCareerPath(User currentUser, ArrayList<CareerPath> cpList) {
 		// CareerPath selectedCareerPath = getCareerPathById(cpList, careerPathId);
 
@@ -1233,12 +1193,12 @@ public class C206_CaseStudy {
 				System.out.println("Description: " + career.getJobDescription());
 				System.out.println("Growth Prospects: " + career.getGrowthProspects());
 				System.out.println("Required Skills: " + career.getRequiredSkills());
-				
+
 			}
 		}
 		return null;
 	}
-	
+
 	public static CareerPath addNewCareerPath(User currentUser, ArrayList<CareerPath> cpList) {
 
 		int newId = cpList.size() + 1;
@@ -1268,9 +1228,9 @@ public class C206_CaseStudy {
 
 		return null;
 	}
-	
+
 	public static CareerPath getCareerPathById(ArrayList<CareerPath> cpList, int id) {
-	
+
 		for (CareerPath cp : cpList) {
 			if (cp.getCareerPathId() == id) {
 				return cp;
@@ -1278,7 +1238,7 @@ public class C206_CaseStudy {
 		}
 		return null;
 	}
-	
+
 	public static void deleteCareerPath(ArrayList<CareerPath> cpList) {
 		int idToDelete = Helper.readInt("Enter the ID of the career path to delete:"); // Assuming the user enters the
 																						// ID to delete
@@ -1291,68 +1251,67 @@ public class C206_CaseStudy {
 			System.out.println("Career Path with ID " + idToDelete + " not found.");
 		}
 	}
-	
-	
+
 	// Jing Jie
-	public static void skillMenu() { 
-		Helper.line(70,"=");
+	public static void skillMenu() {
+		Helper.line(70, "=");
 		System.out.println("1. View all Skills");
 		System.out.println("2. Add Skill");
 		System.out.println("3. Delete Skill");
 //		System.out.println("4. Exit");
 		Helper.line(70, "=");
 	}
-		public static String viewSkills(ArrayList<User>usersList, ArrayList<Skill>skillList) {
-			
-	        for (User user : usersList) {
-	            while(user.getUser_id() != 1 && user.getUser_id() != 4) {
-	        	System.out.println("User: " + user.getName());
-	        	break;
-	            }
-	            for (Skill skill : skillList) {
-	                if (skill.getUser_id() == user.getUser_id()) {
-	                    System.out.println("Skills:");
-	                    for (String s : skill.getSkills()) {
-	                        System.out.println("- " + s);
-	                    }
-	                }
-	            }
-	        }
-	        return null;
-		}
-		
-		public static Skill addSkill(ArrayList<User>usersList, ArrayList<Skill>skillList) {
-			int userID = Helper.readInt("Enter User ID > ");
-			String addSkill = Helper.readString("Enter skill to add > ");
-			
-			for(User user: usersList) {
-				if(user.getUser_id() == userID) {
-					for(Skill skill:skillList) {
-						if(skill.getUser_id() == userID) {
-							skill.addSkill(addSkill);
-						}
-					}
-					
-				}
+
+	public static String viewSkills(ArrayList<User> usersList, ArrayList<Skill> skillList) {
+
+		for (User user : usersList) {
+			while (user.getUser_id() != 1 && user.getUser_id() != 4) {
+				System.out.println("User: " + user.getName());
+				break;
 			}
-			return null;
-		}
-		public static void deleteSkill(ArrayList<User>usersList, ArrayList<Skill>skillList) {
-			int userID = Helper.readInt("Enter User ID > ");
-			String deleteSkill = Helper.readString("Enter skill to delete > ");
-			
-			for(User user: usersList) {
-				if(user.getUser_id() == userID) {
-					for(Skill skill:skillList) {
-						if(skill.getUser_id() == userID) {
-							skill.deleteSkill(deleteSkill);
-						}
+			for (Skill skill : skillList) {
+				if (skill.getUser_id() == user.getUser_id()) {
+					System.out.println("Skills:");
+					for (String s : skill.getSkills()) {
+						System.out.println("- " + s);
 					}
-					
 				}
 			}
 		}
-	
-	
-	
+		return null;
+	}
+
+	public static Skill addSkill(ArrayList<User> usersList, ArrayList<Skill> skillList) {
+		int userID = Helper.readInt("Enter User ID > ");
+		String addSkill = Helper.readString("Enter skill to add > ");
+
+		for (User user : usersList) {
+			if (user.getUser_id() == userID) {
+				for (Skill skill : skillList) {
+					if (skill.getUser_id() == userID) {
+						skill.addSkill(addSkill);
+					}
+				}
+
+			}
+		}
+		return null;
+	}
+
+	public static void deleteSkill(ArrayList<User> usersList, ArrayList<Skill> skillList) {
+		int userID = Helper.readInt("Enter User ID > ");
+		String deleteSkill = Helper.readString("Enter skill to delete > ");
+
+		for (User user : usersList) {
+			if (user.getUser_id() == userID) {
+				for (Skill skill : skillList) {
+					if (skill.getUser_id() == userID) {
+						skill.deleteSkill(deleteSkill);
+					}
+				}
+
+			}
+		}
+	}
+
 }

@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class C206_CaseStudyTestKai {
+	//22003477 - Zay Yar Lin Naing
 
 	private ArrayList<Assessment> assessmentList;
 	private Assessment a1;

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class C206_CaseStudyTestShihan {
+	// NEED TO IMPORT JUNIT 5 TO RUN THE CODE
 
 	private ArrayList<Job_Opportunity> jobList = new ArrayList<>();
     private ArrayList<User> usersList = new ArrayList<>();

@@ -25,6 +25,7 @@ public class C206_CaseStudy {
 
 	// Code starts from here
 	public static void start() {
+		
 		User currentUser = null;
 		  ArrayList<Job_Opportunity> jobList = new ArrayList<>();
 		  Job_Opportunity jobOpportunity = new Job_Opportunity(

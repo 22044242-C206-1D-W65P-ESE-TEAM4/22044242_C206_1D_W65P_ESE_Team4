@@ -42,13 +42,12 @@ public class C206_CaseStudy {
 	private static final int SKILL_ADD = 2;
 	private static final int SKILL_DELETE = 3;
 	private static final int SKILLMANAGEMENTOPTION = 7;
-	
-	//Refactoring Shihan
-	private static final int CREATE_NEW_JOBS =1 ;
-	private static final int MANAGE_ADDED_JOBS=2;
-	private static final int VIEW_ALL_JOBS =3;
-	private static final int EXIT =0 ;
-	
+
+	// Refactoring Shihan
+	private static final int CREATE_NEW_JOBS = 1;
+	private static final int MANAGE_ADDED_JOBS = 2;
+	private static final int VIEW_ALL_JOBS = 3;
+	private static final int EXIT = 0;
 
 	public static final int CareerPathManagement = 6;
 
@@ -111,8 +110,6 @@ public class C206_CaseStudy {
 				new File("construction.txt"));
 
 		ArrayList<Assessment> assessmentList = new ArrayList<Assessment>(Arrays.asList(a1, a2, a3));
-
-		ViewAssessment(assessmentList);
 
 		// custom Resumes
 		String user1Description = "Experienced software developer with a passion for crafting efficient and innovative solutions. "
@@ -319,19 +316,19 @@ public class C206_CaseStudy {
 
 			}
 
-			System.out.println("7. Skill Management");
-
 			System.out.println("5. Resume Management");
+			System.out.println("6. Career Path Management");
+
+			System.out.println("7. Skill Management");
+			System.out.println("0. Quit");
 		}
 
-			Helper.line(70, "=");
-			ans = Helper.readInt("Welcome to CPA, What would you like to do? ");
-			Helper.line(70, "=");
-		
+		Helper.line(70, "=");
+		ans = Helper.readInt("Welcome to CPA, What would you like to do? ");
+		Helper.line(70, "=");
 
-			
-			return ans;
-		
+		return ans;
+
 	}
 
 	public static void ProfileManagement(User user, ArrayList<Profile> profileList, ArrayList<User> usersList) {
@@ -703,100 +700,100 @@ public class C206_CaseStudy {
 //		Helper.line(70, "=");
 //	}
 
-	public static Assessment getInputOfAssessment() {
-		String filePattern = "\\w*(\\.(txt))";
-		Assessment newassessment = null;
-
-		Integer id = Helper.readInt("Enter the ID of the assessment > ");
-		String type = Helper.readString("Enter the type of assessment > ");
-		String topic = Helper.readString("Enter the topic related to assessment > ");
-		String industry = Helper.readString("Enter the related industry > ");
-		String career = Helper.readString("Enter the related career prospect > ");
-		String fileName = Helper.readStringRegEx("Enter the complete name of the file > ", filePattern);
-
-		newassessment = new Assessment(id, type, topic, industry, career, new File(fileName));
-
-		return newassessment;
-
-	}
-
-	public static void AddAssessment(ArrayList<Assessment> assessmentList, Assessment at) {
-
-		Assessment.setHeader("Addition of Assessment");
-
-		System.out.println("");
-
-		for (int i = 0; i < assessmentList.size(); i++) {
-
-			// Refactoring
-			int assessment_id = assessmentList.get(i).getAssessment_id();
-
-			if (assessment_id == at.getAssessment_id()) {
-				System.out.println("The Assessment is already existed");
-				return;
-			}
-
-		}
-		if ((at.getAssessmentType().isEmpty()) || (at.getTopic().isEmpty()) || (at.getIndustry().isEmpty())
-				|| (at.getCareer_path().isEmpty())) {
-			System.out.println("The Info of Assessment is missing!");
-			return;
-
-		}
-
-		assessmentList.add(at);
-
-		System.out.println("The new assessment is successfully added");
-		at.display();
-
-	}
-
-	public static String ViewAssessment(ArrayList<Assessment> assessmentList) {
-
-		Assessment.setHeader("List of Assessments");
-
-		System.out.println("");
-
-		String output = String.format("%-5s %-25s %-25s %-25s %-30s %-30s\n\n", "ID", "TYPE", "TOPIC", "INDUSTRY",
-				"CAREER PROSPECT", "FILE NAME");
-
-		for (Assessment a : assessmentList) {
-			// Refactroing
-			output += String.format("%-140s\n", a.toString());
-		}
-
-		System.out.println(output);
-		return output;
-	}
-
-	public static boolean DeleteAssessment(ArrayList<Assessment> assessmentList, Integer id) {
-
-		Assessment.setHeader("Deletion of Assessment");
-
-		System.out.println("");
-
-		boolean success = false;
-		int deletedAssessment = 0;
-
-		for (int i = 0; i < assessmentList.size(); i++) {
-			// Refactoring
-			int assessment_id = assessmentList.get(i).getAssessment_id();
-			if (id == assessment_id) {
-				success = true;
-				deletedAssessment = i;
-			}
-		}
-
-		if (success) {
-			assessmentList.remove(deletedAssessment);
-			System.out.println("\nThe Assessment is successfully deleted!\n");
-
-		} else {
-			System.out.println("\nThe Assessment ID entered is Invalid.\n");
-		}
-
-		return success;
-	}
+//	public static Assessment getInputOfAssessment() {
+//		String filePattern = "\\w*(\\.(txt))";
+//		Assessment newassessment = null;
+//
+//		Integer id = Helper.readInt("Enter the ID of the assessment > ");
+//		String type = Helper.readString("Enter the type of assessment > ");
+//		String topic = Helper.readString("Enter the topic related to assessment > ");
+//		String industry = Helper.readString("Enter the related industry > ");
+//		String career = Helper.readString("Enter the related career prospect > ");
+//		String fileName = Helper.readStringRegEx("Enter the complete name of the file > ", filePattern);
+//
+//		newassessment = new Assessment(id, type, topic, industry, career, new File(fileName));
+//
+//		return newassessment;
+//
+//	}
+//
+//	public static void AddAssessment(ArrayList<Assessment> assessmentList, Assessment at) {
+//
+//		Assessment.setHeader("Addition of Assessment");
+//
+//		System.out.println("");
+//
+//		for (int i = 0; i < assessmentList.size(); i++) {
+//
+//			// Refactoring
+//			int assessment_id = assessmentList.get(i).getAssessment_id();
+//
+//			if (assessment_id == at.getAssessment_id()) {
+//				System.out.println("The Assessment is already existed");
+//				return;
+//			}
+//
+//		}
+//		if ((at.getAssessmentType().isEmpty()) || (at.getTopic().isEmpty()) || (at.getIndustry().isEmpty())
+//				|| (at.getCareer_path().isEmpty())) {
+//			System.out.println("The Info of Assessment is missing!");
+//			return;
+//
+//		}
+//
+//		assessmentList.add(at);
+//
+//		System.out.println("The new assessment is successfully added");
+//		at.display();
+//
+//	}
+//
+//	public static String ViewAssessment(ArrayList<Assessment> assessmentList) {
+//
+//		Assessment.setHeader("List of Assessments");
+//
+//		System.out.println("");
+//
+//		String output = String.format("%-5s %-25s %-25s %-25s %-30s %-30s\n\n", "ID", "TYPE", "TOPIC", "INDUSTRY",
+//				"CAREER PROSPECT", "FILE NAME");
+//
+//		for (Assessment a : assessmentList) {
+//			// Refactroing
+//			output += String.format("%-140s\n", a.toString());
+//		}
+//
+//		System.out.println(output);
+//		return output;
+//	}
+//
+//	public static boolean DeleteAssessment(ArrayList<Assessment> assessmentList, Integer id) {
+//
+//		Assessment.setHeader("Deletion of Assessment");
+//
+//		System.out.println("");
+//
+//		boolean success = false;
+//		int deletedAssessment = 0;
+//
+//		for (int i = 0; i < assessmentList.size(); i++) {
+//			// Refactoring
+//			int assessment_id = assessmentList.get(i).getAssessment_id();
+//			if (id == assessment_id) {
+//				success = true;
+//				deletedAssessment = i;
+//			}
+//		}
+//
+//		if (success) {
+//			assessmentList.remove(deletedAssessment);
+//			System.out.println("\nThe Assessment is successfully deleted!\n");
+//
+//		} else {
+//			System.out.println("\nThe Assessment ID entered is Invalid.\n");
+//		}
+//
+//		return success;
+//	}
 
 	// -----------Job Application (HR) -------------
 	public static void Job_Application_Menu() {
@@ -846,7 +843,6 @@ public class C206_CaseStudy {
 		}
 	}
 
-
 	public static void ViewAllJobOpportunities(ArrayList<Job_Opportunity> jobList) {
 		System.out.println("List of All Job Opportunities:");
 		for (Job_Opportunity job : jobList) {
@@ -870,9 +866,6 @@ public class C206_CaseStudy {
 		}
 	}
 
-	
-
-
 	public static void ManageAddedJob(ArrayList<Job_Opportunity> JobList) {
 		while (true) {
 			String jobTitle = Helper.readString("Enter the job title to manage (or type 'exit' to quit): ");
@@ -895,7 +888,6 @@ public class C206_CaseStudy {
 		}
 	}
 
-	
 	public static void ResumeMenu() {
 		System.out.println("1. Add resume");
 		System.out.println("2. View resume");
@@ -1325,27 +1317,28 @@ public class C206_CaseStudy {
 			}
 		}
 	}
-	//---------DECLARATION(SHIHAN)----------------
+
+	// ---------DECLARATION(SHIHAN)----------------
 	private static boolean CHECK_USER_HR(User currentUser) {
-			return currentUser.getRole().equalsIgnoreCase("HR");
+		return currentUser.getRole().equalsIgnoreCase("HR");
 	}
 
 	private static boolean CHECK_JOBTITLE_CREATE_ADDED(String JobTitle, Job_Opportunity job) {
-			return job.getJobTitle().equalsIgnoreCase(JobTitle);
+		return job.getJobTitle().equalsIgnoreCase(JobTitle);
 	}
+
 	private static boolean CHECK_JOBTITLE_DELETE(ArrayList<Job_Opportunity> jobList, String jobTitle, int i) {
 		return jobList.get(i).getJobTitle().equalsIgnoreCase(jobTitle);
-		}
-		
+	}
+
 	private static boolean CHECK_ADDED_EXIT(String jobTitle) {
 		return jobTitle.equalsIgnoreCase("exit");
 	}
+
 	private static boolean CHECK_YES(String confirm) {
 		return confirm.equalsIgnoreCase("yes");
 	}
 
-		
-		
-	//---------------------------------
+	// ---------------------------------
 
 }
